@@ -1,0 +1,32 @@
+<h4 class="title"><span class="text"><strong>Login</strong> Formular</span></h4>
+<form action="{f:uri.action(controller:'Account', action:'login', arguments: {loginForm: 'submit'})}" method="post" onsubmit="{onSubmit}">
+    <fieldset>
+        <f:flashMessages renderMode="div" class="alert alert-error" />
+        <div class="control-group">
+            <label class="control-label">E-Mail-Addresse:</label>
+            <div class="controls">
+                <input type="text" id="user" name="user" value="" placeholder="E-Mail-Addresse" class="span4" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Passwort:</label>
+            <div class="controls">
+                <input type="password" placeholder="Passwort" id="pass" name="pass" class="span4" />
+            </div>
+        </div>
+        <div class="control-group">
+            <input tabindex="3" class="btn btn-inverse large" type="submit" value="Login" name="submit" />
+            <hr>
+            <p class="reset">
+                <f:link.action action="forgotPassword" controller="Account" pluginName="tinyshop" pageUid="{settings.shopRootId}" title="Passwort vergessen?">Passwort vergessen?</f:link.action>
+            </p>
+        </div>
+        <div class="felogin-hidden">
+            <input type="hidden" name="logintype" value="login"/>
+            <input type="hidden" name="id" value="{settings.shopRootId}"/>
+            <input type="hidden" name="redirect_url" value=""/>
+            <input type="hidden" name="pid" value="{settings.storagePidUsers}"/>
+            <f:format.html parseFuncTSPath="">{extraHidden}</f:format.html>
+        </div>
+    </fieldset>
+</form>

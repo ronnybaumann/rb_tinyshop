@@ -1,0 +1,20 @@
+<f:form.validationResults for="{object}">
+    <f:if condition="{validationResults.flattenedErrors.newUser}">
+        <div class="alert alert-error">
+            <f:for each="{validationResults.flattenedErrors.newUser}" key="propertyPath" as="error">
+                <div class="userError">
+                    {error}
+                </div>
+            </f:for>
+        </div>
+    </f:if>
+    <f:if condition="{validationResults.flattenedErrors.user}">
+        <div class="alert alert-error">
+            <f:for each="{validationResults.flattenedErrors.user}" key="propertyPath" as="error">
+                <div class="userError">
+                    {error}
+                </div>
+            </f:for>
+        </div>
+    </f:if>
+</f:form.validationResults>

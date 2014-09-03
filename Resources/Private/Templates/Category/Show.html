@@ -1,0 +1,43 @@
+{namespace ts=RB\RbTinyshop\ViewHelpers}
+<f:layout name="Default" />
+<f:section name="main">
+    <section class="header_text sub">
+        <f:flashMessages renderMode="div" />
+        <h4><span>{category.title}</span></h4>
+    </section>
+    <section class="main-content">
+        <div class="row">
+            <div class="span9">
+                <f:if condition="{articles -> f:count()} < 10">
+                    <f:then>
+                        <ul class="thumbnails listing-products">
+                            <f:for each="{articles}" as="article">
+                                <li class="span3">
+                                    <f:render partial="Article/List/Item" arguments="{article: article, category: category}" />
+                                </li>
+                            </f:for>
+                        </ul>
+                    </f:then>
+                    <f:else>
+                        <f:widget.paginate objects="{articles}" as="paginatedArticles" configuration="{itemsPerPage: 9}">
+                            <ul class="thumbnails listing-products">
+                                <f:for each="{paginatedArticles}" as="article">
+                                    <li class="span3">
+                                        <f:render partial="Article/List/Item" arguments="{article: article, category: category}" />
+                                    </li>
+                                </f:for>
+                            </ul>
+                        <div class="pagination pagination-small pagination-centered">
+                        </f:widget.paginate>
+                        </div>
+                    </f:else>
+                </f:if>
+            </div>
+            <div class="span3 col">
+                <div class="block">
+                    <ts:widget.menu action="subMenu"  category="{category}" />
+                </div>
+            </div>
+        </div>
+    </section>
+</f:section>

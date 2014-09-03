@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2014-08-18T00:41:43Z" product-name="tinyshop">
+        <header/>
+        <body>
+            <trans-unit id="company.description">
+                <source>company</source>
+            </trans-unit>
+            <trans-unit id="salutation.description">
+                <source>salutation</source>
+            </trans-unit>
+            <trans-unit id="firstname.description">
+                <source>firstname</source>
+            </trans-unit>
+            <trans-unit id="lastname.description">
+                <source>lastname</source>
+            </trans-unit>
+            <trans-unit id="street.description">
+                <source>street</source>
+            </trans-unit>
+            <trans-unit id="street_number.description">
+                <source>street_number</source>
+            </trans-unit>
+            <trans-unit id="postcode.description">
+                <source>postcode</source>
+            </trans-unit>
+            <trans-unit id="city.description">
+                <source>city</source>
+            </trans-unit>
+            <trans-unit id="country.description">
+                <source>country</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

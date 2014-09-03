@@ -1,0 +1,11 @@
+{namespace ts=RB\RbTinyshop\ViewHelpers}
+<ul class="nav nav-list">
+    <f:for each="{categorys}" as="category">
+        <li>
+            <f:link.action action="show" controller="Category" arguments="{category : category}">{category.title}</f:link.action>
+            <f:if condition="{category.subCategorys}">
+                <f:render partial="Widget/Menu/CategoryTree" arguments="{categorys:category.subCategorys, notFirst: 1}" />
+            </f:if>
+        </li>
+    </f:for>
+</ul>

@@ -1,0 +1,63 @@
+[globalVar = TSFE:id = {$plugin.tx_rbtinyshop.shopPages}]
+plugin.tx_rbtinyshop {
+    page = PAGE
+    page.includeCSS {
+        bootstrap = EXT:rb_tinyshop/Resources/Public/Shopper/bootstrap/css/bootstrap.min.css
+        bootstrap.media = all
+        
+        bootstrapresponsive = EXT:rb_tinyshop/Resources/Public/Shopper/bootstrap/css/bootstrap-responsive.min.css
+        bootstrapresponsive.media = all
+        
+        bootstrappage = EXT:rb_tinyshop/Resources/Public/Shopper/themes/css/bootstrappage.css
+        bootstrappage.media = all
+        
+        main = EXT:rb_tinyshop/Resources/Public/Shopper/themes/css/main.css
+        main.media = all
+        
+        fancybox = EXT:rb_tinyshop/Resources/Public/Shopper/themes/css/jquery.fancybox.css
+        fancybox.media = all
+    }
+    
+    page.includeJS {
+        jquery = EXT:rb_tinyshop/Resources/Public/Shopper/themes/js/jquery-1.7.2.min.js
+        bootstrap = EXT:rb_tinyshop/Resources/Public/Shopper/bootstrap/js/bootstrap.min.js
+        superfish = EXT:rb_tinyshop/Resources/Public/Shopper/themes/js/superfish.js
+        jqueryScrolltotop = EXT:rb_tinyshop/Resources/Public/Shopper/themes/js/jquery.scrolltotop.js
+        fancybox = EXT:rb_tinyshop/Resources/Public/Shopper/themes/js/jquery.fancybox.js
+    }
+    
+    page.includeJSFooter {
+        common = EXT:rb_tinyshop/Resources/Public/Shopper/themes/js/common.js
+    }
+    
+    page.10 = FLUIDTEMPLATE
+    page.10 {
+        template = FILE
+        template.file = {$plugin.tx_rbtinyshop.view.templateRootPath}Page/Page.html
+        partialRootPath = {$plugin.tx_rbtinyshop.view.partialRootPath}
+        layoutRootPath = {$plugin.tx_rbtinyshop.view.layoutRootPath}
+        
+        variables {
+            plugin < styles.content.get
+            plugin.select.where = colPos = 99
+            
+            content < styles.content.get
+            content.select.where = colPos = 0
+        }
+    }
+    
+    cmsContentHome = CONTENT
+    cmsContentHome {
+        table = tt_content
+        select {
+            pidInList = 2
+            orderBy = sorting
+            where = colPos = 0
+            languageField = sys_language_uid
+        }
+    }
+}
+
+page >
+page < plugin.tx_rbtinyshop.page
+[global]

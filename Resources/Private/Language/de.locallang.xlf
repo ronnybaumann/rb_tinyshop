@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2014-08-18T00:41:43Z" product-name="tinyshop">
+		<header/>
+		<body>
+			<trans-unit id="tx_rbtinyshop_domain_model_article">
+				<source>Article</source>
+				<target>Artikel</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_article.categorys">
+				<source>Categorys</source>
+				<target>Kategorie</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_article.article_detail">
+				<source>Article Detail</source>
+				<target>Artikeldetails</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basketposition">
+				<source>Basket Position</source>
+				<target>Warenkorbposition</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basketposition.title">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basketposition.article_number">
+                <source>Article number</source>
+                <target>Artikelnummer</target>
+            </trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basketposition.price">
+                <source>Price</source>
+                <target>Preis</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketposition.quantity">
+                <source>Quantity</source>
+                <target>Anzahl</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketposition.main_image">
+                <source>Main Image</source>
+                <target>Artikelbild</target>
+            </trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_tinyshop">
+				<source>TinyShop</source>
+				<target>TinyShop</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_tinyshop.title">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_tinyshop.categorys">
+				<source>Categorys</source>
+				<target>Kategorien</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basket">
+				<source>Basket</source>
+				<target>Warenkorb</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basket.total">
+				<source>Total</source>
+				<target>Gesamt</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_order">
+				<source>Order</source>
+				<target>Bestellung</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_order.total">
+				<source>Total</source>
+				<target>Gesamt</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basket.user_uid">
+                <source>User Uid</source>
+                <target>Benutzer</target>
+            </trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basket.basket_positions">
+                <source>Basket Positions</source>
+                <target>Warenkorbposition</target>
+            </trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category">
+				<source>Category</source>
+				<target>Kategorie</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category.title">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category.description">
+				<source>Description</source>
+				<target>Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category.image">
+				<source>Image</source>
+				<target>Bild</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category.sub_categorys">
+				<source>Sub Categorys</source>
+				<target>Unterkategorie</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category.articles">
+				<source>Articles</source>
+				<target>Artikel</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_price">
+				<source>Price</source>
+				<target>Preis</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_price.price">
+				<source>Price</source>
+				<target>Preis</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail">
+				<source>Article Detail</source>
+				<target>Artikeldetails</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.title">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.article_number">
+                <source>Article Number</source>
+                <target>Artikelnummer</target>
+            </trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.description">
+				<source>Description</source>
+				<target>Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.main_image">
+				<source>Main Image</source>
+				<target>Artikelbild</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.price">
+				<source>Price</source>
+				<target>Preis</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.images">
+				<source>Images</source>
+				<target>Bilder</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_image">
+				<source>Image</source>
+				<target>Bild</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_image.image">
+				<source>Image</source>
+				<target>Bild</target>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_address">
+                <source>Address</source>
+                <target>Adresse</target>
+            </trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_user.billing_address">
+                <source>Billing Address</source>
+                <target>Rechnungsadresse</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_user.shipping_address">
+                <source>Shipping Address</source>
+                <target>Lieferadresse</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.company">
+                <source>Company</source>
+                <target>Firma</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.salutation">
+                <source>Salutation</source>
+                <target>Anrede</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.firstname">
+                <source>Firstname</source>
+                <target>Vorname</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.lastname">
+                <source>Lastname</source>
+                <target>Nachname</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.street">
+                <source>Street</source>
+                <target>Straße</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.street_number">
+                <source>Street Number</source>
+                <target>Hausnummer</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.postcode">
+                <source>Postcode</source>
+                <target>Postleitzahl</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.city">
+                <source>City</source>
+                <target>Ort</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.country">
+                <source>Country</source>
+                <target>Land</target>
+            </trans-unit>
+            <trans-unit id="validator.notempty.null">
+                <source>This is a required field.</source>
+                <target>Dieses Feld ist ein Pflichtfeld.</target>
+            </trans-unit>
+            <trans-unit id="validator.notempty.empty">
+                <source>This is a required field.</source>
+                <target>Dieses Feld ist ein Pflichtfeld.</target>
+            </trans-unit>
+            <trans-unit id="validator.email.notvalid">
+                <source>This is not a valid email address.</source>
+                <target>Die E-Mail-Adresse ist ungültig.</target>
+            </trans-unit>
+            <trans-unit id="validator.email.exist">
+                <source>The email address already exists.</source>
+                <target>Die E-Mail-Adresse ist bereits registriert.</target>
+            </trans-unit>
+            <trans-unit id="validator.password.notvalid">
+                <source>Password must contain uppercase letters and numbers and must be at least 8 characters long.</source>
+                <target>Das Passwort muss mindestens aus 8 Zeichen bestehen und Großbuchstaben und Zahlen beinhalten.</target>
+            </trans-unit>
+            <trans-unit id="validator.password.notconfirm">
+                <source>Password Confirmation fails.</source>
+                <target>Die Passwörter stimmen nicht überein.</target>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>

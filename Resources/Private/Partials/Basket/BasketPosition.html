@@ -1,0 +1,12 @@
+<tr>
+    <td>
+        <f:image src="{basketPosition.image}" width="100c" height="100c" />
+    </td>
+    <td>{basketPosition.title}</td>
+    <td style="text-align: center;">{basketPosition.quantity}</td>
+    <td style="text-align: right;"><f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{basketPosition.price}</f:format.number>&euro;</td>
+    <td style="text-align: right;"><f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{basketPosition.total}</f:format.number>&euro;</td>
+    <td style="text-align: right;">
+        <f:link.action action="removeItem" controller="Basket" pluginName="tinyshop" pageUid="{settings.shopRootId}" arguments="{articleNumber: basketPosition.articleNumber}"><span class="glyphicon glyphicon-trash"></span></f:link.action>
+    </td>
+</tr>

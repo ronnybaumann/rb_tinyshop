@@ -1,0 +1,23 @@
+config.tx_extbase {
+	persistence {
+		classes {
+			RB\RbTinyshop\Domain\Model\User {
+				mapping {
+					tableName = fe_users
+					recordType =
+					columns {
+                        tx_rbtinyshop_domain_model_user_billingaddress.mapOnProperty = billingAddress
+                        tx_rbtinyshop_domain_model_user_shippingaddress.mapOnProperty = shippingAddress
+                        tx_rbtinyshop_domain_model_user_differshipping.mapOnProperty = differShipping
+                    }
+				}
+			}
+			RB\RbTinyshop\Domain\Model\UserGroup {
+				mapping {
+					tableName = fe_groups
+					recordType =
+				}
+			}
+		}
+	}
+}

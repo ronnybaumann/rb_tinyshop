@@ -1,0 +1,36 @@
+<fieldset>
+    <div class="row">
+        <div class="span12">
+            <h4 class="title"><span class="text"><strong>Allgemeine</strong> Informationen</span></h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6">
+            <div class="control-group">
+                <label class="control-label">E-Mail-Adresse:<span class="required">*</span></label>
+                <div class="controls">
+                    <f:form.textfield property="username" placeholder="E-Mail-Adresse" class="span4" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'username'}" />
+                </div>
+            </div>
+        </div>
+        <f:if condition="{dontEditPassword} == 0">
+            <div class="span6">
+                <div class="control-group">
+                    <label class="control-label">Passwort:<span class="required">*</span></label>
+                    <div class="controls">
+                        <f:form.password property="password" class="span4" />
+                        <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'password'}" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Passwort wiederholen:<span class="required">*</span></label>
+                    <div class="controls">
+                        <f:form.password property="passwordConfirm" class="span4" />
+                        <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'passwordConfirm'}" />
+                    </div>
+                </div>
+            </div>
+        </f:if>
+    </div>
+</fieldset>

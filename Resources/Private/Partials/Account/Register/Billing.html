@@ -1,0 +1,70 @@
+<h4 class="title"><span class="text"><strong>Rechnungs</strong> Adresse</span></h4>
+<fieldset class="billingAddress">
+    <div class="control-group">
+        <label class="control-label">Anrede:<span class="required">*</span></label>
+        <div class="controls">
+            <label class="radio inline">
+                <f:form.radio property="billingAddress.salutation" value="Frau" />
+                Frau
+            </label>
+            <label class="radio inline">
+                <f:form.radio property="billingAddress.salutation" value="Herr" />
+                Herr
+            </label>
+            <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'billingAddress.salutation'}" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6">
+            <div class="control-group">
+                <label class="control-label">Firma:</label>
+                <div class="controls">
+                    <f:form.textfield property="billingAddress.company" placeholder="Firma" class="span4" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'billingAddress.company'}" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Vorname:<span class="required">*</span></label>
+                <div class="controls">
+                    <f:form.textfield property="billingAddress.firstname" placeholder="Vorname" class="span4" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'billingAddress.firstname'}" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Nachname:<span class="required">*</span></label>
+                <div class="controls">
+                    <f:form.textfield property="billingAddress.lastname" placeholder="Nachname" class="span4" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'billingAddress.lastname'}" />
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="control-group">
+                <label class="control-label">Straße, Hausnummer:<span class="required">*</span></label>
+                <div class="controls">
+                    <f:form.textfield property="billingAddress.street" placeholder="Straße" class="span3" style="margin-right: 13px;" />
+                    <f:form.textfield property="billingAddress.streetNumber" placeholder="Nr." class="span1" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'billingAddress.street'}" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'billingAddress.streetNumber'}" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">PLZ, Ort:<span class="required">*</span></label>
+                <div class="controls">
+                    <f:form.textfield property="billingAddress.postcode" placeholder="PLZ" class="span1" style="margin-right: 13px;" />
+                    <f:form.textfield property="billingAddress.city" placeholder="Ort" class="span3" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'billingAddress.postcode'}" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'billingAddress.city'}" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Land:<span class="required">*</span></label>
+                <div class="controls">
+                    <f:form.textfield property="billingAddress.country" placeholder="Land" class="span4" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'billingAddress.country'}" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <f:form.hidden property="billingAddress.pid" value="{settings.storagePidUsers}" />
+</fieldset>

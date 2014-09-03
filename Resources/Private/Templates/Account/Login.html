@@ -1,0 +1,14 @@
+<section class="header_text sub">
+    <h4><span>Anmelden</span></h4>
+</section>
+<section class="main-content">
+    <div class="row">
+        <div class="span6">  
+            <f:render partial="Account/Login/Form" arguments="{onSubmit: onSubmit, extraHidden: extraHidden, arguments: arguments}" />
+        </div>
+        <div class="span6">  
+            <h4 class="title"><span class="text"><strong>Neu</strong> Registrieren</span></h4>
+            <f:link.action action="register" controller="Account" pluginName="tinyshop" pageUid="{settings.shopRootId}" class="btn btn-inverse">Registrierung</f:link.action>
+        </div>
+    </div>
+</section>

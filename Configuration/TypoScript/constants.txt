@@ -1,0 +1,75 @@
+plugin.tx_rbtinyshop {
+	view {
+		# cat=plugin.tx_rbtinyshop/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:rb_tinyshop/Resources/Private/Templates/
+		# cat=plugin.tx_rbtinyshop/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:rb_tinyshop/Resources/Private/Partials/
+		# cat=plugin.tx_rbtinyshop/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:rb_tinyshop/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_rbtinyshop//a; type=string; label=Default storage PID
+		storagePid = 1
+		recursive = 0
+	}
+	settings {
+	   shopRootId = 1
+	   storagePidUsers = 1
+	   storagePidBasket = 1
+       storagePidOrder = 1
+       uidUserGroupNewUser = 1
+       shopMail = ronnybaumann@outlook.de
+       shopMailName = Ronny Baumann
+	}
+	injectContent {
+	   main {
+           home {
+               pid = 11
+               colPos = 0
+           }
+           article {
+               list {
+                    pid = 9
+                    colPos = 0
+               }
+               detail {
+                    pid = 10
+                    colPos = 0
+               }
+           }
+        }
+        sidebar {
+           article {
+               list {
+                    pid = 9
+                    colPos = 1
+               }
+               detail {
+                    pid = 10
+                    colPos = 1
+               }
+           }
+        }
+        account {
+            forgotPassword {
+                pid = 27
+                colPos = 0
+            }
+        }
+    }
+}
+
+module.tx_rbtinyshop {
+	view {
+		# cat=module.tx_rbtinyshop/file; type=string; label=Path to template root (BE)
+		templateRootPath = EXT:rb_tinyshop/Resources/Private/Backend/Templates/
+		# cat=module.tx_rbtinyshop/file; type=string; label=Path to template partials (BE)
+		partialRootPath = EXT:rb_tinyshop/Resources/Private/Backend/Partials/
+		# cat=module.tx_rbtinyshop/file; type=string; label=Path to template layouts (BE)
+		layoutRootPath = EXT:rb_tinyshop/Resources/Private/Backend/Layouts/
+	}
+	persistence {
+		# cat=module.tx_rbtinyshop//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}

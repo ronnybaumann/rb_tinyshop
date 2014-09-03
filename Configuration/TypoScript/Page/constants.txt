@@ -1,0 +1,9 @@
+plugin.tx_rbtinyshop {
+    view {
+        page {
+            templateRootPath = EXT:rb_tinyshop/Resources/Private/Page/Templates/
+            partialRootPath = EXT:rb_tinyshop/Resources/Private/Page/Partials/
+            layoutRootPath = EXT:rb_tinyshop/Resources/Private/Page/Layouts/
+        }
+    }
+}

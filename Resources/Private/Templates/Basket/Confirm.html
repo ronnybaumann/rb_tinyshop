@@ -1,0 +1,42 @@
+{namespace ts=RB\RbTinyshop\ViewHelpers}
+<f:layout name="Default" />
+<f:section name="main">
+    <f:flashMessages renderMode="div" />
+    
+    <section class="header_text sub">
+        <h4><span>Kasse</span></h4>
+    </section>
+    <section class="main-content">
+        <div class="row">
+            <div class="span6">
+                <f:render partial="Account/Account/Billing" arguments="{user: user}" />
+            </div>
+            <div class="span6">
+                <f:render partial="Account/Account/Shipping" arguments="{user: user}" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">                 
+                <h4 class="title"><span class="text"><strong>Ihre</strong> Bestellung</span></h4>
+                <table class="table table-striped">
+                    <thead>
+                        <f:render partial="Basket/Head" />
+                    </thead>
+                    <tbody>
+                        <f:for each="{basket.basketPositions}" as="basketPosition" iteration="iteration">
+                            <f:render partial="Basket/BasketPosition" arguments="{basketPosition: basketPosition}" />
+                        </f:for>
+                    </tbody>
+                </table>
+                <hr>
+                <p class="cart-total right">
+                    <f:render partial="Basket/Totals" arguments="{basket: basket, partialPrices: partialPrices}" />
+                </p>
+                <hr/>
+                <p class="buttons right">              
+                    <f:link.action action="placeOrder" controller="Order" pluginName="tinyshop" pageUid="{settings.shopRootId}" arguments="{basket: basket}" class="btn btn-inverse">Kostenpflichtig bestellen</f:link.action>
+                </p>
+            </div>
+        </div>
+    </section>
+</f:section>

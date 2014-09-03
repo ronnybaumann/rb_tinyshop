@@ -1,0 +1,13 @@
+<div class="product-box">
+    <span class="sale_tag"></span>                                              
+    <f:link.action action="show" controller="Article" arguments="{article: article, category: category}">
+        <f:image src="{article.articleDetail.mainImage.originalResource.publicUrl}" />
+    </f:link.action><br />
+    <f:link.action action="show" controller="Article" arguments="{article: article, category: category}" class="title">
+        {article.articleDetail.title}
+    </f:link.action><br />
+    <a href="#" class="category">Phasellus consequat</a>
+    <p class="price">
+        <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{article.articleDetail.price.price}</f:format.number>&euro;
+    </p>
+</div>

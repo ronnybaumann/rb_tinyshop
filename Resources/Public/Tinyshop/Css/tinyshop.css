@@ -1,0 +1,21 @@
+.f3-form-error,
+input.f3-form-error,
+input[type="text"].f3-form-error,
+input[type="password"].f3-form-error {
+    border-color: red;
+}
+
+.alert-danger.propertyError, 
+.alert-error.propertyError {
+    width: 284px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+@media (max-width: 767px){
+    .alert-danger.propertyError, 
+    .alert-error.propertyError {
+        width: 100%;
+    }
+}

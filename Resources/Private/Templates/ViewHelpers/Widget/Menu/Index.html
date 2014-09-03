@@ -1,0 +1,8 @@
+<f:if condition="{action} == 'mainMenu'">
+    <f:then>
+        <f:render partial="Widget/Menu/CategoryTree" arguments="{categorys:categorys}" />
+    </f:then>
+    <f:else>
+        <f:render partial="Widget/Menu/SubCategoryTree" arguments="{categorys:categorys}" />
+    </f:else>
+</f:if>

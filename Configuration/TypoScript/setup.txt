@@ -1,0 +1,225 @@
+plugin.tx_rbtinyshop {
+	view {
+		templateRootPaths {
+            100 = {$plugin.tx_rbtinyshop.view.templateRootPath}
+        }
+        partialRootPaths {
+            100 = {$plugin.tx_rbtinyshop.view.partialRootPath}
+        }
+        layoutRootPaths {
+            100 = {$plugin.tx_rbtinyshop.view.layoutRootPath}
+        }
+	}
+	persistence {
+		storagePid = {$plugin.tx_rbtinyshop.persistence.storagePid}
+		recursive = {$plugin.tx_rbtinyshop.persistence.recursive}
+	}
+	features {
+		# uncomment the following line to enable the new Property Mapper.
+		# rewrittenPropertyMapper = 1
+	}
+	settings {
+	   shopRootId = {$plugin.tx_rbtinyshop.settings.shopRootId}
+	   storagePidUsers = {$plugin.tx_rbtinyshop.settings.storagePidUsers}
+	   storagePidBasket = {$plugin.tx_rbtinyshop.settings.storagePidBasket}
+	   storagePidOrder = {$plugin.tx_rbtinyshop.settings.storagePidOrder}
+	   uidUserGroupNewUser = {$plugin.tx_rbtinyshop.settings.uidUserGroupNewUser}
+	   shopMail = {$plugin.tx_rbtinyshop.settings.shopMail}
+	   shopMailName = {$plugin.tx_rbtinyshop.settings.shopMailName}
+	}
+	injectContent {
+       main {
+           home {
+               pid = {$plugin.tx_rbtinyshop.injectContent.main.home.pid}
+               colPos = {$plugin.tx_rbtinyshop.injectContent.main.home.colPos}
+           }
+           article {
+               list {
+                    pid = {$plugin.tx_rbtinyshop.injectContent.main.article.list.pid}
+                    colPos = {$plugin.tx_rbtinyshop.injectContent.main.article.list.colPos}
+               }
+               detail {
+                    pid = {$plugin.tx_rbtinyshop.injectContent.main.article.detail.pid}
+                    colPos = {$plugin.tx_rbtinyshop.injectContent.main.article.detail.colPos}
+               }
+           }
+        }
+        sidebar {
+           article {
+               list {
+                    pid = {$plugin.tx_rbtinyshop.injectContent.sidebar.article.list.pid}
+                    colPos = {$plugin.tx_rbtinyshop.injectContent.sidebar.article.list.colPos}
+               }
+               detail {
+                    pid = {$plugin.tx_rbtinyshop.injectContent.sidebar.article.detail.pid}
+                    colPos = {$plugin.tx_rbtinyshop.injectContent.sidebar.article.detail.colPos}
+               }
+           }
+        }
+        account {
+            forgotPassword {
+                pid = {$plugin.tx_rbtinyshop.injectContent.account.forgotPassword.pid}
+                colPos = {$plugin.tx_rbtinyshop.injectContent.account.forgotPassword.pid}
+            }
+        }
+    }
+    ejectMenu {
+        main < lib.tx_rbtinyshop.ejectMenu.main
+    }
+}
+
+lib.tx_rbtinyshop.injectContentDefault = CONTENT
+lib.tx_rbtinyshop.injectContentDefault {
+    table = tt_content
+    select {
+        pidInList = 11
+        orderBy = sorting
+        where = colPos = 0
+        languageField = sys_language_uid
+    }
+}
+
+lib.tx_rbtinyshop.injectContent {
+    main {
+        home < lib.tx_rbtinyshop.injectContentDefault
+        home {
+            select {
+                pidInList = {$plugin.tx_rbtinyshop.injectContent.main.home.pid}
+                where = colPos = {$plugin.tx_rbtinyshop.injectContent.main.home.colPos}
+            }
+        }
+        article {
+            list < lib.tx_rbtinyshop.injectContentDefault
+            list {
+                select {
+                    pidInList = {$plugin.tx_rbtinyshop.injectContent.main.article.list.pid}
+                    where = colPos = {$plugin.tx_rbtinyshop.injectContent.main.article.list.colPos}
+                }
+            }
+            detail < lib.tx_rbtinyshop.injectContentDefault
+            detail {
+                select {
+                    pidInList = {$plugin.tx_rbtinyshop.injectContent.main.article.detail.pid}
+                    where = colPos = {$plugin.tx_rbtinyshop.injectContent.main.article.detail.colPos}
+                }
+            }
+        }
+    }
+    sidebar {
+        article {
+            list < lib.tx_rbtinyshop.injectContentDefault
+            list {
+                select {
+                    pidInList = {$plugin.tx_rbtinyshop.injectContent.sidebar.article.list.pid}
+                    where = colPos = {$plugin.tx_rbtinyshop.injectContent.sidebar.article.list.colPos}
+                }
+            }
+            detail < lib.tx_rbtinyshop.injectContentDefault
+            detail {
+                select {
+                    pidInList = {$plugin.tx_rbtinyshop.injectContent.sidebar.article.detail.pid}
+                    where = colPos = {$plugin.tx_rbtinyshop.injectContent.sidebar.article.detail.colPos}
+                }
+            }
+        }
+    }
+    account {
+        forgotPassword < lib.tx_rbtinyshop.injectContentDefault
+        forgotPassword {
+            select {
+                pidInList = {$plugin.tx_rbtinyshop.injectContent.account.forgotPassword.pid}
+                where = colPos = {$plugin.tx_rbtinyshop.injectContent.account.forgotPassword.colPos}
+            }
+        }
+    }
+}
+
+lib.tx_rbtinyshop.ejectMenu.main = USER
+lib.tx_rbtinyshop.ejectMenu.main {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+    vendorName = RB
+    pluginName = Menu
+    extensionName = RbTinyshop
+    switchableControllerActions {
+        Menu {
+            1 = main
+        }
+    }
+    settings =< plugin.tx_rbtinyshop.settings
+    persistence =< plugin.tx_rbtinyshop.persistence
+    persistence.storagePid = {$plugin.tx_rbtinyshop.persistence.storagePid}
+    persistence.recursive = {$plugin.tx_rbtinyshop.persistence.recursive}
+    view =< plugin.tx_rbtinyshop.view
+}
+
+plugin.tx_rbtinyshop._CSS_DEFAULT_STYLE (
+	textarea.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-tinyshop table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.tx-tinyshop table th {
+		font-weight:bold;
+	}
+
+	.tx-tinyshop table td {
+		vertical-align:top;
+	}
+
+	.typo3-messages .message-error {
+		color:red;
+	}
+
+	.typo3-messages .message-ok {
+		color:green;
+	}
+
+)
+
+ page.includeCSS.tinyshop = EXT:rb_tinyshop/Resources/Public/Tinyshop/Css/tinyshop.css
+
+ # Module configuration
+module.tx_rbtinyshop {
+	persistence {
+		storagePid = {$module.tx_rbtinyshop.persistence.storagePid}
+	}
+	view {
+		templateRootPath = {$module.tx_rbtinyshop.view.templateRootPath}
+		partialRootPath = {$module.tx_rbtinyshop.view.partialRootPath}
+		layoutRootPath = {$module.tx_rbtinyshop.view.layoutRootPath}
+	}
+}
+
+#configuration for linkhandler
+plugin.tx_linkhandler {
+    tx_rbtinyshop_domain_model_article {
+        # force link generation also when the tt_news record are hidden or deleted
+        forceLink = 0
+
+        # typolink settings
+        parameter = {$plugin.tx_rbtinyshop.settings.shopRootId}
+        additionalParams = &tx_rbtinyshop_tinyshop[article]={field:uid}&tx_rbtinyshop_tinyshop[controller]=Article&tx_rbtinyshop_tinyshop[action]=show
+        additionalParams.insertData = 1
+        useCacheHash = 1
+    }
+    tx_rbtinyshop_domain_model_category {
+        # force link generation also when the tt_news record are hidden or deleted
+        forceLink = 0
+
+        # typolink settings
+        parameter = {$plugin.tx_rbtinyshop.settings.shopRootId}
+        additionalParams = &tx_rbtinyshop_tinyshop[category]={field:uid}&tx_rbtinyshop_tinyshop[controller]=Category&tx_rbtinyshop_tinyshop[action]=show
+        additionalParams.insertData = 1
+        useCacheHash = 1
+    }
+}

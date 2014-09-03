@@ -1,0 +1,39 @@
+{namespace ts=RB\RbTinyshop\ViewHelpers}
+<f:layout name="Default" />
+<f:section name="main">
+    <section class="header_text sub">
+        <h4><span>Shopping Cart</span></h4>
+    </section>
+    <section class="main-content">
+        <div class="row">
+            <div class="span12">                 
+                <h4 class="title"><span class="text"><strong>Ihr</strong> Warenkorb</span></h4>
+                <f:if condition="{basket}">
+                    <f:then>
+                        <table class="table table-striped">
+                            <thead>
+                                <f:render partial="Basket/Head" />
+                            </thead>
+                            <tbody>
+                                <f:for each="{basket.basketPositions}" as="basketPosition" iteration="iteration">
+                                    <f:render partial="Basket/BasketPosition" arguments="{basketPosition: basketPosition, iteration: iteration}" />
+                                </f:for>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <p class="cart-total right">
+                            <f:render partial="Basket/Totals" arguments="{basket: basket, partialPrices: partialPrices}" />
+                        </p>
+                        <hr/>
+                        <p class="buttons right">              
+                            <f:link.action action="confirm" controller="Basket" pluginName="tinyshop" pageUid="{settings.shopRootId}" arguments="{article: article}" class="btn btn-inverse">Kasse</f:link.action>
+                        </p>
+                    </f:then>
+                    <f:else>
+                        <f:flashMessages renderMode="div" class="alert alert-warning" />
+                    </f:else>
+                </f:if>
+            </div>
+        </div>
+    </section>
+</f:section>

@@ -1,0 +1,43 @@
+{namespace ts=RB\RbTinyshop\ViewHelpers}
+<f:layout name="Default" />
+<f:section name="main">
+    <section class="header_text sub">
+        <f:flashMessages renderMode="div" />
+        <h4><span>{article.articleDetail.title}</span></h4>
+    </section>
+    <section class="main-content">
+        <div class="row">
+            <div class="span9">
+                <div class="row">
+                    <div class="span4">
+                        <f:render partial="Article/Detail/Image/Item" arguments="{article:article}" />
+                    </div>
+                    <div class="span5">
+                        <f:render partial="Article/Detail/Data/Item" arguments="{article:article}" />
+                    </div>
+                    <div class="span5">
+                        <f:render partial="Article/Detail/Cart/Item" arguments="{article:article}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span9">
+                        <f:render partial="Article/Detail/Description/Item" arguments="{article:article}" />
+                    </div>
+                    <div class="span9">
+                        <f:render partial="Article/Detail/Related/Item" arguments="{article:article}" />
+                    </div>
+                    <div class="span9">
+                        <f:if condition="{category}">
+                            <f:link.action action="show" controller="Category" arguments="{category:category}">zurück</f:link.action><br />
+                        </f:if>
+                    </div>
+                </div>
+            </div>
+            <div class="span3 col">
+                <div class="block"> 
+                    <ts:widget.menu action="subMenu"  category="{category}" />
+                </div>
+            </div>
+        </div>
+    </section>
+</f:section>

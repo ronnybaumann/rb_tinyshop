@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-08-18T00:41:43Z" product-name="tinyshop">
+		<header/>
+		<body>
+			<trans-unit id="tx_rbtinyshop_domain_model_article">
+				<source>Article</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_article.categorys">
+				<source>Categorys</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_article.article_detail">
+				<source>Article Detail</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basketposition">
+                <source>Basket Position</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketposition.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketposition.article_number">
+                <source>Article number</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketposition.price">
+                <source>Price</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketposition.quantity">
+                <source>Quantity</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketposition.main_image">
+                <source>Main Image</source>
+            </trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_tinyshop">
+				<source>TinyShop</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_tinyshop.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_tinyshop.categorys">
+				<source>Categorys</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basket">
+				<source>Basket</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basket.total">
+				<source>Total</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basket.user_uid">
+                <source>User Uid</source>
+            </trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_basket.basket_positions">
+                <source>Basket Positions</source>
+            </trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_order">
+				<source>Order</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_order.total">
+				<source>Total</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category">
+				<source>Category</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category.image">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category.sub_categorys">
+				<source>Sub Categorys</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_category.articles">
+				<source>Articles</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_price">
+				<source>Price</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_price.price">
+				<source>Price</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail">
+				<source>Article Detail</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.article_number">
+                <source>Article Number</source>
+            </trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.main_image">
+				<source>Main Image</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.price">
+				<source>Price</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_articledetail.images">
+				<source>Images</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_image">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_image.image">
+				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_user.billing_address">
+                <source>Billing Address</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_user.shipping_address">
+                <source>Shipping Address</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address">
+                <source>Address</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.company">
+                <source>Company</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.salutation">
+                <source>Salutation</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.firstname">
+                <source>Firstname</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.lastname">
+                <source>Lastname</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.street">
+                <source>Street</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.street_number">
+                <source>Street Number</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.postcode">
+                <source>Postcode</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.city">
+                <source>City</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_address.country">
+                <source>Country</source>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>
