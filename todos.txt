@@ -4,3 +4,6 @@
 -prüfen ob benutzername eine email adresse ist
 -injectContent nimmt keine abstände (erscheinungsbild -> oben bzw. unten im backend)
 -validierung auf modelebene wird doppelt ausgegeben
+
+Bugs:
+wenn benutzer eingelogt war und auf der confirmseite, sich dann ausloggt und wieder artikel in den warenkorb legt und diese dann löscht landet er auf der login seite weil session redirect variablen nicht zurückgesetzt werden

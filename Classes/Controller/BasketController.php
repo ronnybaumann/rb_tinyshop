@@ -90,20 +90,14 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				$basketPosition = $this->getNewBasketPosition($article, $quantity);
 				$basket->addBasketPosition($basketPosition);
 			}
-			$this->updateBasketRepository($basket);
-		}
-		else {
-			if(isset($basket['basketPositions'][$articleNumber])) {
-				$basketPosition = $basket['basketPositions'][$articleNumber];
-				$cartBasketPositionQuantity = $basketPosition->getQuantity();
-				$basketPosition->setQuantity($cartBasketPositionQuantity + $quantity);
+			
+			if($this->feSessionStorage->getUser()->user['uid']) {
+				$this->updateBasketRepository($basket);
 			}
 			else {
-				$basketPosition = $this->getNewBasketPosition($article, $quantity);
+				$basket = $this->updateSessionBasket($basket);
 			}
-			$basket['basketPositions'][$articleNumber] = $basketPosition;
-			$basket = $this->updateSessionBasket($basket);
-			$this->feSessionStorage->storeObject($basket, 'basket');
+			
 		}
 		$this->redirect('show', 'Basket', 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
 	}
@@ -118,23 +112,28 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		$basket = $this->getBasket();
 		
 		if($basket instanceof \RB\RbTinyshop\Domain\Model\Basket) {
-			foreach ($basket->getBasketPositions() as $key => $basketPosition) {
-				if($basketPosition instanceof \RB\RbTinyshop\Domain\Model\BasketPosition) {
-					if($basketPosition->getArticleNumber() == $articleNumber) {
-						$basket->removeBasketPosition($basketPosition);
-						$this->updateBasketRepository($basket);
-						break;
+			if($this->feSessionStorage->getUser()->user['uid']) {
+				foreach ($basket->getBasketPositions() as $key => $basketPosition) {
+					if($basketPosition instanceof \RB\RbTinyshop\Domain\Model\BasketPosition) {
+						if($basketPosition->getArticleNumber() === $articleNumber) {
+							$basket->removeBasketPosition($basketPosition);
+							$this->updateBasketRepository($basket);
+							break;
+						}
 					}
 				}
 			}
-			
-		}
-		else {
-			if(isset($basket['basketPositions'][$articleNumber])) {
-				unset($basket['basketPositions'][$articleNumber]);
+			else {
+				$newBasket = new \RB\RbTinyshop\Domain\Model\Basket();
+				foreach ($basket->getBasketPositions() as $key => $basketPosition) {
+					if($basketPosition instanceof \RB\RbTinyshop\Domain\Model\BasketPosition) {
+						if($basketPosition->getArticleNumber() !== $articleNumber) {
+							$newBasket->addBasketPosition($basketPosition);
+						}
+					}
+				}
+				$basket = $this->updateSessionBasket($newBasket);
 			}
-			$basket = $this->updateSessionBasket($basket);
-			$this->feSessionStorage->storeObject($basket, 'basket');
 		}
 		
 		if($this->feSessionStorage->has('redirectAction') && $this->feSessionStorage->has('redirectController')) {
@@ -153,19 +152,16 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	public function showAction() {
 		$basket = $this->getBasket();
 		$basketEmpty = false;
+		
 		if($basket instanceof \RB\RbTinyshop\Domain\Model\Basket) {
 			if($basket->getBasketPositions()->count() > 0) {
-				$this->updateBasketRepository($basket);
+				if($this->feSessionStorage->getUser()->user['uid']) {
+					$this->updateBasketRepository($basket);
+				}
+				else {
+					$basket = $this->updateSessionBasket($basket);
+				}
 				$total = $basket->getTotal();
-			}
-			else {
-				$basketEmpty = true;
-			}
-		}
-		else {
-			if(count($basket['basketPositions']) > 0) {
-				$this->updateSessionBasket($basket);
-				$total = $basket['total'];
 			}
 			else {
 				$basketEmpty = true;
@@ -210,46 +206,46 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	protected function getBasket() {
 		$sessionBasket = $this->feSessionStorage->getObject('basket');
 		if($userUid = $this->feSessionStorage->getUser()->user['uid']) {
-			$userBaskets = $this->basketRepository->findByUserUid($userUid);
-			if($userBaskets->count() > 0 && $sessionBasket !== false) {
-				foreach ($userBaskets as $key => $userBasket) {
-					$this->basketRepository->remove($userBasket);
-				}
-				$this->persistenceManager->persistAll();
+			$userBasket = $this->basketRepository->findOneByUserUid($userUid);
+			
+			if(!$userBasket || ($sessionBasket instanceof \RB\RbTinyshop\Domain\Model\Basket && $sessionBasket->getBasketPositions()->count() > 0)) {
+				$emptyBasket = new \RB\RbTinyshop\Domain\Model\Basket();
+				$emptyBasket->setPid($this->settings['storagePidBasket']);
+				$emptyBasket->setUserUid($userUid);
 			}
 			
-			if($sessionBasket) {
-				$basketPersist = new \RB\RbTinyshop\Domain\Model\Basket();
-				foreach ($sessionBasket['basketPositions'] as $key => $basketPosition) {
-					$basketPosition->setPid($this->settings['storagePidBasket']);
-					$basketPersist->addBasketPosition($basketPosition);
+			if(!$sessionBasket && ! $userBasket) {
+				$this->addBasketRepository($emptyBasket);
+				return $emptyBasket;
+			}
+			
+			if($sessionBasket && !$userBasket) {
+				foreach ($sessionBasket->getBasketPositions() as $key => $basketPosition) {
+					$emptyBasket->addBasketPosition($basketPosition);
 				}
-				$basketPersist->setUserUid($userUid);
-				$basketPersist->setPid($this->settings['storagePidBasket']);
-				
-				$this->addBasketRepository($basketPersist);
+				$this->addBasketRepository($emptyBasket);
 				$this->feSessionStorage->remove('basket');
+				return $emptyBasket;
 			}
 			
-			if($basketPersist) {
-				return $basketPersist;
-			}
-			elseif($userBaskets->count() > 0) {
-				foreach ($userBaskets as $key => $userBasket) {
-					return $userBasket;
-				}
+			if((!$sessionBasket && $userBasket) || $sessionBasket->getBasketPositions()->count() > 0) {
+				return $userBasket;
 			}
 			else {
-				$emtyBasket = new \RB\RbTinyshop\Domain\Model\Basket();
-				$emtyBasket->setUserUid($userUid);
-				$emtyBasket->setPid($this->settings['storagePidBasket']);
-				$this->addBasketRepository($emtyBasket);
-				return $emtyBasket;
+				$this->basketRepository->remove($userBasket);
+				$this->persistenceManager->persistAll();
+				foreach ($sessionBasket->getBasketPositions() as $key => $basketPosition) {
+					$emptyBasket->addBasketPosition($basketPosition);
+				}
+				$this->addBasketRepository($emptyBasket);
+				$this->feSessionStorage->remove('basket');
+				return $emptyBasket;
 			}
 		}
 		else {
 			if($sessionBasket === false) {
-				$sessionBasket = array('basketPositions' => array());
+				$sessionBasket = new \RB\RbTinyshop\Domain\Model\Basket();
+				$sessionBasket->setPid($this->settings['storagePidBasket']);
 			}
 			return $sessionBasket;
 		}
@@ -312,7 +308,8 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	protected function updateSessionBasket($basket) {
 		$total = $this->getBasketRawTotal($basket);
 		$total = $this->addAdditionalCost($total);
-		$basket['total'] = $total;
+		$basket->setTotal($total);
+		$this->feSessionStorage->storeObject($basket, 'basket');
 		return $basket;
 	}
 	
@@ -478,11 +475,10 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				$total += $basketPosition->getTotal();
 			}
 		}
-		else {
-			foreach ($basket['basketPositions'] as $key => $basketPosition) {
-				$total += $basketPosition->getTotal();
-			}
-		}
 		return $total;
+	}
+	
+	protected function debug($variable) {
+		return \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($variable);
 	}
 }
