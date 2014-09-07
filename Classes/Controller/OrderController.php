@@ -41,12 +41,44 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	protected $persistenceManager;
 	
 	/**
+	 * userRepository
+	 *
+	 * @var \RB\RbTinyshop\Domain\Repository\UserRepository
+	 * @inject
+	 */
+	protected $userRepository = NULL;
+	
+	/**
 	 * orderRepository
 	 *
 	 * @var \RB\RbTinyshop\Domain\Repository\OrderRepository
 	 * @inject
 	 */
 	protected $orderRepository = NULL;
+	
+	/**
+	 * orderStateRepository
+	 *
+	 * @var \RB\RbTinyshop\Domain\Repository\OrderStateRepository
+	 * @inject
+	 */
+	protected $orderStateRepository = NULL;
+	
+	/**
+	 * basketRepository
+	 *
+	 * @var \RB\RbTinyshop\Domain\Repository\BasketRepository
+	 * @inject
+	 */
+	protected $basketRepository = NULL;
+	
+	/**
+	 * ReflectionService instance
+	 *
+	 * @var \RB\RbTinyshop\Service\CloneService
+	 * @inject
+	 */
+	protected $cloneService;
 	
 	/**
 	 * action list
@@ -75,8 +107,65 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * @return void
 	 */
 	public function placeOrderAction(\RB\RbTinyshop\Domain\Model\Basket $basket) {
+		$orderFinished = true;
+		$order = new \RB\RBTinyshop\Domain\Model\Order();
+		$user = $this->userRepository->findByUid($basket->getUserUid());
+		$orderState = $this->orderStateRepository->findByUid(1);
 		
-		$this->view->assign('order', $order);
+		//set new order values
+		$order->setTotal($basket->getTotal());
+		$order->setOrderState($orderState);
+		$order->setPid($this->settings['storagePidOrder']);
+		
+		foreach ($basket->getBasketPositions() as $key => $basketPosition) {
+			if($basketPosition instanceof \RB\RbTinyshop\Domain\Model\BasketPosition) {
+				$orderPosition = new \RB\RbTinyshop\Domain\Model\OrderPosition();
+				
+				$orderPosition->setArticleNumber($basketPosition->getArticleNumber());
+				$orderPosition->setPrice($basketPosition->getPrice());
+				$orderPosition->setQuantity($basketPosition->getQuantity());
+				$orderPosition->setTitle($basketPosition->getTitle());
+				$orderPosition->setPid($this->settings['storagePidOrder']);
+				
+				$order->addOrderPosition($orderPosition);
+			}
+			else {
+				$orderFinished = false;
+			}
+		}
+		
+		if($user instanceof \RB\RbTinyshop\Domain\Model\User) {
+			if ($user->getBillingAddress() instanceof \TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy) {
+				$user->getBillingAddress()->_loadRealInstance();
+			}
+			
+			if ($user->getShippingAddress() instanceof \TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy) {
+				$user->getShippingAddress()->_loadRealInstance();
+			}
+			
+			$order->setBillingAddress($this->cloneService->copy($user->getBillingAddress()));
+			$order->setShippingAddress($this->cloneService->copy($user->getShippingAddress()));
+			
+			$order->getBillingAddress()->setPid($this->settings['storagePidOrder']);
+			$order->getShippingAddress()->setPid($this->settings['storagePidOrder']);
+			
+		}
+		else {
+			$orderFinished = false;
+		}
+		
+		//persist new order
+		$this->orderRepository->add($order);
+		$this->persistenceManager->persistAll();
+		
+		//delete basket
+		if($orderFinished) {
+			$this->basketRepository->remove($basket);
+			$this->persistenceManager->persistAll();
+			$this->view->assign('order', $order);
+		}
+		else {
+			$this->redirect('confirm', 'Basket');
+		}
 	}
-
 }

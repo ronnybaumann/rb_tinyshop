@@ -36,6 +36,7 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * company
 	 *
 	 * @var string
+	 * @copy clone
 	 */
 	protected $company = '';
 	
@@ -44,6 +45,7 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var string
 	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @copy clone
 	 */
 	protected $salutation = '';
 	
@@ -52,6 +54,7 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var string
 	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @copy clone
 	 */
 	protected $firstname = '';
 	
@@ -60,6 +63,7 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var string
 	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @copy clone
 	 */
 	protected $lastname = '';
 	
@@ -68,6 +72,7 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var string
 	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @copy clone
 	 */
 	protected $street = '';
 	
@@ -76,6 +81,7 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var string
 	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @copy clone
 	 */
 	protected $streetNumber = '';
 	
@@ -84,6 +90,7 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var string
 	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @copy clone
 	 */
 	protected $postcode = '';
 	
@@ -92,6 +99,7 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var string
 	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @copy clone
 	 */
 	protected $city = '';
 	
@@ -100,6 +108,7 @@ class Address extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var string
 	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @copy clone
 	 */
 	protected $country = '';
 	

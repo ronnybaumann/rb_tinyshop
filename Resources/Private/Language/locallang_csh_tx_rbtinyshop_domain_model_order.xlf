@@ -6,6 +6,9 @@
 			<trans-unit id="total.description">
 				<source>total</source>
 			</trans-unit>
+            <trans-unit id="order_positions.description">
+                <source>order_positions</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

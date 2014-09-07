@@ -3,13 +3,13 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
-	'ctrl' => $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article']['ctrl'],
+$GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderposition'] = array(
+	'ctrl' => $GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderposition']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, categorys, article_detail',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, article_number, price, quantity',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, categorys, article_detail, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, article_number, price, quantity, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -38,8 +38,8 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 				'items' => array(
 					array('', 0),
 				),
-				'foreign_table' => 'tx_rbtinyshop_domain_model_article',
-				'foreign_table_where' => 'AND tx_rbtinyshop_domain_model_article.pid=###CURRENT_PID### AND tx_rbtinyshop_domain_model_article.sys_language_uid IN (-1,0)',
+				'foreign_table' => 'tx_rbtinyshop_domain_model_orderposition',
+				'foreign_table_where' => 'AND tx_rbtinyshop_domain_model_orderposition.pid=###CURRENT_PID### AND tx_rbtinyshop_domain_model_orderposition.sys_language_uid IN (-1,0)',
 			),
 		),
 		'l10n_diffsource' => array(
@@ -96,46 +96,41 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 				),
 			),
 		),
-		'categorys' => array(
+		'title' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_article.categorys',
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_orderposition.title',
 			'config' => array(
-				'type' => 'select',
-				'foreign_table' => 'tx_rbtinyshop_domain_model_category',
-				'MM' => 'tx_rbtinyshop_article_category_mm',
-				'size' => 10,
-				'autoSizeMax' => 30,
-				'maxitems' => 9999,
-				'multiple' => 0,
-				'renderMode' => 'tree',
-				'treeConfig' => array(
-					'parentField' => 'category',
-					'appearance' => array(
-						'maxLevels' => 99,
-						'expandAll' => false,
-						'showHeader' => true,
-						'allowRecursiveMode' => true,
-					),
-				),
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
 			),
 		),
-		'article_detail' => array(
+		'article_number' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_article.article_detail',
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_orderposition.article_number',
 			'config' => array(
-				'type' => 'inline',
-				'foreign_table' => 'tx_rbtinyshop_domain_model_articledetail',
-				'minitems' => 0,
-				'maxitems' => 1,
-				'appearance' => array(
-					'collapseAll' => 1,
-					'levelLinksPosition' => 'top',
-					'showSynchronizationLink' => 1,
-					'showPossibleLocalizationRecords' => 1,
-					'showAllLocalizationLink' => 1
-				),
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim,required'
 			),
 		),
-		
+		'price' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_orderposition.price',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'double2'
+			)
+		),
+		'quantity' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_orderposition.quantity',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'double2'
+			)
+		),
 	),
 );

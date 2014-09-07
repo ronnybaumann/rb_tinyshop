@@ -1,37 +1,24 @@
 <section class="header_text sub">
-    <h4><span>Registrierung</span></h4>
+    <h4><span>Benutzerdaten ändern</span></h4>
 </section>
 <section class="main-content">
     <f:render partial="Account/Register/UserError" />
-    <f:form action="create" name="newUser" object="{newUser}">
+    <f:form action="update" controller="Account" name="user" object="{user}">
     <div class="row">
         <div class="span12">
-            <f:render partial="Account/Register/User" arguments="{newUser: newUser, objectName: 'newUser'}" />
+                <f:render partial="Account/Register/BillingAddress" arguments="{user: user, objectName: 'user'}" />
         </div>
     </div>
     <div class="row">
         <div class="span12">
-                <f:render partial="Account/Register/BillingAddress" arguments="{newUser: newUser, objectName: 'newUser'}" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="span12">
-            <f:render partial="Account/Register/ShippingAddress" arguments="{newUser: newUser, objectName: 'newUser'}" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="span6">
-            <f:render partial="Account/Register/Payment" arguments="{newUser: newUser, objectName: 'newUser', payments: payments}" />
-        </div>
-        <div class="span6">
-            <f:render partial="Account/Register/Shipping" arguments="{newUser: newUser, objectName: 'newUser', shippings: shippings}" />
+            <f:render partial="Account/Register/ShippingAddress" arguments="{user: user, objectName: 'user'}" />
         </div>
     </div>
     <div class="row">
         <div class="span12">
             <p><span class="required">*</span> Pflichtfelder</p>
             <p class="buttons right">
-                <f:form.submit value="Registrieren" class="btn btn-inverse large" />
+                <f:form.submit value="Speichern" class="btn btn-inverse large" />
             </p>
         </div>
     </div>

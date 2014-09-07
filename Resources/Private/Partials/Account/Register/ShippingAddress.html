@@ -1,0 +1,78 @@
+<h4 class="title"><span class="text"><strong>Liefer</strong>Adresse</span></h4>
+<fieldset class="differShipping">
+    <div class="control-group">
+        <label class="checkbox inline">
+            Abweichende Lieferadresse:
+            <f:form.checkbox property="differShipping" value="1" class="differShippingAddress" />
+        </label>
+    </div>
+</fieldset>
+<fieldset class="shippingAddress" style="display: none;">
+    <div class="control-group">
+        <label class="control-label">Anrede:<span class="required">*</span></label>
+        <div class="controls">
+            <label class="radio inline">
+                <f:form.radio property="shippingAddress.salutation" value="Frau" />
+                Frau
+            </label>
+            <label class="radio inline">
+                <f:form.radio property="shippingAddress.salutation" value="Herr" />
+                Herr
+            </label>
+            <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'shippingAddress.salutation'}" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6">
+            <div class="control-group">
+                <label class="control-label">Firma:</label>
+                <div class="controls">
+                    <f:form.textfield property="shippingAddress.company" placeholder="Firma" class="span4" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'shippingAddress.company'}" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Vorname:<span class="required">*</span></label>
+                <div class="controls">
+                    <f:form.textfield property="shippingAddress.firstname" placeholder="Vorname" class="span4" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'shippingAddress.firstname'}" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Nachname:<span class="required">*</span></label>
+                <div class="controls">
+                    <f:form.textfield property="shippingAddress.lastname" placeholder="Nachname" class="span4" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'shippingAddress.lastname'}" />
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="control-group">
+                <label class="control-label">Straße, Hausnummer:<span class="required">*</span></label>
+                <div class="controls">
+                    <f:form.textfield property="shippingAddress.street" placeholder="Straße" class="span3" style="margin-right: 13px;" />
+                    <f:form.textfield property="shippingAddress.streetNumber" placeholder="Nr." class="span1" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'shippingAddress.street'}" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'shippingAddress.streetNumber'}" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">PLZ, Ort:<span class="required">*</span></label>
+                <div class="controls">
+                    <f:form.textfield property="shippingAddress.postcode" placeholder="PLZ" class="span1" style="margin-right: 13px;" />
+                    <f:form.textfield property="shippingAddress.city" placeholder="Ort" class="span3" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'shippingAddress.postcode'}" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'shippingAddress.city'}" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Land:<span class="required">*</span></label>
+                <div class="controls">
+                    <f:form.textfield property="shippingAddress.country" placeholder="Land" class="span4" />
+                    <f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'shippingAddress.country'}" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <f:form.hidden property="shippingAddress.pid" value="{settings.storagePidUsers}" />
+</fieldset>

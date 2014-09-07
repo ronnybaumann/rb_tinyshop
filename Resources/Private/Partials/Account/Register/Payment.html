@@ -1,0 +1,21 @@
+<h4 class="title"><span class="text"><strong>Zahlungs</strong>Art</span></h4>
+<fieldset>
+<f:for each="{payments}" as="payment">
+    <label class="radio">
+        <f:if condition="{user.payment.uid} == {payment.uid}">
+            <f:then>
+                <f:form.radio property="payment" value="{payment.uid}" checked="1" />
+            </f:then>
+            <f:else>
+                <f:form.radio property="payment" value="{payment.uid}" />
+            </f:else>
+        </f:if>
+        {payment.title}
+        <f:if condition="{payment.description}">
+            <br />
+            {payment.description}
+        </f:if>
+    </label>
+</f:for>
+<f:render partial="Account/Register/PropertyError" arguments="{objectName: objectName, property: 'payment'}" />
+</fieldset>

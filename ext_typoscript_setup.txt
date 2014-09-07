@@ -8,6 +8,8 @@ config.tx_extbase {
 					columns {
                         tx_rbtinyshop_domain_model_user_billingaddress.mapOnProperty = billingAddress
                         tx_rbtinyshop_domain_model_user_shippingaddress.mapOnProperty = shippingAddress
+                        tx_rbtinyshop_domain_model_user_payment.mapOnProperty = payment
+                        tx_rbtinyshop_domain_model_user_shipping.mapOnProperty = shipping
                         tx_rbtinyshop_domain_model_user_differshipping.mapOnProperty = differShipping
                     }
 				}

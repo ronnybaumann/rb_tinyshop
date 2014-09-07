@@ -27,9 +27,6 @@
             <trans-unit id="tx_rbtinyshop_domain_model_basketposition.quantity">
                 <source>Quantity</source>
             </trans-unit>
-            <trans-unit id="tx_rbtinyshop_domain_model_basketposition.main_image">
-                <source>Main Image</source>
-            </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_tinyshop">
 				<source>TinyShop</source>
 			</trans-unit>
@@ -48,9 +45,27 @@
 			<trans-unit id="tx_rbtinyshop_domain_model_order">
 				<source>Order</source>
 			</trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.order_positions">
+                <source>Order Positions</source>
+            </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_order.total">
 				<source>Total</source>
 			</trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition">
+                <source>Order Position</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition.article_number">
+                <source>Article number</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition.price">
+                <source>Price</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition.quantity">
+                <source>Quantity</source>
+            </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_basket.user_uid">
                 <source>User Uid</source>
             </trans-unit>
@@ -143,6 +158,60 @@
             </trans-unit>
             <trans-unit id="tx_rbtinyshop_domain_model_address.country">
                 <source>Country</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment">
+                <source>Payment</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.description">
+                <source>Description</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.value">
+                <source>Value</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.value_type">
+                <source>Value Type</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.value_type.absolute">
+                <source>Absolute</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.value_type.relative">
+                <source>Relative</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.payment_identifier">
+                <source>Payment Identifier</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping">
+                <source>Shipping</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.description">
+                <source>Description</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.value">
+                <source>Value</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.value_type">
+                <source>Value Type</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.value_type.absolute">
+                <source>Absolute</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.value_type.relative">
+                <source>Relative</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderstate">
+                <source>Orderstate</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderstate.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderstate.description">
+                <source>Description</source>
             </trans-unit>
             <trans-unit id="validator.notempty.null">
                 <source>This is a required field.</source>

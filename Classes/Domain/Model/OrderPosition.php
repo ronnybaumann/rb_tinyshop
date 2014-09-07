@@ -28,9 +28,9 @@ use \TYPO3\CMS\Extbase\Validation\Validator\NotEmptyValidator;
  ***************************************************************/
 
 /**
- * BasketPosition
+ * OrderPosition
  */
-class BasketPosition extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class OrderPosition extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * title
@@ -63,13 +63,6 @@ class BasketPosition extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @validate NotEmpty
 	 */
 	protected $quantity = 1.0;
-	
-	/**
-	 * mainImage
-	 *
-	 * @var string
-	 */
-	protected $image = '';
 	
 	/**
 	 * Returns the title
@@ -145,25 +138,6 @@ class BasketPosition extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setQuantity($quantity) {
 		$this->quantity = $quantity;
-	}
-	
-	/**
-	 * Returns the image
-	 *
-	 * @return string $image
-	 */
-	public function getImage() {
-		return $this->image;
-	}
-	
-	/**
-	 * Sets the image
-	 *
-	 * @param string $image
-	 * @return void
-	 */
-	public function setImage($image) {
-		$this->image = $image;
 	}
 	
 	/**

@@ -3,13 +3,13 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
-	'ctrl' => $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article']['ctrl'],
+$GLOBALS['TCA']['tx_rbtinyshop_domain_model_shipping'] = array(
+	'ctrl' => $GLOBALS['TCA']['tx_rbtinyshop_domain_model_shipping']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, categorys, article_detail',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description, value, value_type',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, categorys, article_detail, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, description, value, value_type, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -38,8 +38,8 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 				'items' => array(
 					array('', 0),
 				),
-				'foreign_table' => 'tx_rbtinyshop_domain_model_article',
-				'foreign_table_where' => 'AND tx_rbtinyshop_domain_model_article.pid=###CURRENT_PID### AND tx_rbtinyshop_domain_model_article.sys_language_uid IN (-1,0)',
+				'foreign_table' => 'tx_rbtinyshop_domain_model_shipping',
+				'foreign_table_where' => 'AND tx_rbtinyshop_domain_model_shipping.pid=###CURRENT_PID### AND tx_rbtinyshop_domain_model_shipping.sys_language_uid IN (-1,0)',
 			),
 		),
 		'l10n_diffsource' => array(
@@ -96,46 +96,43 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 				),
 			),
 		),
-		'categorys' => array(
+		'title' => array(
 			'exclude' => 1,
-			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_article.categorys',
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_shipping.title',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim,required'
+			),
+		),
+		'description' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_shipping.description',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim'
+			),
+		),
+		'value' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_shipping.value',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'double2'
+			),
+		),
+		'value_type' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_shipping.value_type',
 			'config' => array(
 				'type' => 'select',
-				'foreign_table' => 'tx_rbtinyshop_domain_model_category',
-				'MM' => 'tx_rbtinyshop_article_category_mm',
-				'size' => 10,
-				'autoSizeMax' => 30,
-				'maxitems' => 9999,
-				'multiple' => 0,
-				'renderMode' => 'tree',
-				'treeConfig' => array(
-					'parentField' => 'category',
-					'appearance' => array(
-						'maxLevels' => 99,
-						'expandAll' => false,
-						'showHeader' => true,
-						'allowRecursiveMode' => true,
-					),
+				'items' => array(
+					array('LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_shipping.value_type.absolute', 'absolute'),
+					array('LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_shipping.value_type.relative', 'relative'),
 				),
 			),
 		),
-		'article_detail' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_article.article_detail',
-			'config' => array(
-				'type' => 'inline',
-				'foreign_table' => 'tx_rbtinyshop_domain_model_articledetail',
-				'minitems' => 0,
-				'maxitems' => 1,
-				'appearance' => array(
-					'collapseAll' => 1,
-					'levelLinksPosition' => 'top',
-					'showSynchronizationLink' => 1,
-					'showPossibleLocalizationRecords' => 1,
-					'showAllLocalizationLink' => 1
-				),
-			),
-		),
-		
 	),
 );

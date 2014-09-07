@@ -3,7 +3,7 @@
 </section>
 <section class="main-content">
     <f:render partial="Account/Register/UserError" />
-    <f:form action="updateUser" controller="Account" name="user" object="{user}">
+    <f:form action="update" controller="Account" name="user" object="{user}">
     <div class="row">
         <div class="span12">
             <f:render partial="Account/Register/User" arguments="{user: user, objectName: 'user', dontEditPassword: 1}" />
@@ -11,12 +11,20 @@
     </div>
     <div class="row">
         <div class="span12">
-                <f:render partial="Account/Register/Billing" arguments="{user: user, objectName: 'user'}" />
+                <f:render partial="Account/Register/BillingAddress" arguments="{user: user, objectName: 'user'}" />
         </div>
     </div>
     <div class="row">
         <div class="span12">
-            <f:render partial="Account/Register/Shipping" arguments="{user: user, objectName: 'user'}" />
+            <f:render partial="Account/Register/ShippingAddress" arguments="{user: user, objectName: 'user'}" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6">
+            <f:render partial="Account/Register/Payment" arguments="{user: user, objectName: 'user', payments: payments}" />
+        </div>
+        <div class="span6">
+            <f:render partial="Account/Register/Shipping" arguments="{user: user, objectName: 'user', shippings: shippings}" />
         </div>
     </div>
     <div class="row">

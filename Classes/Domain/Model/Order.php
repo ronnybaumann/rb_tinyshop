@@ -38,6 +38,64 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @var float
 	 */
 	protected $total = 0.0;
+	
+	/**
+	 * orderState
+	 *
+	 * @var \RB\RbTinyshop\Domain\Model\OrderState
+	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @lazy
+	 */
+	protected $orderState = NULL;
+	
+	/**
+	 * orderPositions
+	 *
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\OrderPosition>
+	 * @cascade remove
+	 * @lazy
+	 */
+	protected $orderPositions = NULL;
+	
+	/**
+	 * billingAddress
+	 *
+	 * @var \RB\RbTinyshop\Domain\Model\Address
+	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @cascade remove
+	 * @lazy
+	 */
+	protected $billingAddress = NULL;
+	
+	/**
+	 * shippingAddress
+	 *
+	 * @var \RB\RbTinyshop\Domain\Model\Address
+	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @cascade remove
+	 * @lazy
+	 */
+	protected $shippingAddress = NULL;
+	
+	/**
+	 * __construct
+	 */
+	public function __construct() {
+		//Do not remove the next line: It would break the functionality
+		$this->initStorageObjects();
+	}
+	
+	/**
+	 * Initializes all ObjectStorage properties
+	 * Do not modify this method!
+	 * It will be rewritten on each save in the extension builder
+	 * You may modify the constructor of this class instead
+	 *
+	 * @return void
+	 */
+	protected function initStorageObjects() {
+		$this->orderPositions = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+	}
 
 	/**
 	 * Returns the total
@@ -57,5 +115,100 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	public function setTotal($total) {
 		$this->total = $total;
 	}
-
+	
+	/**
+	 * Returns the orderState
+	 *
+	 * @return \RB\RbTinyshop\Domain\Model\OrderState $orderState
+	 */
+	public function getOrderState() {
+		return $this->orderState;
+	}
+	
+	/**
+	 * Sets the orderState
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\OrderState $orderState
+	 * @return void
+	 */
+	public function setOrderState(\RB\RbTinyshop\Domain\Model\OrderState $orderState) {
+		$this->orderState = $orderState;
+	}
+	
+	/**
+	 * Adds a OrderPosition
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\OrderPosition $orderPosition
+	 * @return void
+	 */
+	public function addOrderPosition(\RB\RbTinyshop\Domain\Model\OrderPosition $orderPosition) {
+		$this->orderPositions->attach($orderPosition);
+	}
+	
+	/**
+	 * Removes a OrderPosition
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\OrderPosition $orderPositionToRemove The BasketPosition to be removed
+	 * @return void
+	 */
+	public function removeOrderPosition(\RB\RbTinyshop\Domain\Model\OrderPosition $orderPositionToRemove) {
+		$this->orderPositions->detach($orderPositionToRemove);
+	}
+	
+	/**
+	 * Returns the orderPositions
+	 *
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\OrderPosition> $orderPositions
+	 */
+	public function getOrderPositions() {
+		return $this->orderPositions;
+	}
+	
+	/**
+	 * Sets the orderPositions
+	 *
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\OrderPosition> $orderPositions
+	 * @return void
+	 */
+	public function setOrderPositions(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderPositions) {
+		$this->orderPositions = $orderPositions;
+	}
+	
+	/**
+	 * Returns the billingAddress
+	 *
+	 * @return \RB\RbTinyshop\Domain\Model\Address $billingAddress
+	 */
+	public function getBillingAddress() {
+		return $this->billingAddress;
+	}
+	
+	/**
+	 * Sets the billingAddress
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\Address $billingAddress
+	 * @return void
+	 */
+	public function setBillingAddress(\RB\RbTinyshop\Domain\Model\Address $billingAddress) {
+		$this->billingAddress = $billingAddress;
+	}
+	
+	/**
+	 * Returns the shippingAddress
+	 *
+	 * @return \RB\RbTinyshop\Domain\Model\Address $shippingAddress
+	 */
+	public function getShippingAddress() {
+		return $this->shippingAddress;
+	}
+	
+	/**
+	 * Sets the shippingAddress
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\Address $shippingAddress
+	 * @return void
+	 */
+	public function setShippingAddress(\RB\RbTinyshop\Domain\Model\Address $shippingAddress) {
+		$this->shippingAddress = $shippingAddress;
+	}
 }

@@ -7,7 +7,7 @@ input[type="password"].f3-form-error {
 
 .alert-danger.propertyError, 
 .alert-error.propertyError {
-    width: 284px;
+    width: 304px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;

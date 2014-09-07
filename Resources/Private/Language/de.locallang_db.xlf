@@ -63,9 +63,33 @@
                 <source>Order</source>
                 <target>Bestellung</target>
             </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.order_positions">
+                <source>Order Positions</source>
+                <target>Bestellpositionen</target>
+            </trans-unit>
             <trans-unit id="tx_rbtinyshop_domain_model_order.total">
                 <source>Total</source>
                 <target>Gesamt</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition">
+                <source>Order Position</source>
+                <target>Bestellposition</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition.title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition.article_number">
+                <source>Article number</source>
+                <target>Artikelnummer</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition.price">
+                <source>Price</source>
+                <target>Preis</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition.quantity">
+                <source>Quantity</source>
+                <target>Anzahl</target>
             </trans-unit>
             <trans-unit id="tx_rbtinyshop_domain_model_basket.user_uid">
                 <source>User Uid</source>
@@ -190,6 +214,78 @@
             <trans-unit id="tx_rbtinyshop_domain_model_address.country">
                 <source>Country</source>
                 <target>Land</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment">
+                <source>Payment</source>
+                <target>Zahlungsart</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.description">
+                <source>Description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.value">
+                <source>Value</source>
+                <target>Kosten</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.value_type">
+                <source>Value Type</source>
+                <target>Kostentyp</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.value_type.absolute">
+                <source>Absolute</source>
+                <target>Absolut</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.value_type.relative">
+                <source>Relative</source>
+                <target>Relativ</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_payment.payment_identifier">
+                <source>Payment Identifier</source>
+                <target>Schlüssel Zahlungsartplugin</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping">
+                <source>Shipping</source>
+                <target>Versandart</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.description">
+                <source>Description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.value">
+                <source>Value</source>
+                <target>Kosten</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.value_type">
+                <source>Value Type</source>
+                <target>Kostentyp</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.value_type.absolute">
+                <source>Absolute</source>
+                <target>Absolut</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_shipping.value_type.relative">
+                <source>Relative</source>
+                <target>Relativ</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderstate">
+                <source>Orderstate</source>
+                <target>Bestellstatus</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderstate.title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderstate.description">
+                <source>Description</source>
+                <target>Beschreibung</target>
             </trans-unit>
         </body>
     </file>

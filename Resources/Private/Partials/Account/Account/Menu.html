@@ -4,7 +4,7 @@
         <a href="#">Bestellungen</a>
     </li>
     <li>
-        <f:link.action action="editUser" controller="Account" arguments="{user: user}">Benutzerdaten ändern</f:link.action>
+        <f:link.action action="edit" controller="Account" arguments="{user: user}">Benutzerdaten ändern</f:link.action>
     </li>
     <li>
         <a href="{f:uri.action(action:'login', controller:'Account', extensionName: 'rbtinyshop', pluginName: 'tinyshop', pageUid: settings.shopRootId, noCacheHash: 1)}&logintype=logout" method="post" onsubmit="{onSubmit}">Logout</a>

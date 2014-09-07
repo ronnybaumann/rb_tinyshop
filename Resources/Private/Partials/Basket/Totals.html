@@ -1,3 +1,77 @@
-<strong>Netto:</strong> <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{partialPrices.priceWithoutTax}</f:format.number>&euro;<br />
-<strong>19% MwSt.:</strong> <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{partialPrices.taxIncluded}</f:format.number>&euro;<br />
-<strong>Gesamt:</strong> <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{basket.total}</f:format.number>&euro;<br />
+<table style="text-align: right; float: right; padding: 0; margin: 0;" class="lead cart-total">
+    <f:if condition="{partialPrices.rawTotal}">
+    <tr>
+        <td>
+            <strong>Warenkorb:</strong>
+        </td>
+        <td>
+            <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{partialPrices.rawTotal}</f:format.number>&euro;
+        </td>
+    </tr>
+    </f:if>
+    <f:if condition="{partialPrices.payment.absolute}">
+    <tr>
+        <td>
+            <strong>Kosten Zahlungsart:</strong>
+        </td>
+        <td>
+            <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{partialPrices.payment.absolute}</f:format.number>&euro;
+        </td>
+    </tr>
+    </f:if>
+    <f:if condition="{partialPrices.shipping.absolute}">
+    <tr>
+        <td>
+            <strong>Kosten Versandart:</strong>
+        </td>
+        <td>
+            <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{partialPrices.shipping.absolute}</f:format.number>&euro;
+        </td>
+    </tr>
+    </f:if>
+    <f:if condition="{partialPrices.payment.relative}">
+    <tr>
+        <td>
+            <strong>Kosten Zahlungsart:</strong>
+        </td>
+        <td>
+            <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{partialPrices.payment.relative}</f:format.number>&euro;
+        </td>
+    </tr>
+    </f:if>
+    <f:if condition="{partialPrices.shipping.relative}">
+    <tr>
+        <td>
+            <strong>Kosten Versandart:</strong>
+        </td>
+        <td>
+            <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{partialPrices.shipping.relative}</f:format.number>&euro;
+        </td>
+    </tr>
+    </f:if>
+    <tr>
+        <td>
+            <strong>Netto:</strong>
+        </td>
+        <td>
+            <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{partialPrices.priceWithoutTax}</f:format.number>&euro;
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <strong>MwSt.(19%):</strong>
+        </td>
+        <td>
+            <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{partialPrices.taxIncluded}</f:format.number>&euro;
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <strong>Gesamtbetrag:</strong>
+        </td>
+        <td>
+            <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{basket.total}</f:format.number>&euro;
+        </td>
+    </tr>
+</table>
+<div style="clear: both;"></div>

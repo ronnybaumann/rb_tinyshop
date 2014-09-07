@@ -41,14 +41,6 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	protected $basketRepository = NULL;
 	
 	/**
-	 * basketPositionRepository
-	 *
-	 * @var \RB\RbTinyshop\Domain\Repository\BasketPositionRepository
-	 * @inject
-	 */
-	protected $basketPositionRepository = NULL;
-	
-	/**
 	 * userRepository
 	 *
 	 * @var \RB\RbTinyshop\Domain\Repository\UserRepository
@@ -96,7 +88,6 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			}
 			if($positionUpdated === false) {
 				$basketPosition = $this->getNewBasketPosition($article, $quantity);
-				$this->basketPositionRepository->add($basketPosition);
 				$basket->addBasketPosition($basketPosition);
 			}
 			$this->updateBasketRepository($basket);
@@ -131,7 +122,6 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				if($basketPosition instanceof \RB\RbTinyshop\Domain\Model\BasketPosition) {
 					if($basketPosition->getArticleNumber() == $articleNumber) {
 						$basket->removeBasketPosition($basketPosition);
-						$this->basketPositionRepository->remove($basketPosition);
 						$this->updateBasketRepository($basket);
 						break;
 					}
@@ -147,7 +137,12 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			$this->feSessionStorage->storeObject($basket, 'basket');
 		}
 		
-		$this->redirect('show', 'Basket', 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+		if($this->feSessionStorage->has('redirectAction') && $this->feSessionStorage->has('redirectController')) {
+			$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+		}
+		else {
+			$this->redirect('show', 'Basket', 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+		}
 	}
 	
 	/**
@@ -160,28 +155,28 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		$basketEmpty = false;
 		if($basket instanceof \RB\RbTinyshop\Domain\Model\Basket) {
 			if($basket->getBasketPositions()->count() > 0) {
+				$this->updateBasketRepository($basket);
 				$total = $basket->getTotal();
 			}
 			else {
 				$basketEmpty = true;
 			}
-			
 		}
 		else {
 			if(count($basket['basketPositions']) > 0) {
+				$this->updateSessionBasket($basket);
 				$total = $basket['total'];
 			}
 			else {
 				$basketEmpty = true;
 			}
-			
 		}
 		
 		if($basketEmpty) {
 			$this->addFlashMessage('Sie haben keine Artikel in Ihrem Warenkorb.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
 		}
 		else {
-			$this->view->assign('partialPrices', $this->getPartialPrices($total));
+			$this->view->assign('partialPrices', $this->getPartialPrices($total, $this->getBasketRawTotal($basket)));
 			$this->view->assign('basket', $basket);
 		}
 	}
@@ -192,13 +187,14 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return void
 	 */
 	public function confirmAction() {
+		$this->feSessionStorage->write('redirectAction', 'confirm');
+		$this->feSessionStorage->write('redirectController', 'Basket');
 		$basket = $this->getBasket();
-		$this->feSessionStorage->remove('redirectAction');
-		$this->feSessionStorage->remove('redirectController');
 		if($userUid = $this->feSessionStorage->getUser()->user['uid']) {
 			if($basket->getBasketPositions()->count() > 0) {
 				$user = $this->userRepository->findByUid($userUid);
-				$this->view->assign('partialPrices', $this->getPartialPrices($basket->getTotal()));
+				$this->updateBasketRepository($basket);
+				$this->view->assign('partialPrices', $this->getPartialPrices($basket->getTotal(), $this->getBasketRawTotal($basket)));
 				$this->view->assign('basket', $basket);
 				$this->view->assign('user', $user);
 			}
@@ -207,21 +203,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			}
 		}
 		else {
-			$this->feSessionStorage->write('redirectAction', 'confirm');
-			$this->feSessionStorage->write('redirectController', 'Basket');
 			$this->redirect('login', 'Account', 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
-		}
-	}
-	
-	/**
-	 * action finish
-	 *
-	 * @return void
-	 */
-	public function finishAction(\RB\RbTinyshop\Domain\Model\Basket $basket) {
-	
-		if($basket === false) {
-			$this->redirect('show', 'Basket', 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
 		}
 	}
 	
@@ -231,9 +213,6 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			$userBaskets = $this->basketRepository->findByUserUid($userUid);
 			if($userBaskets->count() > 0 && $sessionBasket !== false) {
 				foreach ($userBaskets as $key => $userBasket) {
-					foreach ($userBasket->getBasketPositions() as $key => $value) {
-						$this->basketPositionRepository->remove($value);
-					}
 					$this->basketRepository->remove($userBasket);
 				}
 				$this->persistenceManager->persistAll();
@@ -249,7 +228,6 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				$basketPersist->setPid($this->settings['storagePidBasket']);
 				
 				$this->addBasketRepository($basketPersist);
-				$this->persistenceManager->persistAll();
 				$this->feSessionStorage->remove('basket');
 			}
 			
@@ -304,10 +282,8 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return void
 	 */
 	protected function addBasketRepository(\RB\RbTinyshop\Domain\Model\Basket $basket) {
-		$totals = 0;
-		foreach ($basket->getBasketPositions() as $key => $basketPosition) {
-			$total += ($basketPosition->getPrice() * $basketPosition->getQuantity());
-		}
+		$total = $this->getBasketRawTotal($basket);
+		$total = $this->addAdditionalCost($total);
 		$basket->setTotal($total);
 		$this->basketRepository->add($basket);
 		$this->persistenceManager->persistAll();
@@ -320,10 +296,8 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return void
 	 */
 	protected function updateBasketRepository(\RB\RbTinyshop\Domain\Model\Basket $basket) {
-		$totals = 0;
-		foreach ($basket->getBasketPositions() as $key => $basketPosition) {
-			$total += $basketPosition->getTotal();
-		}
+		$total = $this->getBasketRawTotal($basket);
+		$total = $this->addAdditionalCost($total);
 		$basket->setTotal($total);
 		$this->basketRepository->update($basket);
 		$this->persistenceManager->persistAll();
@@ -336,19 +310,179 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return array $basket
 	 */
 	protected function updateSessionBasket($basket) {
-		$total = 0;
-		foreach ($basket['basketPositions'] as $key => $basketPosition) {
-			$total += $basketPosition->getTotal();
-		}
+		$total = $this->getBasketRawTotal($basket);
+		$total = $this->addAdditionalCost($total);
 		$basket['total'] = $total;
 		return $basket;
 	}
 	
-	protected function getPartialPrices($total) {
+	protected function getPartialPrices($total, $rawTotal) {
 		$partialPrices = array();
 		$tax = 19;
 		$partialPrices['taxIncluded'] = round($total / (100 + $tax) * $tax, 2);
 		$partialPrices['priceWithoutTax'] = $total - $partialPrices['taxIncluded'];
+		$rawTotalOrg = $rawTotal;
+		
+		if($userUid = $this->feSessionStorage->getUser()->user['uid']) {
+			$user = $this->userRepository->findByUid($userUid);
+			if($user instanceof \RB\RbTinyshop\Domain\Model\User) {
+				$payment = $user->getPayment();
+				$shipping = $user->getShipping();
+				
+				$hasPaymentCost = false;
+				$hasShippingCost = false;
+				
+				if($shipping->getValue() > 0 || $payment->getValue() < 0) {
+					$hasPaymentCost = true;
+				}
+				
+				if($shipping->getValue() > 0 || $payment->getValue() < 0) {
+					$hasShippingCost = true;
+				}
+				
+				//add absolute costs
+				if($hasPaymentCost) {
+					if($payment->getValueType() === 'absolute') {
+						$partialPrices['payment']['absolute'] = $payment->getValue();
+						$rawTotal += $partialPrices['payment']['absolute'];
+					}
+				}
+				
+				if($hasShippingCost) {
+					if($shipping->getValueType() === 'absolute') {
+						$partialPrices['shipping']['absolute'] = $shipping->getValue();
+						$rawTotal += $partialPrices['shipping']['absolute'];
+					}
+				}
+				
+				//add relative costs after adding absolute costs
+				if($hasPaymentCost) {
+					if($payment->getValueType() === 'relative') {
+						$totalOnePercent = $rawTotal / 100;
+						if($payment->getValue() > 0) {
+							$totalAdd = $totalOnePercent * $payment->getValue();
+							$partialPrices['payment']['relative'] = round($totalAdd, 2);
+							$rawTotal += $partialPrices['payment']['relative'];
+						}
+				
+						if($payment->getValue() < 0) {
+							$totalSub = $totalOnePercent * ($payment->getValue() * -1);
+							$partialPrices['payment']['relative'] = round($totalSub, 2);
+							$rawTotal -= $partialPrices['payment']['relative'];
+							$partialPrices['payment']['relative'] *= -1;
+						}
+					}
+				}
+				
+				if($hasShippingCost) {
+					if($shipping->getValueType() === 'relative') {
+						$totalOnePercent = $rawTotal / 100;
+						if($shipping->getValue() > 0) {
+							$totalAdd = $totalOnePercent * $shipping->getValue();
+							$partialPrices['shipping']['relative'] = round($totalAdd, 2);
+							$rawTotal += $partialPrices['shipping']['relative'];
+						}
+							
+						if($shipping->getValue() < 0) {
+							$totalSub = $totalOnePercent * ($shipping->getValue() * -1);
+							$partialPrices['shipping']['relative'] = round($totalSub, 2);
+							$rawTotal -= $partialPrices['shipping']['relative'];
+							$partialPrices['shipping']['relative'] *= -1;
+						}
+					}
+				}
+			}
+		}
+		
+		if($rawTotalOrg != $rawTotal) {
+			$partialPrices['rawTotal'] = $rawTotalOrg;
+		}
+		
 		return $partialPrices;
+	}
+	
+	protected function addAdditionalCost($total) {
+		if($userUid = $this->feSessionStorage->getUser()->user['uid']) {
+			$user = $this->userRepository->findByUid($userUid);
+			if($user instanceof \RB\RbTinyshop\Domain\Model\User) {
+				$payment = $user->getPayment();
+				$shipping = $user->getShipping();
+				
+				$hasPaymentCost = false;
+				$hasShippingCost = false;
+				
+				if($shipping->getValue() > 0 || $payment->getValue() < 0) {
+					$hasPaymentCost = true;
+				}
+				
+				if($shipping->getValue() > 0 || $payment->getValue() < 0) {
+					$hasShippingCost = true;
+				}
+				
+				//add absolute costs
+				if($hasPaymentCost) {
+					if($payment->getValueType() === 'absolute') {
+						$total += $payment->getValue();
+					}
+				}
+				
+				if($hasShippingCost) {
+					if($shipping->getValueType() === 'absolute') {
+						$total += $shipping->getValue();
+					}
+				}
+				
+				//add relative costs after adding absolute costs
+				if($hasPaymentCost) {
+					if($payment->getValueType() === 'relative') {
+						$totalOnePercent = $total / 100;
+						if($payment->getValue() > 0) {
+							$totalAdd = $totalOnePercent * $payment->getValue();
+							$totalAdd = round($totalAdd, 2);
+							$total += $totalAdd;
+						}
+
+						if($payment->getValue() < 0) {
+							$totalSub = $totalOnePercent * ($payment->getValue() * -1);
+							$totalSub = round($totalSub, 2);
+							$total -= $totalSub;
+						}
+					}
+				}
+				
+				if($hasShippingCost) {
+					if($shipping->getValueType() === 'relative') {
+						$totalOnePercent = $total / 100;
+						if($shipping->getValue() > 0) {
+							$totalAdd = $totalOnePercent * $shipping->getValue();
+							$totalAdd = round($totalAdd, 2);
+							$total += $totalAdd;
+						}
+					
+						if($shipping->getValue() < 0) {
+							$totalSub = $totalOnePercent * ($shipping->getValue() * -1);
+							$totalSub = round($totalSub, 2);
+							$total -= $totalSub;
+						}
+					}
+				}
+			}
+		}
+		return $total;
+	}
+	
+	protected function getBasketRawTotal($basket) {
+		$total = 0;
+		if($basket instanceof \RB\RbTinyShop\Domain\Model\Basket) {
+			foreach ($basket->getBasketPositions() as $key => $basketPosition) {
+				$total += $basketPosition->getTotal();
+			}
+		}
+		else {
+			foreach ($basket['basketPositions'] as $key => $basketPosition) {
+				$total += $basketPosition->getTotal();
+			}
+		}
+		return $total;
 	}
 }

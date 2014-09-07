@@ -50,6 +50,7 @@ class Basket extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * basketPositions
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\BasketPosition>
+	 * @cascade remove
 	 * @lazy
 	 */
 	protected $basketPositions = NULL;
@@ -150,5 +151,4 @@ class Basket extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	public function setBasketPositions(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $basketPositions) {
 		$this->basketPositions = $basketPositions;
 	}
-
 }

@@ -57,17 +57,17 @@ class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVali
 		if($user instanceof \RB\RbTinyshop\Domain\Model\User) {
 			$userIsValid = true;
 			$isUpdate = false;
-			
+				
 			//fill email address with username value
 			$user->setEmail($user->getUsername());
-			
+				
 			//check if its an update action
 			$userExist = $this->userRepository->findByUid($user->getUid());
 			if($userExist instanceof \RB\RbTinyshop\Domain\Model\User) {
 				$isUpdate = true;
 			}
-			
-			//clone billing to shipping if differShipping is set
+				
+			//clone billing to shipping if differShipping is not set
 			if(!$user->getDifferShipping()) {
 				if ($user->getBillingAddress() instanceof \TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy) {
 					$user->getBillingAddress()->_loadRealInstance();
@@ -87,9 +87,9 @@ class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVali
 					$user->setShippingAddress(clone $user->getBillingAddress());
 				}
 			}
-			
+				
 			//check passwordConfirm
-			if(!$isUpdate) {	
+			if(!$isUpdate) {
 				if($user->getPassword() !== $user->getPasswordConfirm()) {
 					if(!UserValidator::$userErrors['passwordConfirm']) {
 						$this->addError($this->translateErrorMessage('validator.password.notconfirm', 'rb_tinyshop'), time());
@@ -98,7 +98,7 @@ class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVali
 					$userIsValid = false;
 				}
 			}
-			
+				
 			//check email address already exists
 			$userNameExist = $this->userRepository->findOneByUsername($user->getUsername());
 			if($userNameExist instanceof \RB\RbTinyshop\Domain\Model\User) {
@@ -110,7 +110,6 @@ class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVali
 					$userIsValid = false;
 				}
 			}
-			
 			return $userIsValid;
 		}
 		else {

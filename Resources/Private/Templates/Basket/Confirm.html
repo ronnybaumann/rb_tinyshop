@@ -9,10 +9,24 @@
     <section class="main-content">
         <div class="row">
             <div class="span6">
-                <f:render partial="Account/Account/Billing" arguments="{user: user}" />
+                <f:render partial="Account/Account/BillingAddress" arguments="{user: user}" />
+            </div>
+            <div class="span6">
+                <f:render partial="Account/Account/ShippingAddress" arguments="{user: user}" />
+                <p class="buttons right">
+                    <f:link.action action="editBillingShippingAddress" controller="Account" pluginName="tinyshop" pageUid="{settings.shopRootId}" arguments="{user: user}" class="btn btn-inverse">Ändern</f:link.action>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <f:render partial="Account/Account/Payment" arguments="{user: user}" />
             </div>
             <div class="span6">
                 <f:render partial="Account/Account/Shipping" arguments="{user: user}" />
+                <p class="buttons right">
+                    <f:link.action action="editPaymentShipping" controller="Account" pluginName="tinyshop" pageUid="{settings.shopRootId}" arguments="{user: user}" class="btn btn-inverse">Ändern</f:link.action>
+                </p>
             </div>
         </div>
         <div class="row">
@@ -28,12 +42,10 @@
                         </f:for>
                     </tbody>
                 </table>
-                <hr>
-                <p class="cart-total right">
-                    <f:render partial="Basket/Totals" arguments="{basket: basket, partialPrices: partialPrices}" />
-                </p>
-                <hr/>
-                <p class="buttons right">              
+                <hr />
+                <f:render partial="Basket/Totals" arguments="{basket: basket, partialPrices: partialPrices}" />
+                <hr />
+                <p class="buttons right">
                     <f:link.action action="placeOrder" controller="Order" pluginName="tinyshop" pageUid="{settings.shopRootId}" arguments="{basket: basket}" class="btn btn-inverse">Kostenpflichtig bestellen</f:link.action>
                 </p>
             </div>

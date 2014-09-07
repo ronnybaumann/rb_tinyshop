@@ -11,15 +11,17 @@ if (!defined('TYPO3_MODE')) {
 		'Category' => 'show',
 		'Article' => 'show',
 		'Basket' => 'show, addItem, removeItem, confirm',
-		'Account' => 'login,account,register,create,forgotPassword,editUser,updateUser,editPassword'
+		'Account' => 'login,account,register,create,edit,update,editBillingShippingAddress,editPaymentShipping,forgotPassword',
+		'Order' => 'placeOrder'
 	),
 	// non-cacheable actions
 	array(
-		'TinyShop' => 'home',
-		'Category' => 'show',
-		'Article' => 'show',
+		'TinyShop' => '',
+		'Category' => '',
+		'Article' => '',
 		'Basket' => 'show, addItem, removeItem, confirm',
-		'Account' => 'login,account,register,create,forgotPassword,editUser,updateUser,editPassword'
+		'Account' => 'login,account,register,create,edit,update,editBillingShippingAddress,editPaymentShipping,forgotPassword',
+		'Order' => 'placeOrder'
 	)
 );
 

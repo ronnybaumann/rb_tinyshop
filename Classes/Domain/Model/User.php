@@ -66,6 +66,24 @@ class User extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
 	protected $shippingAddress = NULL;
 	
 	/**
+	 * payment
+	 *
+	 * @var \RB\RbTinyshop\Domain\Model\Payment
+	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @lazy
+	 */
+	protected $payment = NULL;
+	
+	/**
+	 * shipping
+	 *
+	 * @var \RB\RbTinyshop\Domain\Model\Shipping
+	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @lazy
+	 */
+	protected $shipping = NULL;
+	
+	/**
 	 * @var boolean
 	 */
 	protected $differShipping = FALSE;
@@ -106,6 +124,44 @@ class User extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
 	 */
 	public function setShippingAddress(\RB\RbTinyshop\Domain\Model\Address $shippingAddress) {
 		$this->shippingAddress = $shippingAddress;
+	}
+	
+	/**
+	 * Returns the payment
+	 *
+	 * @return \RB\RbTinyshop\Domain\Model\Payment $payment
+	 */
+	public function getPayment() {
+		return $this->payment;
+	}
+	
+	/**
+	 * Sets the payment
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\Payment $payment
+	 * @return void
+	 */
+	public function setPayment(\RB\RbTinyshop\Domain\Model\Payment $payment) {
+		$this->payment = $payment;
+	}
+	
+	/**
+	 * Returns the shipping
+	 *
+	 * @return \RB\RbTinyshop\Domain\Model\Shipping $shipping
+	 */
+	public function getShipping() {
+		return $this->shipping;
+	}
+	
+	/**
+	 * Sets the shipping
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\Shipping $shipping
+	 * @return void
+	 */
+	public function setShipping(\RB\RbTinyshop\Domain\Model\Shipping $shipping) {
+		$this->shipping = $shipping;
 	}
 
     /**

@@ -57,12 +57,28 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	protected $addressRepository = NULL;
 	
 	/**
-	 * userRepository
+	 * userGroupRepository
 	 *
 	 * @var \RB\RbTinyshop\Domain\Repository\UserGroupRepository
 	 * @inject
 	 */
 	protected $userGroupRepository = NULL;
+	
+	/**
+	 * pamentRepository
+	 *
+	 * @var \RB\RbTinyshop\Domain\Repository\PaymentRepository
+	 * @inject
+	 */
+	protected $paymentRepository = NULL;
+	
+	/**
+	 * shippingRepository
+	 *
+	 * @var \RB\RbTinyshop\Domain\Repository\ShippingRepository
+	 * @inject
+	 */
+	protected $shippingRepository = NULL;
 	
 	/**
 	 * persistenceManager
@@ -131,6 +147,8 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @return void
 	 */
 	public function accountAction() {
+		$this->feSessionStorage->remove('redirectAction');
+		$this->feSessionStorage->remove('redirectController');
 		if(!$this->feSessionStorage->getUser()->user['uid']) {
 			$this->redirect('login', 'Account', 'RbTinyshop', array('pluginName' => 'Tinyshop', 'redirectAction' => 'account', 'redirectController' => 'Account'), $this->settings['shopRootId']);
 		}
@@ -149,6 +167,11 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	public function registerAction(\RB\RbTinyshop\Domain\Model\User $newUser = NULL) {
 		$newUser = new \RB\RbTinyshop\Domain\Model\User;
+		$payments = $this->paymentRepository->findAll();
+		$shippings = $this->shippingRepository->findAll();
+		
+		$this->view->assign('payments', $payments);
+		$this->view->assign('shippings', $shippings);
 		$this->view->assign('newUser', $newUser);
 	}
 	
@@ -156,7 +179,6 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * action create
 	 * 
 	 * @param \RB\RbTinyshop\Domain\Model\User $newUser
-	 * @ignorevalidation $newUser
 	 * @return void
 	 */
 	public function createAction(\RB\RbTinyshop\Domain\Model\User $newUser) {
@@ -191,6 +213,67 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	}
 	
 	/**
+	 * action edit
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\User $user
+	 * @ignorevalidation $user
+	 * @return void
+	 */
+	public function editAction(\RB\RbTinyshop\Domain\Model\User $user) {
+		$payments = $this->paymentRepository->findAll();
+		$shippings = $this->shippingRepository->findAll();
+		
+		$this->view->assign('payments', $payments);
+		$this->view->assign('shippings', $shippings);
+		$this->view->assign('user', $user);
+	}
+	
+	/**
+	 * action edit
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\User $user
+	 * @ignorevalidation $user
+	 * @return void
+	 */
+	public function editBillingShippingAddressAction(\RB\RbTinyshop\Domain\Model\User $user) {
+		$this->view->assign('user', $user);
+	}
+	
+	/**
+	 * action edit
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\User $user
+	 * @ignorevalidation $user
+	 * @return void
+	 */
+	public function editPaymentShippingAction(\RB\RbTinyshop\Domain\Model\User $user) {
+		$payments = $this->paymentRepository->findAll();
+		$shippings = $this->shippingRepository->findAll();
+		
+		$this->view->assign('payments', $payments);
+		$this->view->assign('shippings', $shippings);
+		$this->view->assign('user', $user);
+	}
+	
+	/**
+	 * action update
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\User $user
+	 * @return void
+	 */
+	public function updateAction(\RB\RbTinyshop\Domain\Model\User $user) {
+		$this->userRepository->update($user);
+		$this->persistenceManager->persistAll();
+		
+		if($this->feSessionStorage->has('redirectAction') && $this->feSessionStorage->has('redirectController')) {
+			$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+		}
+		else {
+			$this->redirect('account');
+		}
+	}
+	
+	/**
 	 * action forgotPassword
 	 *
 	 * @param string $email
@@ -210,40 +293,6 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 				$this->addFlashMessage('Beim erstellen des Passwortes ist ein Fehler aufgetreten', 'Fehler');
 			}
 		}
-	}
-	
-	/**
-	 * action editUser
-	 *
-	 * @param \RB\RbTinyshop\Domain\Model\User $user
-	 * @ignorevalidation $user
-	 * @return void
-	 */
-	public function editUserAction(\RB\RbTinyshop\Domain\Model\User $user) {
-		$this->view->assign('user', $user);
-	}
-	
-	/**
-	 * action editPassword
-	 *
-	 * @param \RB\RbTinyshop\Domain\Model\User $user
-	 * @ignorevalidation $user
-	 * @return void
-	 */
-	public function editPasswordAction(\RB\RbTinyshop\Domain\Model\User $user) {
-		
-	}
-	
-	/**
-	 * action updateUser
-	 *
-	 * @param \RB\RbTinyshop\Domain\Model\User $user
-	 * @return void
-	 */
-	public function updateUserAction(\RB\RbTinyshop\Domain\Model\User $user) {
-		$this->userRepository->update($user);
-		$this->persistenceManager->persistAll();
-		$this->redirect('account');
 	}
 	
 	/**

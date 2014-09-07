@@ -1,0 +1,15 @@
+{namespace ts=RB\RbTinyshop\ViewHelpers}
+<f:if condition="{notFirst} == 1">
+    <ul class="">
+</f:if>
+    <f:for each="{categorys}" as="category">
+        <li>
+            <f:link.action action="show" controller="Category" pluginName="tinyshop" pageUid="{settings.shopRootId}" arguments="{category : category}">{category.title}</f:link.action>
+            <f:if condition="{category.subCategorys}">
+                <f:render partial="Menu/Main" arguments="{categorys:category.subCategorys, notFirst: 1}" />
+            </f:if>
+        </li>
+    </f:for>
+<f:if condition="{notFirst} == 1">
+    </ul>
+</f:if>
