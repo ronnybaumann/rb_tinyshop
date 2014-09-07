@@ -136,7 +136,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			}
 		}
 		
-		if($this->feSessionStorage->has('redirectAction') && $this->feSessionStorage->has('redirectController')) {
+		if($this->feSessionStorage->has('redirectAction') && $this->feSessionStorage->has('redirectController') && $this->feSessionStorage->getUser()->user['uid']) {
 			$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
 		}
 		else {
