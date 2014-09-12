@@ -174,6 +174,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_order (
 
 	total double(11,2) DEFAULT '0.00' NOT NULL,
 	order_state int(11) unsigned DEFAULT '0' NOT NULL,
+	feuser int(11) unsigned DEFAULT '0' NOT NULL,
 	billing_address int(11) unsigned DEFAULT '0' NOT NULL,
 	shipping_address int(11) unsigned DEFAULT '0' NOT NULL,
 	order_positions int(11) unsigned DEFAULT '0' NOT NULL,

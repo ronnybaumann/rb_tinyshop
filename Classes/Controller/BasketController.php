@@ -57,6 +57,16 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	protected $feSessionStorage = NULL;
 	
 	/**
+	 * feSessionStorage
+	 *
+	 * @var \RB\RbTinyshop\Utility\Price\CalculationUtility
+	 * @inject
+	 */
+	protected $calculationUtility = NULL;
+	
+	
+	
+	/**
 	 * persistenceManager
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
@@ -150,6 +160,8 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return void
 	 */
 	public function showAction() {
+		$this->feSessionStorage->write('redirectAction', 'show');
+		$this->feSessionStorage->write('redirectController', 'Basket');
 		$basket = $this->getBasket();
 		$basketEmpty = false;
 		
@@ -161,7 +173,6 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				else {
 					$basket = $this->updateSessionBasket($basket);
 				}
-				$total = $basket->getTotal();
 			}
 			else {
 				$basketEmpty = true;
@@ -172,7 +183,8 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			$this->addFlashMessage('Sie haben keine Artikel in Ihrem Warenkorb.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
 		}
 		else {
-			$this->view->assign('partialPrices', $this->getPartialPrices($total, $this->getBasketRawTotal($basket)));
+			$partialPrices = $this->getPartialPrices($basket->getTotal(), $this->calculationUtility->getBasketRawTotal($basket));
+			$this->view->assign('partialPrices', $partialPrices);
 			$this->view->assign('basket', $basket);
 		}
 	}
@@ -190,7 +202,9 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			if($basket->getBasketPositions()->count() > 0) {
 				$user = $this->userRepository->findByUid($userUid);
 				$this->updateBasketRepository($basket);
-				$this->view->assign('partialPrices', $this->getPartialPrices($basket->getTotal(), $this->getBasketRawTotal($basket)));
+				$partialPrices = $this->getPartialPrices($basket->getTotal(), $this->calculationUtility->getBasketRawTotal($basket));
+				
+				$this->view->assign('partialPrices', $partialPrices);
 				$this->view->assign('basket', $basket);
 				$this->view->assign('user', $user);
 			}
@@ -278,7 +292,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return void
 	 */
 	protected function addBasketRepository(\RB\RbTinyshop\Domain\Model\Basket $basket) {
-		$total = $this->getBasketRawTotal($basket);
+		$total = $this->calculationUtility->getBasketRawTotal($basket);
 		$total = $this->addAdditionalCost($total);
 		$basket->setTotal($total);
 		$this->basketRepository->add($basket);
@@ -292,7 +306,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return void
 	 */
 	protected function updateBasketRepository(\RB\RbTinyshop\Domain\Model\Basket $basket) {
-		$total = $this->getBasketRawTotal($basket);
+		$total = $this->calculationUtility->getBasketRawTotal($basket);
 		$total = $this->addAdditionalCost($total);
 		$basket->setTotal($total);
 		$this->basketRepository->update($basket);
@@ -306,7 +320,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return array $basket
 	 */
 	protected function updateSessionBasket($basket) {
-		$total = $this->getBasketRawTotal($basket);
+		$total = $this->calculationUtility->getBasketRawTotal($basket);
 		$total = $this->addAdditionalCost($total);
 		$basket->setTotal($total);
 		$this->feSessionStorage->storeObject($basket, 'basket');
@@ -463,16 +477,6 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 						}
 					}
 				}
-			}
-		}
-		return $total;
-	}
-	
-	protected function getBasketRawTotal($basket) {
-		$total = 0;
-		if($basket instanceof \RB\RbTinyShop\Domain\Model\Basket) {
-			foreach ($basket->getBasketPositions() as $key => $basketPosition) {
-				$total += $basketPosition->getTotal();
 			}
 		}
 		return $total;

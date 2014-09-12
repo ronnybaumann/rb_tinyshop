@@ -78,6 +78,15 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $shippingAddress = NULL;
 	
 	/**
+	 * feuser
+	 *
+	 * @var \RB\RbTinyshop\Domain\Model\User
+	 * @validate \RB\RbTinyshop\Validation\Validator\NotEmpty
+	 * @lazy
+	 */
+	protected $feuser = NULL;
+	
+	/**
 	 * __construct
 	 */
 	public function __construct() {
@@ -210,5 +219,24 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setShippingAddress(\RB\RbTinyshop\Domain\Model\Address $shippingAddress) {
 		$this->shippingAddress = $shippingAddress;
+	}
+	
+	/**
+	 * Returns the feuser
+	 *
+	 * @return \RB\RbTinyshop\Domain\Model\User $feuser
+	 */
+	public function getFeuser() {
+		return $this->feuser;
+	}
+	
+	/**
+	 * Sets the feuser
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\User $feuser
+	 * @return void
+	 */
+	public function setFeuser(\RB\RbTinyshop\Domain\Model\User $feuser) {
+		$this->feuser = $feuser;
 	}
 }

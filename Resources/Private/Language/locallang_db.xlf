@@ -123,6 +123,9 @@
 			<trans-unit id="tx_rbtinyshop_domain_model_image.image">
 				<source>Image</source>
 			</trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_user">
+                <source>User</source>
+            </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_user.billing_address">
                 <source>Billing Address</source>
             </trans-unit>

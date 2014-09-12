@@ -151,7 +151,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
-
+			
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
@@ -325,7 +325,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_order'] = array(
 
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
-
+		'default_sortby' => 'ORDER BY crdate DESC',
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',

@@ -171,6 +171,10 @@
                 <source>Address</source>
                 <target>Adresse</target>
             </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_user">
+                <source>User</source>
+                <target>Benutzer</target>
+            </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_user.billing_address">
                 <source>Billing Address</source>
                 <target>Rechnungsadresse</target>

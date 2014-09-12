@@ -12,7 +12,7 @@ if (!defined('TYPO3_MODE')) {
 		'Article' => 'show',
 		'Basket' => 'show, addItem, removeItem, confirm',
 		'Account' => 'login,account,register,create,edit,update,editBillingShippingAddress,editPaymentShipping,forgotPassword',
-		'Order' => 'placeOrder'
+		'Order' => 'placeOrder, finish'
 	),
 	// non-cacheable actions
 	array(
@@ -21,7 +21,7 @@ if (!defined('TYPO3_MODE')) {
 		'Article' => '',
 		'Basket' => 'show, addItem, removeItem, confirm',
 		'Account' => 'login,account,register,create,edit,update,editBillingShippingAddress,editPaymentShipping,forgotPassword',
-		'Order' => 'placeOrder'
+		'Order' => 'placeOrder, finish'
 	)
 );
 

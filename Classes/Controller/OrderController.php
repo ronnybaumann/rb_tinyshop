@@ -81,22 +81,14 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	protected $cloneService;
 	
 	/**
-	 * action list
-	 *
-	 * @return void
-	 */
-	public function listAction() {
-		$orders = $this->orderRepository->findAll();
-		$this->view->assign('orders', $orders);
-	}
-
-	/**
 	 * action show
 	 *
 	 * @param \RB\RbTinyshop\Domain\Model\Order $order
+	 * @ignorevalidation $order
 	 * @return void
 	 */
-	public function showAction(\RB\RbTinyshop\Domain\Model\Order $order) {
+	public function finishAction(\RB\RbTinyshop\Domain\Model\Order $order) {
+		$this->debug($order);
 		$this->view->assign('order', $order);
 	}
 	
@@ -149,6 +141,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 			$order->getBillingAddress()->setPid($this->settings['storagePidOrder']);
 			$order->getShippingAddress()->setPid($this->settings['storagePidOrder']);
 			
+			$order->setFeuser($user);
 		}
 		else {
 			$orderFinished = false;
@@ -160,12 +153,17 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 		
 		//delete basket
 		if($orderFinished) {
-			$this->basketRepository->remove($basket);
-			$this->persistenceManager->persistAll();
-			$this->view->assign('order', $order);
+			//$this->basketRepository->remove($basket);
+			//$this->persistenceManager->persistAll();
+			
+			$this->redirect('finish', 'Order', 'RbTinyshop', array('pluginName' => 'Tinyshop', 'order' => $order), $this->settings['shopRootId']);
 		}
 		else {
 			$this->redirect('confirm', 'Basket');
 		}
+	}
+	
+	protected function debug($variable) {
+		return \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($variable);
 	}
 }
