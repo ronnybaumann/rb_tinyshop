@@ -48,6 +48,18 @@
             <trans-unit id="tx_rbtinyshop_domain_model_order.order_positions">
                 <source>Order Positions</source>
             </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.order_partial_prices">
+                <source>Order Partial Prices</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.crdate">
+                <source>Creation Date</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.payment">
+                <source>Payment</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.shipping">
+                <source>Shipping</source>
+            </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_order.total">
 				<source>Total</source>
 			</trans-unit>
@@ -65,6 +77,18 @@
             </trans-unit>
             <trans-unit id="tx_rbtinyshop_domain_model_orderposition.quantity">
                 <source>Quantity</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderpartialprice">
+                <source>Order Partial Price</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderpartialprice.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderpartialprice.value">
+                <source>Value</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderpartialprice.position">
+                <source>Position</source>
             </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_basket.user_uid">
                 <source>User Uid</source>

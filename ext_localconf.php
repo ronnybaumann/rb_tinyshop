@@ -11,7 +11,7 @@ if (!defined('TYPO3_MODE')) {
 		'Category' => 'show',
 		'Article' => 'show',
 		'Basket' => 'show, addItem, removeItem, confirm',
-		'Account' => 'login,account,register,create,edit,update,editBillingShippingAddress,editPaymentShipping,forgotPassword',
+		'Account' => 'login,account,userOrders,register,create,edit,update,editBillingShippingAddress,editPaymentShipping,forgotPassword',
 		'Order' => 'placeOrder, finish'
 	),
 	// non-cacheable actions
@@ -20,7 +20,7 @@ if (!defined('TYPO3_MODE')) {
 		'Category' => '',
 		'Article' => '',
 		'Basket' => 'show, addItem, removeItem, confirm',
-		'Account' => 'login,account,register,create,edit,update,editBillingShippingAddress,editPaymentShipping,forgotPassword',
+		'Account' => 'login,account,userOrders,register,create,edit,update,editBillingShippingAddress,editPaymentShipping,forgotPassword',
 		'Order' => 'placeOrder, finish'
 	)
 );

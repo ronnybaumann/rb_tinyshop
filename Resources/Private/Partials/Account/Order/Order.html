@@ -1,0 +1,86 @@
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#order-{order.uid}">Datum: <f:format.date format="d.m.Y - H:i:s">{order.crdate}</f:format.date></a>
+    </div>
+    <div id="order-{order.uid}" class="accordion-body collapse">
+        <div class="accordion-inner">
+            <div class="row-fluid">
+                <div class="span6">
+                    <h4 class="title"><span class="text"><strong>Rechnungs</strong>Adresse</span></h4>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            {order.billingaddress.company}<br />
+                            {order.billingaddress.firstname} {order.billingaddress.lastname}<br />
+                            {order.billingaddress.street} {order.billingaddress.streetNumber}<br />
+                            {order.billingaddress.postcode} {order.billingaddress.city}<br />
+                            {order.billingaddress.country}<br />
+                        </div>
+                    </div>
+                </div>
+                <div class="span6">
+                    <h4 class="title"><span class="text"><strong>Liefer</strong>Adresse</span></h4>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            {order.shippingAddress.company}<br />
+                            {order.shippingAddress.firstname} {order.shippingAddress.lastname}<br />
+                            {order.shippingAddress.street} {order.shippingAddress.streetNumber}<br />
+                            {order.shippingAddress.postcode} {order.shippingAddress.city}<br />
+                            {order.shippingAddress.country}<br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6">
+                    <h4 class="title"><span class="text"><strong>Zahlungs</strong>art</span></h4>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            {order.payment}<br />
+                        </div>
+                    </div>
+                </div>
+                <div class="span6">
+                    <h4 class="title"><span class="text"><strong>Versand</strong>art</span></h4>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            {order.shipping}<br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <h4 class="title"><span class="text"><strong>Waren</strong>korb</span></h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Artikel</th>
+                                <th style="text-align: center;">Anzahl</th>
+                                <th style="text-align: right;">Preis</th>
+                                <th style="text-align: right;">Gesamt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <f:for each="{order.orderPositions}" as="orderPosition" iteration="iteration">
+                                <f:render partial="Account/Order/OrderPosition" arguments="{orderPosition: orderPosition}" />
+                            </f:for>
+                        </tbody>
+                    </table>
+                    <table style="text-align: right; float: right; padding: 0; margin: 0; border-spacing: 5px;" class="cart-total">
+                        <f:for each="{order.orderPartialPrices}" as="orderPartialPrice" iteration="iteration">
+                            <f:render partial="Account/Order/OrderPartialPrice" arguments="{orderPartialPrice: orderPartialPrice}" />
+                        </f:for>
+                        <tr>
+                            <td>
+                                <strong>Gesamtbetrag:</strong>
+                            </td>
+                            <td>
+                                <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{order.total}</f:format.number>&euro;
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

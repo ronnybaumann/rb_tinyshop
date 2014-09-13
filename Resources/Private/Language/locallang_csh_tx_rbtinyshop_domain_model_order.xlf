@@ -3,11 +3,23 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2014-08-18T00:41:43Z" product-name="tinyshop">
 		<header/>
 		<body>
+            <trans-unit id="crdate.description">
+                <source>crdate</source>
+            </trans-unit>
+            <trans-unit id="payment.description">
+                <source>payment</source>
+            </trans-unit>
+            <trans-unit id="shipping.description">
+                <source>shipping</source>
+            </trans-unit>
 			<trans-unit id="total.description">
 				<source>total</source>
 			</trans-unit>
             <trans-unit id="order_positions.description">
                 <source>order_positions</source>
+            </trans-unit>
+            <trans-unit id="order_partial_prices.description">
+                <source>order_partial_prices</source>
             </trans-unit>
 		</body>
 	</file>

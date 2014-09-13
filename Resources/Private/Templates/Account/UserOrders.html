@@ -1,0 +1,19 @@
+<section class="header_text sub">
+    <h4><span>Bestellungen</span></h4>
+</section>
+<section class="main-content">
+    <div class="row">
+        <div class="span9">
+            <div class="accordion" id="accordion2">
+                <f:for each="{orders}" as="order">
+                    <f:render partial="Account/Order/Order" arguments="{order: order}" />
+                </f:for>
+            </div>
+        </div>
+        <div class="span3 col">
+            <div class="block">
+                <f:render partial="Account/Account/Menu" arguments="{user: user}" />
+            </div>
+        </div>
+    </div>
+</section>

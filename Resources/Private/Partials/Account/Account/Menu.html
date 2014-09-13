@@ -1,7 +1,10 @@
 <ul class="nav nav-list">
     <li class="nav-header">Navigation</li>
     <li>
-        <a href="#">Bestellungen</a>
+        <f:link.action action="account" controller="Account" arguments="{user: user}">Kontoübersicht</f:link.action>
+    </li>
+    <li>
+        <f:link.action action="userOrders" controller="Account" arguments="{user: user}">Bestellungen</f:link.action>
     </li>
     <li>
         <f:link.action action="edit" controller="Account" arguments="{user: user}">Benutzerdaten ändern</f:link.action>

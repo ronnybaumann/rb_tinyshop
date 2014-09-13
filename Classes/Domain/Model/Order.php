@@ -33,6 +33,27 @@ namespace RB\RbTinyshop\Domain\Model;
 class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
+	 * crdate
+	 *
+	 * @var \DateTime|NULL
+	 */
+	protected $crdate = NULL;
+	
+	/**
+	 * payment
+	 *
+	 * @var string
+	 */
+	protected $payment = NULL;
+	
+	/**
+	 * shipping
+	 *
+	 * @var string
+	 */
+	protected $shipping = NULL;
+	
+	/**
 	 * total
 	 *
 	 * @var float
@@ -56,6 +77,15 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @lazy
 	 */
 	protected $orderPositions = NULL;
+	
+	/**
+	 * orderPartialPrices
+	 *
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\OrderPartialPrice>
+	 * @cascade remove
+	 * @lazy
+	 */
+	protected $orderPartialPrices = NULL;
 	
 	/**
 	 * billingAddress
@@ -104,7 +134,66 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	protected function initStorageObjects() {
 		$this->orderPositions = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$this->orderPartialPrices = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 	}
+	
+	/**
+	 * Sets the crdate value
+	 *
+	 * @param \DateTime $crdate
+	 * @return void
+	 */
+	public function setCrdate(\DateTime $crdate) {
+		$this->crdate = $crdate;
+	}
+	
+	/**
+	 * Returns the crdate value
+	 *
+	 * @return \DateTime
+	 */
+	public function getCrdate() {
+		return $this->crdate;
+	}
+	
+	/**
+	 * Returns the payment
+	 *
+	 * @return float $payment
+	 */
+	public function getPayment() {
+		return $this->payment;
+	}
+	
+	/**
+	 * Sets the payment
+	 *
+	 * @param float $payment
+	 * @return void
+	 */
+	public function setPayment($payment) {
+		$this->payment = $payment;
+	}
+	
+	/**
+	 * Returns the shipping
+	 *
+	 * @return float $shipping
+	 */
+	public function getShipping() {
+		return $this->shipping;
+	}
+	
+	/**
+	 * Sets the shipping
+	 *
+	 * @param float $shipping
+	 * @return void
+	 */
+	public function setShipping($shipping) {
+		$this->shipping = $shipping;
+	}
+	
 
 	/**
 	 * Returns the total
@@ -181,6 +270,45 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setOrderPositions(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderPositions) {
 		$this->orderPositions = $orderPositions;
+	}
+	
+	/**
+	 * Adds a OrderPartialPrice
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\OrderPartialPrice $orderPartialPrice
+	 * @return void
+	 */
+	public function addOrderPartialPrice(\RB\RbTinyshop\Domain\Model\OrderPartialPrice $orderPartialPrice) {
+		$this->orderPartialPrices->attach($orderPartialPrice);
+	}
+	
+	/**
+	 * Removes a OrderPartialPrice
+	 *
+	 * @param \RB\RbTinyshop\Domain\Model\OrderPartialPrice $orderPartialPriceToRemove The OrderPartialPrice to be removed
+	 * @return void
+	 */
+	public function removeOrderPartialPrice(\RB\RbTinyshop\Domain\Model\OrderPartialPrice $orderPartialPriceToRemove) {
+		$this->orderPartialPrices->detach($orderPartialPriceToRemove);
+	}
+	
+	/**
+	 * Returns the orderPartialPrices
+	 *
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\OrderPartialPrice> $orderPartialPrices
+	 */
+	public function getOrderPartialPrices() {
+		return $this->orderPartialPrices;
+	}
+	
+	/**
+	 * Sets the orderPartialPrices
+	 *
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\OrderPartialPrice> $orderPartialPrices
+	 * @return void
+	 */
+	public function setOrderPartialPrices(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderPartialPrices) {
+		$this->orderPartialPrices = $orderPartialPrices;
 	}
 	
 	/**

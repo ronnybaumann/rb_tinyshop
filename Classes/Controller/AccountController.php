@@ -81,6 +81,14 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	protected $shippingRepository = NULL;
 	
 	/**
+	 * orderRepository
+	 *
+	 * @var \RB\RbTinyshop\Domain\Repository\OrderRepository
+	 * @inject
+	 */
+	protected $orderRepository = NULL;
+	
+	/**
 	 * persistenceManager
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
@@ -154,6 +162,24 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		}
 		else {
 			$user = $this->userRepository->findByUid($this->feSessionStorage->getUser()->user['uid']);
+			$this->view->assign('user', $user);
+		}
+	}
+	
+	/**
+	 * action login
+	 *
+	 * @return void
+	 */
+	public function userOrdersAction(\RB\RbTinyshop\Domain\Model\User $user) {
+		if(!$this->feSessionStorage->getUser()->user['uid']) {
+			$this->redirect('login', 'Account', 'RbTinyshop', array('pluginName' => 'Tinyshop', 'redirectAction' => 'account', 'redirectController' => 'Account'), $this->settings['shopRootId']);
+		}
+		else {
+			$this->orderRepository->setDefaultOrderings(array('crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
+			$orders = $this->orderRepository->findByFeuser($user);
+			
+			$this->view->assign('orders', $orders);
 			$this->view->assign('user', $user);
 		}
 	}

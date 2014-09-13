@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $GLOBALS['TCA']['tx_rbtinyshop_domain_model_order'] = array(
 	'ctrl' => $GLOBALS['TCA']['tx_rbtinyshop_domain_model_order']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, order_state, feuser, billing_address, shipping_address, order_positions, total',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, order_state, crdate, payment, shipping, feuser, billing_address, shipping_address, order_positions, order_partial_prices, total',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, order_state, feuser, billing_address, shipping_address, order_positions, total, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, order_state, crdate, payment, shipping, feuser, billing_address, shipping_address, order_positions, order_partial_prices, total, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -96,7 +96,34 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_order'] = array(
 				),
 			),
 		),
-
+		'crdate' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_order.crdate',
+			'config' => Array (
+				'type' => 'none',
+				'format' => 'datetime',
+				'eval' => 'datetime',
+	
+			)
+		),
+		'payment' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_order.payment',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'readOnly' =>1
+			)
+		),
+		'shipping' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_order.shipping',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'readOnly' =>1
+			)
+		),
 		'total' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_order.total',
@@ -203,6 +230,23 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_order'] = array(
 			'config' => array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_rbtinyshop_domain_model_orderposition',
+				'foreign_field' => 'order_id',
+				'maxitems'      => 9999,
+				'appearance' => array(
+					'collapseAll' => 1,
+					'levelLinksPosition' => 'top',
+					'showSynchronizationLink' => 1,
+					'showPossibleLocalizationRecords' => 1,
+					'showAllLocalizationLink' => 1
+				),
+			),
+		),
+		'order_partial_prices' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_order.order_partial_prices',
+			'config' => array(
+				'type' => 'inline',
+				'foreign_table' => 'tx_rbtinyshop_domain_model_orderpartialprice',
 				'foreign_field' => 'order_id',
 				'maxitems'      => 9999,
 				'appearance' => array(

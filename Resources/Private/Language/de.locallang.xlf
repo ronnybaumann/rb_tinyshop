@@ -67,6 +67,22 @@
                 <source>Order Positions</source>
                 <target>Bestellpositionen</target>
             </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.order_partial_prices">
+                <source>Order Partial Prices</source>
+                <target>Bestellung Zwischenpreise</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.crdate">
+                <source>Creation Date</source>
+                <target>Bestelldatum</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.payment">
+                <source>Payment</source>
+                <target>Zahlungsart</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.shipping">
+                <source>Shipping</source>
+                <target>Versandart</target>
+            </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_order.total">
 				<source>Total</source>
 				<target>Gesamt</target>
@@ -90,6 +106,22 @@
             <trans-unit id="tx_rbtinyshop_domain_model_orderposition.quantity">
                 <source>Quantity</source>
                 <target>Anzahl</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderpartialprice">
+                <source>Order Partial Price</source>
+                <target>Bestellung Zwischenpreis</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderpartialprice.title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderpartialprice.value">
+                <source>Value</source>
+                <target>Wert</target>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderpartialprice.position">
+                <source>Position</source>
+                <target>Position</target>
             </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_basket.user_uid">
                 <source>User Uid</source>

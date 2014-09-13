@@ -183,7 +183,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			$this->addFlashMessage('Sie haben keine Artikel in Ihrem Warenkorb.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
 		}
 		else {
-			$partialPrices = $this->getPartialPrices($basket->getTotal(), $this->calculationUtility->getBasketRawTotal($basket));
+			$partialPrices = $this->calculationUtility->getPartialPrices($basket->getTotal(), $this->calculationUtility->getBasketRawTotal($basket));
 			$this->view->assign('partialPrices', $partialPrices);
 			$this->view->assign('basket', $basket);
 		}
@@ -202,7 +202,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			if($basket->getBasketPositions()->count() > 0) {
 				$user = $this->userRepository->findByUid($userUid);
 				$this->updateBasketRepository($basket);
-				$partialPrices = $this->getPartialPrices($basket->getTotal(), $this->calculationUtility->getBasketRawTotal($basket));
+				$partialPrices = $this->calculationUtility->getPartialPrices($basket->getTotal(), $this->calculationUtility->getBasketRawTotal($basket));
 				
 				$this->view->assign('partialPrices', $partialPrices);
 				$this->view->assign('basket', $basket);
@@ -293,7 +293,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 */
 	protected function addBasketRepository(\RB\RbTinyshop\Domain\Model\Basket $basket) {
 		$total = $this->calculationUtility->getBasketRawTotal($basket);
-		$total = $this->addAdditionalCost($total);
+		$total = $this->calculationUtility->addAdditionalCost($total);
 		$basket->setTotal($total);
 		$this->basketRepository->add($basket);
 		$this->persistenceManager->persistAll();
@@ -307,7 +307,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 */
 	protected function updateBasketRepository(\RB\RbTinyshop\Domain\Model\Basket $basket) {
 		$total = $this->calculationUtility->getBasketRawTotal($basket);
-		$total = $this->addAdditionalCost($total);
+		$total = $this->calculationUtility->addAdditionalCost($total);
 		$basket->setTotal($total);
 		$this->basketRepository->update($basket);
 		$this->persistenceManager->persistAll();
@@ -321,165 +321,10 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 */
 	protected function updateSessionBasket($basket) {
 		$total = $this->calculationUtility->getBasketRawTotal($basket);
-		$total = $this->addAdditionalCost($total);
+		$total = $this->calculationUtility->addAdditionalCost($total);
 		$basket->setTotal($total);
 		$this->feSessionStorage->storeObject($basket, 'basket');
 		return $basket;
-	}
-	
-	protected function getPartialPrices($total, $rawTotal) {
-		$partialPrices = array();
-		$tax = 19;
-		$partialPrices['taxIncluded'] = round($total / (100 + $tax) * $tax, 2);
-		$partialPrices['priceWithoutTax'] = $total - $partialPrices['taxIncluded'];
-		$rawTotalOrg = $rawTotal;
-		
-		if($userUid = $this->feSessionStorage->getUser()->user['uid']) {
-			$user = $this->userRepository->findByUid($userUid);
-			if($user instanceof \RB\RbTinyshop\Domain\Model\User) {
-				$payment = $user->getPayment();
-				$shipping = $user->getShipping();
-				
-				$hasPaymentCost = false;
-				$hasShippingCost = false;
-				
-				if($shipping->getValue() > 0 || $payment->getValue() < 0) {
-					$hasPaymentCost = true;
-				}
-				
-				if($shipping->getValue() > 0 || $payment->getValue() < 0) {
-					$hasShippingCost = true;
-				}
-				
-				//add absolute costs
-				if($hasPaymentCost) {
-					if($payment->getValueType() === 'absolute') {
-						$partialPrices['payment']['absolute'] = $payment->getValue();
-						$rawTotal += $partialPrices['payment']['absolute'];
-					}
-				}
-				
-				if($hasShippingCost) {
-					if($shipping->getValueType() === 'absolute') {
-						$partialPrices['shipping']['absolute'] = $shipping->getValue();
-						$rawTotal += $partialPrices['shipping']['absolute'];
-					}
-				}
-				
-				//add relative costs after adding absolute costs
-				if($hasPaymentCost) {
-					if($payment->getValueType() === 'relative') {
-						$totalOnePercent = $rawTotal / 100;
-						if($payment->getValue() > 0) {
-							$totalAdd = $totalOnePercent * $payment->getValue();
-							$partialPrices['payment']['relative'] = round($totalAdd, 2);
-							$rawTotal += $partialPrices['payment']['relative'];
-						}
-				
-						if($payment->getValue() < 0) {
-							$totalSub = $totalOnePercent * ($payment->getValue() * -1);
-							$partialPrices['payment']['relative'] = round($totalSub, 2);
-							$rawTotal -= $partialPrices['payment']['relative'];
-							$partialPrices['payment']['relative'] *= -1;
-						}
-					}
-				}
-				
-				if($hasShippingCost) {
-					if($shipping->getValueType() === 'relative') {
-						$totalOnePercent = $rawTotal / 100;
-						if($shipping->getValue() > 0) {
-							$totalAdd = $totalOnePercent * $shipping->getValue();
-							$partialPrices['shipping']['relative'] = round($totalAdd, 2);
-							$rawTotal += $partialPrices['shipping']['relative'];
-						}
-							
-						if($shipping->getValue() < 0) {
-							$totalSub = $totalOnePercent * ($shipping->getValue() * -1);
-							$partialPrices['shipping']['relative'] = round($totalSub, 2);
-							$rawTotal -= $partialPrices['shipping']['relative'];
-							$partialPrices['shipping']['relative'] *= -1;
-						}
-					}
-				}
-			}
-		}
-		
-		if($rawTotalOrg != $rawTotal) {
-			$partialPrices['rawTotal'] = $rawTotalOrg;
-		}
-		
-		return $partialPrices;
-	}
-	
-	protected function addAdditionalCost($total) {
-		if($userUid = $this->feSessionStorage->getUser()->user['uid']) {
-			$user = $this->userRepository->findByUid($userUid);
-			if($user instanceof \RB\RbTinyshop\Domain\Model\User) {
-				$payment = $user->getPayment();
-				$shipping = $user->getShipping();
-				
-				$hasPaymentCost = false;
-				$hasShippingCost = false;
-				
-				if($shipping->getValue() > 0 || $payment->getValue() < 0) {
-					$hasPaymentCost = true;
-				}
-				
-				if($shipping->getValue() > 0 || $payment->getValue() < 0) {
-					$hasShippingCost = true;
-				}
-				
-				//add absolute costs
-				if($hasPaymentCost) {
-					if($payment->getValueType() === 'absolute') {
-						$total += $payment->getValue();
-					}
-				}
-				
-				if($hasShippingCost) {
-					if($shipping->getValueType() === 'absolute') {
-						$total += $shipping->getValue();
-					}
-				}
-				
-				//add relative costs after adding absolute costs
-				if($hasPaymentCost) {
-					if($payment->getValueType() === 'relative') {
-						$totalOnePercent = $total / 100;
-						if($payment->getValue() > 0) {
-							$totalAdd = $totalOnePercent * $payment->getValue();
-							$totalAdd = round($totalAdd, 2);
-							$total += $totalAdd;
-						}
-
-						if($payment->getValue() < 0) {
-							$totalSub = $totalOnePercent * ($payment->getValue() * -1);
-							$totalSub = round($totalSub, 2);
-							$total -= $totalSub;
-						}
-					}
-				}
-				
-				if($hasShippingCost) {
-					if($shipping->getValueType() === 'relative') {
-						$totalOnePercent = $total / 100;
-						if($shipping->getValue() > 0) {
-							$totalAdd = $totalOnePercent * $shipping->getValue();
-							$totalAdd = round($totalAdd, 2);
-							$total += $totalAdd;
-						}
-					
-						if($shipping->getValue() < 0) {
-							$totalSub = $totalOnePercent * ($shipping->getValue() * -1);
-							$totalSub = round($totalSub, 2);
-							$total -= $totalSub;
-						}
-					}
-				}
-			}
-		}
-		return $total;
 	}
 	
 	protected function debug($variable) {

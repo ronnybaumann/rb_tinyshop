@@ -81,6 +81,14 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	protected $cloneService;
 	
 	/**
+	 * calculationUtility
+	 *
+	 * @var \RB\RbTinyshop\Utility\Price\CalculationUtility
+	 * @inject
+	 */
+	protected $calculationUtility = NULL;
+	
+	/**
 	 * action show
 	 *
 	 * @param \RB\RbTinyshop\Domain\Model\Order $order
@@ -141,10 +149,27 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 			$order->getBillingAddress()->setPid($this->settings['storagePidOrder']);
 			$order->getShippingAddress()->setPid($this->settings['storagePidOrder']);
 			
+			$order->setShipping($user->getShipping()->getTitle());
+			$order->setPayment($user->getPayment()->getTitle());
+			
 			$order->setFeuser($user);
 		}
 		else {
 			$orderFinished = false;
+		}
+		
+		//set partial prices
+		$orderParitalPrices = $this->calculationUtility->getOrderPartialPrices($basket->getTotal(), $this->calculationUtility->getBasketRawTotal($basket));
+			
+		foreach ($orderParitalPrices as $key => $orderParitalPrice) {
+			$orderParitalPriceModel = new \RB\RbTinyshop\Domain\Model\OrderPartialPrice();
+			if($orderParitalPriceModel instanceof \RB\RbTinyshop\Domain\Model\OrderPartialPrice) {
+				$orderParitalPriceModel->setTitle($orderParitalPrice['title']);
+				$orderParitalPriceModel->setValue($orderParitalPrice['value']);
+				$orderParitalPriceModel->setPosition($orderParitalPrice['position']);
+					
+				$order->addOrderPartialPrice($orderParitalPriceModel);
+			}
 		}
 		
 		//persist new order
