@@ -79,6 +79,10 @@
                 <source>Payment</source>
                 <target>Zahlungsart</target>
             </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.transaction">
+                <source>Transaction</source>
+                <target>Transaktion</target>
+            </trans-unit>
             <trans-unit id="tx_rbtinyshop_domain_model_order.shipping">
                 <source>Shipping</source>
                 <target>Versandart</target>

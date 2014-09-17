@@ -221,7 +221,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		$sessionBasket = $this->feSessionStorage->getObject('basket');
 		if($userUid = $this->feSessionStorage->getUser()->user['uid']) {
 			$userBasket = $this->basketRepository->findOneByUserUid($userUid);
-			
+
 			if(!$userBasket || ($sessionBasket instanceof \RB\RbTinyshop\Domain\Model\Basket && $sessionBasket->getBasketPositions()->count() > 0)) {
 				$emptyBasket = new \RB\RbTinyshop\Domain\Model\Basket();
 				$emptyBasket->setPid($this->settings['storagePidBasket']);
@@ -242,7 +242,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				return $emptyBasket;
 			}
 			
-			if((!$sessionBasket && $userBasket) || $sessionBasket->getBasketPositions()->count() > 0) {
+			if((!$sessionBasket && $userBasket) || $sessionBasket->getBasketPositions()->count() == 0) {
 				return $userBasket;
 			}
 			else {

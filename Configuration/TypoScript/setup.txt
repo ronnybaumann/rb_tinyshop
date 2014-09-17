@@ -26,6 +26,20 @@ plugin.tx_rbtinyshop {
 	   uidUserGroupNewUser = {$plugin.tx_rbtinyshop.settings.uidUserGroupNewUser}
 	   shopMail = {$plugin.tx_rbtinyshop.settings.shopMail}
 	   shopMailName = {$plugin.tx_rbtinyshop.settings.shopMailName}
+	   
+	   payment {
+	       paypal {
+	           mode = {$plugin.tx_rbtinyshop.settings.payment.paypal.mode}
+	           live {
+	               clientId = {$plugin.tx_rbtinyshop.settings.payment.paypal.live.clientId}
+                   clientSecret = {$plugin.tx_rbtinyshop.settings.payment.paypal.live.clientSecret}
+	           }
+	           sandbox {
+	               clientId = {$plugin.tx_rbtinyshop.settings.payment.paypal.sandbox.clientId}
+                   clientSecret = {$plugin.tx_rbtinyshop.settings.payment.paypal.sandbox.clientSecret}
+	           }
+	       }
+	   }
 	}
 	injectContent {
        main {

@@ -40,6 +40,13 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $crdate = NULL;
 	
 	/**
+	 * transaction
+	 *
+	 * @var string
+	 */
+	protected $transaction = NULL;
+	
+	/**
 	 * payment
 	 *
 	 * @var string
@@ -159,7 +166,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the payment
 	 *
-	 * @return float $payment
+	 * @return string $payment
 	 */
 	public function getPayment() {
 		return $this->payment;
@@ -168,7 +175,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the payment
 	 *
-	 * @param float $payment
+	 * @param string $payment
 	 * @return void
 	 */
 	public function setPayment($payment) {
@@ -176,9 +183,28 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 	
 	/**
+	 * Returns the transaction
+	 *
+	 * @return string $transaction
+	 */
+	public function getTransaction() {
+		return $this->transaction;
+	}
+	
+	/**
+	 * Sets the transaction
+	 *
+	 * @param string $transaction
+	 * @return void
+	 */
+	public function setTransaction($transaction) {
+		$this->transaction = $transaction;
+	}
+	
+	/**
 	 * Returns the shipping
 	 *
-	 * @return float $shipping
+	 * @return string $shipping
 	 */
 	public function getShipping() {
 		return $this->shipping;
@@ -187,7 +213,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the shipping
 	 *
-	 * @param float $shipping
+	 * @param string $shipping
 	 * @return void
 	 */
 	public function setShipping($shipping) {

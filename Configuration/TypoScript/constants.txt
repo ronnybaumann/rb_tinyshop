@@ -20,6 +20,20 @@ plugin.tx_rbtinyshop {
        uidUserGroupNewUser = 1
        shopMail = ronnybaumann@outlook.de
        shopMailName = Ronny Baumann
+       
+       payment {
+           paypal {
+               mode = sandbox
+               live {
+                    clientId = clientId
+                    clientSecret = clientSecret
+               }
+               sandbox {
+                    clientId = clientId
+                    clientSecret = clientSecret
+               }
+           }
+       }
 	}
 	injectContent {
 	   main {

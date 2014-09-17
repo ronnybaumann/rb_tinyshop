@@ -9,6 +9,9 @@
             <trans-unit id="payment.description">
                 <source>payment</source>
             </trans-unit>
+            <trans-unit id="transaction.description">
+                <source>transaction</source>
+            </trans-unit>
             <trans-unit id="shipping.description">
                 <source>shipping</source>
             </trans-unit>

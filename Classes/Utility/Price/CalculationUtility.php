@@ -134,11 +134,11 @@ class CalculationUtility implements \TYPO3\CMS\Core\SingletonInterface {
 				$hasPaymentCost = false;
 				$hasShippingCost = false;
 		
-				if($shipping->getValue() > 0 || $payment->getValue() < 0) {
+				if($payment->getValue() > 0 || $payment->getValue() < 0) {
 					$hasPaymentCost = true;
 				}
 		
-				if($shipping->getValue() > 0 || $payment->getValue() < 0) {
+				if($shipping->getValue() > 0 || $shipping->getValue() < 0) {
 					$hasShippingCost = true;
 				}
 		
@@ -203,6 +203,13 @@ class CalculationUtility implements \TYPO3\CMS\Core\SingletonInterface {
 		return $partialPrices;
 	}
 	
+	/**
+	 * returns partial prices for order
+	 *
+	 * @param float $total
+	 * @param float $rawTotal
+	 * @return array
+	 */
 	public function getOrderPartialPrices($total, $rawTotal) {
 		$orderParitalPrices = array();
 		$orderParitalPricePosition = 0;

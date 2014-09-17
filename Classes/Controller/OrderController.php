@@ -31,6 +31,14 @@ namespace RB\RbTinyshop\Controller;
  * OrderController
  */
 class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+	
+	/**
+	 * feSessionStorage
+	 *
+	 * @var \RB\RbTinyshop\Utility\Session\Storage\FeSessionStorage
+	 * @inject
+	 */
+	protected $feSessionStorage = NULL;
 
 	/**
 	 * persistenceManager
@@ -81,6 +89,14 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	protected $cloneService;
 	
 	/**
+	 * payPalUtility
+	 *
+	 * @var \RB\RbTinyshop\Utility\Payment\PayPal\PayPalUtility
+	 * @inject
+	 */
+	protected $payPalUtility = NULL;
+	
+	/**
 	 * calculationUtility
 	 *
 	 * @var \RB\RbTinyshop\Utility\Price\CalculationUtility
@@ -104,13 +120,61 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * action show
 	 *
 	 * @param \RB\RbTinyshop\Domain\Model\Order $order
+	 * @param boolean $paymentSuccess
 	 * @return void
 	 */
-	public function placeOrderAction(\RB\RbTinyshop\Domain\Model\Basket $basket) {
+	public function placeOrderAction(\RB\RbTinyshop\Domain\Model\Basket $basket, $paymentSuccess = false) {
 		$orderFinished = true;
 		$order = new \RB\RBTinyshop\Domain\Model\Order();
 		$user = $this->userRepository->findByUid($basket->getUserUid());
-		$orderState = $this->orderStateRepository->findByUid(1);
+
+		//do paypal payment
+		if($user->getPayment()->getUid() == 4) {
+			if($paymentSuccess == false) {
+				$paymentUrl = 'http://www.tiny-shop.de/demoshop/?tx_rbtinyshop_tinyshop[basket]=' . $basket->getUid() . '&tx_rbtinyshop_tinyshop[action]=placeOrder&tx_rbtinyshop_tinyshop[controller]=Order';
+				$payment = $this->payPalUtility->payWithPayPal('' . $basket->getTotal(), 'EUR', 'Ihre Bestellung bei tiny-shop.de',
+						"$paymentUrl&tx_rbtinyshop_tinyshop[paymentSuccess]=true", "$paymentUrl&tx_rbtinyshop_tinyshop[paymentSuccess]=false");
+					
+				$this->feSessionStorage->write('paymentId', $payment->getId());
+				
+				header("Location: " . $this->payPalUtility->getPayPalLink($payment->getLinks(), "approval_url") );
+				exit;
+			}
+			
+			if($paymentSuccess == true) {
+				
+				if(isset($_GET['PayerID'])) {
+					$paymentId = $this->feSessionStorage->read('paymentId');
+					$payment = $this->payPalUtility->executePayment($paymentId, $_GET['PayerID']);
+					
+					if($payment->getState() == 'approved') {
+						$orderState = $this->orderStateRepository->findByUid(2);
+						$transactions = $payment->getTransactions();
+						$orderTransaction = '';
+						
+						foreach ($transactions as $transactionKey => $transaction) {
+							if($transaction instanceof  \PayPal\Api\Transaction) {
+								foreach ($transaction->getRelatedResources() as $relatedResourceKey => $relatedResource) {
+									if($relatedResource instanceof \PayPal\Api\RelatedResources) {
+										if($orderTransaction == '') {
+											$orderTransaction .= $relatedResource->getSale()->getId();
+										}
+										else {
+											$orderTransaction .= '|' . $relatedResource->getSale()->getId();
+										}
+									}
+								}
+							}
+						}
+						$order->setTransaction($orderTransaction);
+					}
+				}
+			}
+		}
+		
+		if(!isset($orderState)) {
+			$orderState = $this->orderStateRepository->findByUid(1);
+		}
 		
 		//set new order values
 		$order->setTotal($basket->getTotal());

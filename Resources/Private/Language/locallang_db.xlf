@@ -63,6 +63,9 @@
             <trans-unit id="tx_rbtinyshop_domain_model_order.payment">
                 <source>Payment</source>
             </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_order.transaction">
+                <source>Transaction</source>
+            </trans-unit>
             <trans-unit id="tx_rbtinyshop_domain_model_order.shipping">
                 <source>Shipping</source>
             </trans-unit>
