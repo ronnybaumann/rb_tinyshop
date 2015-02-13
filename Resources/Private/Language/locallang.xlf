@@ -12,6 +12,21 @@
 			<trans-unit id="tx_rbtinyshop_domain_model_article.article_detail">
 				<source>Article Detail</source>
 			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_attribute">
+                <source>Attribute</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_attribute.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_attributegroup">
+                <source>Attributegroup</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_attributegroup.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_attributegroup.attributes">
+                <source>Attributes</source>
+            </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_basketposition">
 				<source>Basket Position</source>
 			</trans-unit>
