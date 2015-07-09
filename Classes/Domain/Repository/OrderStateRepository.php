@@ -30,7 +30,7 @@ namespace RB\RbTinyshop\Domain\Repository;
 /**
  * The repository for OrderStates
  */
-class OrderStateRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class OrderStateRepository extends AbstractRepository {
 
 	
 }

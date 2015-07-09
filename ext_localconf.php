@@ -40,3 +40,5 @@ if (!defined('TYPO3_MODE')) {
 
 //Hooks
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'RB\\RbTinyshop\\Hooks\\ProcessDatamapHooks';
+$TYPO3_CONF_VARS['BE']['AJAX']['ptxAjax'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('pt_extbase').'Classes/Utility/AjaxDispatcher.php:Tx_PtExtbase_Utility_AjaxDispatcher->initAndEchoDispatch';
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['pt_extbase']['ajaxDispatcher']['allowedControllerActions']['RbTinyshop']['Backend']['updateCategoryParentAjax'] = TRUE;

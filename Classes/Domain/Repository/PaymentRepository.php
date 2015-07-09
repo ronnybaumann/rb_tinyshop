@@ -30,6 +30,6 @@ namespace RB\RbTinyshop\Domain\Repository;
 /**
  * The repository for Payment
  */
-class PaymentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class PaymentRepository extends AbstractRepository {
 	
 }

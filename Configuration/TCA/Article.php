@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 	'ctrl' => $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, categorys, article_detail, attributes',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, article_detail, attributes, categorys',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, categorys, article_detail, attributes, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, article_detail, attributes, --div--;Kategorien, categorys, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -102,9 +102,10 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_rbtinyshop_domain_model_category',
+				'foreign_sortby' => 'sorting',
 				'MM' => 'tx_rbtinyshop_article_category_mm',
 				'size' => 10,
-				'autoSizeMax' => 30,
+				'autoSizeMax' => 20,
 				'maxitems' => 9999,
 				'multiple' => 0,
 				'renderMode' => 'tree',
@@ -115,6 +116,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 						'expandAll' => false,
 						'showHeader' => true,
 						'allowRecursiveMode' => true,
+						'width' => '500',
 					),
 				),
 			),
@@ -135,29 +137,6 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 					'showAllLocalizationLink' => 1
 				),
 			),
-		),
-		'attributes' => array(
-				'exclude' => 1,
-				'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_article.categorys',
-				'config' => array(
-						'type' => 'select',
-						'foreign_table' => 'tx_rbtinyshop_domain_model_attributegroup',
-						'MM' => 'tx_rbtinyshop_article_attribute_mm',
-						'size' => 10,
-						'autoSizeMax' => 30,
-						'maxitems' => 9999,
-						'multiple' => 0,
-						'renderMode' => 'tree',
-						'treeConfig' => array(
-								'parentField' => 'uid',
-								'appearance' => array(
-										'maxLevels' => 4,
-										'expandAll' => false,
-										'showHeader' => true,
-										'allowRecursiveMode' => true,
-								),
-						),
-				),
 		),
 	),
 );

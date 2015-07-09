@@ -30,6 +30,6 @@ namespace RB\RbTinyshop\Domain\Repository;
 /**
  * The repository for Shipping
  */
-class ShippingRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class ShippingRepository extends AbstractRepository {
 	
 }

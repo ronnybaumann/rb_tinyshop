@@ -30,7 +30,7 @@ namespace RB\RbTinyshop\Domain\Repository;
 /**
  * The repository for Articles
  */
-class ArticleRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class ArticleRepository extends AbstractRepository {
 	
 	/**
 	 * find articles by given category
@@ -50,5 +50,4 @@ class ArticleRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	
 		return $result;
 	}
-	
 }

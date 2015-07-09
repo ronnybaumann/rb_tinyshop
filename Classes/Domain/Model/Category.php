@@ -38,6 +38,13 @@ class Category extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @var string
 	 */
 	protected $title = '';
+	
+	/**
+	 * category
+	 *
+	 * @var integer
+	 */
+	protected $category;
 
 	/**
 	 * description
@@ -100,6 +107,25 @@ class Category extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setTitle($title) {
 		$this->title = $title;
+	}
+	
+	/**
+	 * Returns the category
+	 *
+	 * @return string $category
+	 */
+	public function getCategory() {
+		return $this->category;
+	}
+	
+	/**
+	 * Sets the category
+	 *
+	 * @param string $category
+	 * @return void
+	 */
+	public function setCategory($category) {
+		$this->category = $category;
 	}
 
 	/**

@@ -16,21 +16,62 @@ if (!defined('TYPO3_MODE')) {
 );
 
 if (TYPO3_MODE === 'BE') {
-
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
+		'RbTinyshopBackendController::getArticleByCategoryJson',
+		'RB\\RbTinyshop\\Controller\\BackendController->getArticleByCategoryJson'
+	);
+	
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
+		'RbTinyshopBackendController::getCategoryTreeJson',
+		'RB\\RbTinyshop\\Controller\\BackendController->getCategoryTreeJson'
+	);
+	
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
+		'RbTinyshopBackendController::moveRecordAjax',
+		'RB\\RbTinyshop\\Controller\\BackendController->moveRecordAjax'
+	);
+	
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
+		'RbTinyshopBackendController::updateCategoryParentAjax',
+		'RB\\RbTinyshop\\Controller\\BackendController->updateCategoryParentAjax'
+	);
+	
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+		'RB.' . $_EXTKEY,
+		'rb_tinyshop',
+		'',
+		'',
+		array(),
+		array(
+			'access' => 'user,group',
+			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_tinyshop.xlf',
+		)
+	);
+	
+	//change sorting for new MainModule because until now sorting of MainModules is not supported by registerModule function
+	if(isset($GLOBALS['TBE_MODULES']['RbTinyshopRbTinyshop'])) {
+		$rbTinyShopModule = $GLOBALS['TBE_MODULES']['RbTinyshopRbTinyshop'];
+		unset($GLOBALS['TBE_MODULES']['RbTinyshopRbTinyshop']);
+		$newTbeModules =array();
+		foreach ($GLOBALS['TBE_MODULES'] as $key=>$value) {
+			$newTbeModules[$key] = $value;
+			if($key === 'web') {
+				$newTbeModules['RbTinyshopRbTinyshop'] = $rbTinyShopModule;
+			}
+		}
+		$GLOBALS['TBE_MODULES'] = $newTbeModules;
+	}
+	
 	/**
 	 * Registers a Backend Module
 	 */
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 		'RB.' . $_EXTKEY,
-		'web',	 // Make module a submodule of 'web'
+		'rb_tinyshop',	 // Make module a submodule of 'web'
 		'tinyshop',	// Submodule key
 		'',						// Position
 		array(
-			'Article' => 'show',
-			'TinyShop' => 'home',
-			'Basket' => 'show, addItem, removeItem, confirm',
-			'Order' => 'list, show',
-			'Category' => 'show',
+			'Backend' => 'list,popClose',
 		),
 		array(
 			'access' => 'user,group',
@@ -38,7 +79,6 @@ if (TYPO3_MODE === 'BE') {
 			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_tinyshop.xlf',
 		)
 	);
-
 }
 
 $pluginSignature = str_replace('_','',$_EXTKEY) . '_menu';
@@ -90,7 +130,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_tinyshop'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 
@@ -119,7 +159,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_category'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 
@@ -148,7 +188,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 			
@@ -177,7 +217,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_articledetail'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -206,7 +246,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_attribute'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => false,
@@ -235,7 +275,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_attributegroup'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => false,
@@ -264,7 +304,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_price'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -293,7 +333,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_image'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -322,7 +362,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_basket'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => false,
@@ -351,7 +391,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_basketposition'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -381,7 +421,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_order'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'default_sortby' => 'ORDER BY crdate DESC',
@@ -412,7 +452,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderposition'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -443,7 +483,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderpartialprice'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -472,7 +512,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderstate'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => false,
@@ -503,7 +543,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_address'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -532,7 +572,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_payment'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => false,
@@ -561,7 +601,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_shipping'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => false,

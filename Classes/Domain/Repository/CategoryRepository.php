@@ -30,7 +30,8 @@ namespace RB\RbTinyshop\Domain\Repository;
 /**
  * The repository for Categories
  */
-class CategoryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class CategoryRepository extends AbstractRepository {
+	protected $defaultOrderings = array('sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING);
 	
 	public function findNonRootCategorys() {
 		$query = $this->createQuery();
@@ -45,5 +46,11 @@ class CategoryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 		$result = $query->execute();
 		
 		return $result;
+	}
+	
+	public function setStoragePageIds($storagePageIds) {
+		$defaultQuerySettings = $this->createQuery()->getQuerySettings();
+		$defaultQuerySettings->setStoragePageIds($storagePageIds);
+		$this->setDefaultQuerySettings($defaultQuerySettings);
 	}
 }

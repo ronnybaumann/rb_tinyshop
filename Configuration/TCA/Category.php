@@ -131,6 +131,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_category'] = array(
 				'type' => 'inline',
 				'foreign_table' => 'tx_rbtinyshop_domain_model_category',
 				'foreign_field' => 'category',
+				'foreign_sortby' => 'sorting',
 				'maxitems'      => 9999,
 				'appearance' => array(
 					'collapseAll' => 1,
