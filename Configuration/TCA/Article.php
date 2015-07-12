@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 	'ctrl' => $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, article_detail, attributes, categorys',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, article_detail, categorys, article_attributes',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, article_detail, attributes, --div--;Kategorien, categorys, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, article_detail, --div--;Kategorien, categorys, --div--;Attribute,  article_attributes, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -138,5 +138,23 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 				),
 			),
 		),
+        'article_attributes' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_article.article_attributes',
+            'config' => array(
+                'type' => 'inline',
+                'foreign_table' => 'tx_rbtinyshop_domain_model_articleattribute',
+                'foreign_field' => 'article',
+                'maxitems'      => 9999,
+                'appearance' => array(
+                    'collapseAll' => 0,
+                    'levelLinksPosition' => 'top',
+                    'showSynchronizationLink' => 1,
+                    'showPossibleLocalizationRecords' => 1,
+                    'showAllLocalizationLink' => 1
+                ),
+            ),
+
+        ),
 	),
 );

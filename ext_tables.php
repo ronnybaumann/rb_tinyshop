@@ -249,7 +249,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_attribute'] = array(
 		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
-		'hideTable' => false,
+		'hideTable' => true,
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
@@ -292,6 +292,36 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_attributegroup'] = array(
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/AttributeGroup.php',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_rbtinyshop_domain_model_attributegroup.gif'
 	),
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rbtinyshop_domain_model_articleattribute', 'EXT:rb_tinyshop/Resources/Private/Language/locallang_csh_tx_rbtinyshop_domain_model_articleattribute.xlf');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_rbtinyshop_domain_model_articleattribute');
+$GLOBALS['TCA']['tx_rbtinyshop_domain_model_articleattribute'] = array(
+    'ctrl' => array(
+        'title'	=> 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_articleattribute',
+        'label' => 'title',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => TRUE,
+        'sortby' => 'sorting',
+        'versioningWS' => 2,
+        'versioning_followPages' => TRUE,
+        'hideTable' => true,
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'delete' => 'deleted',
+        'requestUpdate' => ',attribute_group',
+        'enablecolumns' => array(
+            'disabled' => 'hidden',
+            'starttime' => 'starttime',
+            'endtime' => 'endtime',
+        ),
+        'searchFields' => 'title,attribute_group,attributes,',
+        'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/ArticleAttribute.php',
+        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_rbtinyshop_domain_model_articleattribute.gif'
+    ),
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rbtinyshop_domain_model_price', 'EXT:rb_tinyshop/Resources/Private/Language/locallang_csh_tx_rbtinyshop_domain_model_price.xlf');
