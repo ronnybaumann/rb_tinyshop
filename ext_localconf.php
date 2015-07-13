@@ -18,7 +18,7 @@ if (!defined('TYPO3_MODE')) {
 	array(
 		'TinyShop' => '',
 		'Category' => '',
-		'Article' => '',
+		'Article' => 'show',
 		'Basket' => 'show, addItem, removeItem, confirm',
 		'Account' => 'login,account,userOrders,register,create,edit,update,editBillingShippingAddress,editPaymentShipping,forgotPassword',
 		'Order' => 'placeOrder, finish'

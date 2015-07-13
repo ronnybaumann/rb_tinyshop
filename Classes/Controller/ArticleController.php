@@ -60,4 +60,8 @@ class ArticleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$this->view->assign('article', $article);
 	}
 
+    protected function debug($variable) {
+        return \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($variable);
+    }
+
 }
