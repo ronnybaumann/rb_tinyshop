@@ -64,8 +64,6 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 */
 	protected $calculationUtility = NULL;
 	
-	
-	
 	/**
 	 * persistenceManager
 	 *
@@ -79,11 +77,12 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 *
 	 * @param \RB\RbTinyshop\Domain\Model\Article $article
 	 * @param float $quantity
+     * @param array $articleAttributes
 	 * @return void
 	 */
-	public function addItemAction(\RB\RbTinyshop\Domain\Model\Article $article, $quantity = 1) {
+	public function addItemAction(\RB\RbTinyshop\Domain\Model\Article $article, $quantity = 1, $articleAttributes = array()) {
 		$basket = $this->getBasket();
-		$articleNumber = $article->getArticleDetail()->getArticleNumber();
+		$articleNumber = $this->getArticleNumber($article->getArticleDetail()->getArticleNumber(), $articleAttributes);
 		
 		if($basket instanceof \RB\RbTinyshop\Domain\Model\Basket) {
 			$positionUpdated = false;
@@ -97,7 +96,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				}
 			}
 			if($positionUpdated === false) {
-				$basketPosition = $this->getNewBasketPosition($article, $quantity);
+				$basketPosition = $this->getNewBasketPosition($article, $quantity, $articleAttributes);
 				$basket->addBasketPosition($basketPosition);
 			}
 			
@@ -272,7 +271,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @param float $quantity
 	 * @return \RB\RbTinyshop\Domain\Model\BasketPosition
 	 */
-	protected function getNewBasketPosition(\RB\RbTinyshop\Domain\Model\Article $article, $quantity) {
+	protected function getNewBasketPosition(\RB\RbTinyshop\Domain\Model\Article $article, $quantity, $articleAttributes) {
 		$image = $article->getArticleDetail()->getMainImage()->getOriginalResource()->getPublicUrl();
 		
 		$basketPosition = new \RB\RbTinyshop\Domain\Model\BasketPosition();
@@ -280,11 +279,45 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		$basketPosition->setPrice($article->getArticleDetail()->getPrice()->getPrice());
 		$basketPosition->setQuantity($quantity);
 		$basketPosition->setImage($image);
-		$basketPosition->setArticleNumber($article->getArticleDetail()->getArticleNumber());
+		$basketPosition->setArticleNumber($this->getArticleNumber($article->getArticleDetail()->getArticleNumber(), $articleAttributes));
 		$basketPosition->setPid($this->settings['storagePidBasket']);
-		return $basketPosition;
+
+        foreach($articleAttributes as $groupUid => $attributeUid) {
+            $basketPosition->addBasketAttribute($this->getNewBasketAttribute($groupUid, $attributeUid));
+        }
+
+        return $basketPosition;
 	}
-	
+
+    /**
+     * action addItem
+     *
+     * @param array $articleAttribute
+     * @return \RB\RbTinyshop\Domain\Model\BasketAttribute
+     */
+    protected function getNewBasketAttribute($groupUid, $attributeUid) {
+        $basketAttribute = new \RB\RbTinyshop\Domain\Model\BasketAttribute();
+
+        $basketAttribute->setGroupUid($groupUid);
+        $basketAttribute->setAttributeUid($attributeUid);
+
+        $basketAttribute->setPid($this->settings['storagePidBasket']);
+        return $basketAttribute;
+    }
+
+    /**
+     * action addItem
+     *
+     * @param string $articleNumber
+     * @param array $articleAttributes
+     * @return \RB\RbTinyshop\Domain\Model\BasketPosition
+     */
+    protected function getArticleNumber($articleNumber, $articleAttributes) {
+        foreach($articleAttributes as $key => $value) {
+            $articleNumber .= '-' . $key . '-' . $value;
+        }
+        return $articleNumber;
+    }
 	/**
 	 * addBasketRepository
 	 *

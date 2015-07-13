@@ -105,5 +105,10 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_attribute'] = array(
 				'eval' => 'trim,required'
 			),
 		),
+        'attribute_group' => array(
+            'config' => array(
+                'type' => 'passthrough',
+            ),
+        ),
 	),
 );

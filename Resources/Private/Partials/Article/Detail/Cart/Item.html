@@ -1,5 +1,21 @@
 <f:form action="addItem" controller="Basket" pluginName="tinyshop" pageUid="{settings.shopRootId}" name="article" object="{article}" class="form-inline">
-    <label>Anzahl:</label>
-    <f:form.textfield name="quantity" placeholder="1" class="span1" />
+
+    <f:if condition="{article.articleAttributes}">
+        <div class="article-attributes">
+            <f:for each="{article.articleAttributes}" as="articleAttribute">
+                <f:render partial="Article/Detail/Cart/Attribute" arguments="{articleAttribute: articleAttribute}" />
+            </f:for>
+        </div>
+    </f:if>
+
+    <div class="control-group">
+        <label class="control-label">Anzahl:</label>
+        <div class="controls">
+            <f:form.textfield name="quantity" placeholder="1" class="form-control" />
+        </div>
+    </div>
+
+    <p class="price">Preis: <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{article.articleDetail.price.price}</f:format.number>&euro;</p>
+
     <f:form.button class="btn btn-inverse">In den Warenkorb</f:form.button>
 </f:form>

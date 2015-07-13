@@ -154,7 +154,6 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
                     'showAllLocalizationLink' => 1
                 ),
             ),
-
         ),
 	),
 );

@@ -70,6 +70,35 @@ class BasketPosition extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @var string
 	 */
 	protected $image = '';
+
+    /**
+     * basketAttributes
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\BasketAttribute>
+     * @lazy
+     * @cascade remove
+     */
+    protected $basketAttributes = NULL;
+
+    /**
+     * __construct
+     */
+    public function __construct() {
+        //Do not remove the next line: It would break the functionality
+        $this->initStorageObjects();
+    }
+
+    /**
+     * Initializes all ObjectStorage properties
+     * Do not modify this method!
+     * It will be rewritten on each save in the extension builder
+     * You may modify the constructor of this class instead
+     *
+     * @return void
+     */
+    protected function initStorageObjects() {
+        $this->basketAttributes = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
 	
 	/**
 	 * Returns the title
@@ -174,4 +203,43 @@ class BasketPosition extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	public function getTotal() {
 		return $this->price * $this->quantity;
 	}
+
+    /**
+     * Adds a BasketAttribute
+     *
+     * @param \RB\RbTinyshop\Domain\Model\BasketAttribute $basketAttribute
+     * @return void
+     */
+    public function addBasketAttribute(\RB\RbTinyshop\Domain\Model\BasketAttribute $basketAttribute) {
+        $this->basketAttributes->attach($basketAttribute);
+    }
+
+    /**
+     * Removes a BasketAttribute
+     *
+     * @param \RB\RbTinyshop\Domain\Model\BasketAttribute $basketAttributeToRemove The BasketAttribute to be removed
+     * @return void
+     */
+    public function removeBasketAttribute(\RB\RbTinyshop\Domain\Model\BasketAttribute $basketAttributeToRemove) {
+        $this->basketAttributes->detach($basketAttributeToRemove);
+    }
+
+    /**
+     * Returns the basketAttributes
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\BasketAttribute> $basketAttributes
+     */
+    public function getBasketAttributes() {
+        return $this->basketAttributes;
+    }
+
+    /**
+     * Sets the basketAttributes
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\BasketAttribute> $basketAttributes
+     * @return void
+     */
+    public function setBasketAttributes(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $basketAttributes) {
+        $this->basketAttributes = $basketAttributes;
+    }
 }
