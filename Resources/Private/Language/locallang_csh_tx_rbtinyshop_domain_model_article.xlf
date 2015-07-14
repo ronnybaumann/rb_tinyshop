@@ -9,6 +9,9 @@
 			<trans-unit id="article_detail.description">
 				<source>articleDetail</source>
 			</trans-unit>
+			<trans-unit id="article_attributes.description">
+                <source>articleAttributes</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

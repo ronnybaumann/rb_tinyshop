@@ -48,6 +48,14 @@ class Article extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	protected $articleDetail = NULL;
 
+    /**
+     * articleAttributes
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\ArticleAttribute>
+     * @cascade remove
+     */
+    protected $articleAttributes = NULL;
+
 	/**
 	 * __construct
 	 */
@@ -66,6 +74,7 @@ class Article extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	protected function initStorageObjects() {
 		$this->categorys = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->articleAttributes = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 	}
 
 	/**
@@ -125,5 +134,44 @@ class Article extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	public function setArticleDetail(\RB\RbTinyshop\Domain\Model\ArticleDetail $articleDetail) {
 		$this->articleDetail = $articleDetail;
 	}
+
+    /**
+     * Adds a ArticleAttribute
+     *
+     * @param \RB\RbTinyshop\Domain\Model\ArticleAttribute $articleAttribute
+     * @return void
+     */
+    public function addArticleAttribute(\RB\RbTinyshop\Domain\Model\ArticleAttribute $articleAttribute) {
+        $this->articleAttributes->attach($articleAttribute);
+    }
+
+    /**
+     * Removes a ArticleAttribute
+     *
+     * @param \RB\RbTinyshop\Domain\Model\ArticleAttribute $articleAttributeToRemove The ArticleAttribute to be removed
+     * @return void
+     */
+    public function removeArticleAttribute(\RB\RbTinyshop\Domain\Model\ArticleAttribute $articleAttributeToRemove) {
+        $this->articleAttributes->detach($articleAttributeToRemove);
+    }
+
+    /**
+     * Returns the articleAttributes
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\ArticleAttribute> $articleAttributes
+     */
+    public function getArticleAttributes() {
+        return $this->articleAttributes;
+    }
+
+    /**
+     * Sets the articleAttributes
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\ArticleAttribute> $articleAttributes
+     * @return void
+     */
+    public function setArticleAttributes(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $articleAttributes) {
+        $this->articleAttributes = $articleAttributes;
+    }
 
 }

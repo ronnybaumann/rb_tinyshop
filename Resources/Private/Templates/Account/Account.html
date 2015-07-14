@@ -11,10 +11,10 @@
             </div>
             <div class="row">
                 <div class="span4">
-                    <f:render partial="Account/Account/BillingAddress" arguments="{user: user}" />
+                    <f:render partial="Account/Account/BillingAddress" arguments="{billingAddress: user.billingAddress}" />
                 </div>
                 <div class="span4 col">
-                    <f:render partial="Account/Account/ShippingAddress" arguments="{user: user}" />
+                    <f:render partial="Account/Account/ShippingAddress" arguments="{shippingAddress: user.shippingAddress}" />
                 </div>
             </div>
             <div class="row">

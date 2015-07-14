@@ -26,6 +26,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_tinyshop (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -70,6 +71,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_category (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -91,8 +93,8 @@ CREATE TABLE tx_rbtinyshop_domain_model_article (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	categorys int(11) unsigned DEFAULT '0' NOT NULL,
-	attributes int(11) unsigned DEFAULT '0' NOT NULL,
 	article_detail int(11) unsigned DEFAULT '0',
+	article_attributes int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -111,6 +113,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_article (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -155,6 +158,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_articledetail (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -194,6 +198,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_attribute (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -232,6 +237,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_attributegroup (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -241,6 +247,49 @@ CREATE TABLE tx_rbtinyshop_domain_model_attributegroup (
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
 	KEY language (l10n_parent,sys_language_uid)
+);
+
+#
+# Table structure for table 'tx_rbtinyshop_domain_model_articleattribute'
+#
+CREATE TABLE tx_rbtinyshop_domain_model_articleattribute (
+
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+
+	title varchar(255) DEFAULT '' NOT NULL,
+	attribute_group int(11) unsigned DEFAULT '0',
+	attributes int(11) unsigned DEFAULT '0' NOT NULL,
+	article  int(11) unsigned DEFAULT '0' NOT NULL,
+
+	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	starttime int(11) unsigned DEFAULT '0' NOT NULL,
+	endtime int(11) unsigned DEFAULT '0' NOT NULL,
+
+	t3ver_oid int(11) DEFAULT '0' NOT NULL,
+	t3ver_id int(11) DEFAULT '0' NOT NULL,
+	t3ver_wsid int(11) DEFAULT '0' NOT NULL,
+	t3ver_label varchar(255) DEFAULT '' NOT NULL,
+	t3ver_state tinyint(4) DEFAULT '0' NOT NULL,
+	t3ver_stage int(11) DEFAULT '0' NOT NULL,
+	t3ver_count int(11) DEFAULT '0' NOT NULL,
+	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
+	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
+
+	sys_language_uid int(11) DEFAULT '0' NOT NULL,
+	l10n_parent int(11) DEFAULT '0' NOT NULL,
+	l10n_diffsource mediumblob,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid),
+	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
+ KEY language (l10n_parent,sys_language_uid)
+
 );
 
 #
@@ -270,6 +319,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_price (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -311,6 +361,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_image (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -352,6 +403,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_basket (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -373,6 +425,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_basketposition (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	basket int(11) unsigned DEFAULT '0' NOT NULL,
+	basket_attributes int(11) unsigned DEFAULT '0' NOT NULL,
 	
 	title varchar(255) DEFAULT '' NOT NULL,
 	article_number varchar(255) DEFAULT '' NOT NULL,
@@ -397,6 +450,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_basketposition (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -406,6 +460,51 @@ CREATE TABLE tx_rbtinyshop_domain_model_basketposition (
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
 	KEY language (l10n_parent,sys_language_uid)
+
+);
+
+#
+# Table structure for table 'tx_rbtinyshop_domain_model_basketattribute'
+#
+CREATE TABLE tx_rbtinyshop_domain_model_basketattribute (
+
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+
+  group_uid int(11) unsigned DEFAULT '0',
+  group_title varchar(255) DEFAULT '' NOT NULL,
+  attribute_uid int(11) unsigned DEFAULT '0',
+  attribute_title varchar(255) DEFAULT '' NOT NULL,
+
+	basketposition int(11) unsigned DEFAULT '0' NOT NULL,
+
+	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	starttime int(11) unsigned DEFAULT '0' NOT NULL,
+	endtime int(11) unsigned DEFAULT '0' NOT NULL,
+
+	t3ver_oid int(11) DEFAULT '0' NOT NULL,
+	t3ver_id int(11) DEFAULT '0' NOT NULL,
+	t3ver_wsid int(11) DEFAULT '0' NOT NULL,
+	t3ver_label varchar(255) DEFAULT '' NOT NULL,
+	t3ver_state tinyint(4) DEFAULT '0' NOT NULL,
+	t3ver_stage int(11) DEFAULT '0' NOT NULL,
+	t3ver_count int(11) DEFAULT '0' NOT NULL,
+	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
+	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
+
+	sys_language_uid int(11) DEFAULT '0' NOT NULL,
+	l10n_parent int(11) DEFAULT '0' NOT NULL,
+	l10n_diffsource mediumblob,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid),
+	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
+ KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -445,6 +544,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_order (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -466,6 +566,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_orderposition (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	order_id int(11) unsigned DEFAULT '0' NOT NULL,
+	order_attributes int(11) unsigned DEFAULT '0' NOT NULL,
 	
 	title varchar(255) DEFAULT '' NOT NULL,
 	article_number varchar(255) DEFAULT '' NOT NULL,
@@ -489,6 +590,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_orderposition (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -498,6 +600,51 @@ CREATE TABLE tx_rbtinyshop_domain_model_orderposition (
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
 	KEY language (l10n_parent,sys_language_uid)
+
+);
+
+#
+# Table structure for table 'tx_rbtinyshop_domain_model_orderattribute'
+#
+CREATE TABLE tx_rbtinyshop_domain_model_orderattribute (
+
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+
+  group_uid int(11) unsigned DEFAULT '0',
+  group_title varchar(255) DEFAULT '' NOT NULL,
+  attribute_uid int(11) unsigned DEFAULT '0',
+  attribute_title varchar(255) DEFAULT '' NOT NULL,
+
+	orderposition int(11) unsigned DEFAULT '0' NOT NULL,
+
+	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	starttime int(11) unsigned DEFAULT '0' NOT NULL,
+	endtime int(11) unsigned DEFAULT '0' NOT NULL,
+
+	t3ver_oid int(11) DEFAULT '0' NOT NULL,
+	t3ver_id int(11) DEFAULT '0' NOT NULL,
+	t3ver_wsid int(11) DEFAULT '0' NOT NULL,
+	t3ver_label varchar(255) DEFAULT '' NOT NULL,
+	t3ver_state tinyint(4) DEFAULT '0' NOT NULL,
+	t3ver_stage int(11) DEFAULT '0' NOT NULL,
+	t3ver_count int(11) DEFAULT '0' NOT NULL,
+	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
+	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
+
+	sys_language_uid int(11) DEFAULT '0' NOT NULL,
+	l10n_parent int(11) DEFAULT '0' NOT NULL,
+	l10n_diffsource mediumblob,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid),
+	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
+ KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -532,6 +679,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_orderpartialprice (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -578,6 +726,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_address (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -619,6 +768,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_payment (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -659,6 +809,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_shipping (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -697,6 +848,7 @@ CREATE TABLE tx_rbtinyshop_domain_model_orderstate (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
@@ -722,9 +874,9 @@ CREATE TABLE tx_rbtinyshop_article_category_mm (
 );
 
 #
-# Table structure for table 'tx_rbtinyshop_article_category_mm'
+# Table structure for table 'tx_rbtinyshop_tinyshop_category_mm'
 #
-CREATE TABLE tx_rbtinyshop_article_attribute_mm (
+CREATE TABLE tx_rbtinyshop_tinyshop_category_mm (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting int(11) unsigned DEFAULT '0' NOT NULL,
@@ -735,9 +887,9 @@ CREATE TABLE tx_rbtinyshop_article_attribute_mm (
 );
 
 #
-# Table structure for table 'tx_rbtinyshop_tinyshop_category_mm'
+# Table structure for table 'tx_rbtinyshop_articleattribute_attribute_mm'
 #
-CREATE TABLE tx_rbtinyshop_tinyshop_category_mm (
+CREATE TABLE tx_rbtinyshop_articleattribute_attribute_mm (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting int(11) unsigned DEFAULT '0' NOT NULL,

@@ -30,7 +30,7 @@ namespace RB\RbTinyshop\Domain\Repository;
 /**
  * The repository for BasketPositions
  */
-class BasketPositionRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class BasketPositionRepository extends AbstractRepository {
 
 	
 }

@@ -30,6 +30,6 @@ namespace RB\RbTinyshop\Domain\Repository;
 /**
  * The repository for Users
  */
-class UserRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class UserRepository extends AbstractRepository {
 
 }

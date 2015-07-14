@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-08-18T00:41:43Z" product-name="tinyshop">
+		<header/>
+		<body>
+			<trans-unit id="group_uid.description">
+                <source>group_uid</source>
+            </trans-unit>
+            <trans-unit id="group_title.description">
+                <source>group_title</source>
+            </trans-unit>
+            <trans-unit id="attribute_uid.description">
+                <source>attribute_uid</source>
+            </trans-unit>
+            <trans-unit id="attribute_title.description">
+                <source>attribute_title</source>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>

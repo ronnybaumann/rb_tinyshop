@@ -12,6 +12,9 @@
 			<trans-unit id="tx_rbtinyshop_domain_model_article.article_detail">
 				<source>Article Detail</source>
 			</trans-unit>
+			<trans-unit id="tx_rbtinyshop_domain_model_article.article_attributes">
+                <source>Article Attributes</source>
+            </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_attribute">
                 <source>Attribute</source>
             </trans-unit>
@@ -25,6 +28,18 @@
                 <source>Title</source>
             </trans-unit>
             <trans-unit id="tx_rbtinyshop_domain_model_attributegroup.attributes">
+                <source>Attributes</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_articleattribute">
+                <source>Article Attribute</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_articleattribute.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_articleattribute.attribute_group">
+                <source>Attribute Group</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_articleattribute.attributes">
                 <source>Attributes</source>
             </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_basketposition">
@@ -41,6 +56,24 @@
             </trans-unit>
             <trans-unit id="tx_rbtinyshop_domain_model_basketposition.quantity">
                 <source>Quantity</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketposition.basket_attributes">
+                <source>Basket Attributes</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketattribute">
+                <source>Basket Attribute</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketattribute.group_uid">
+                <source>Group Uid</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketattribute.group_title">
+                <source>Group Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketattribute.attribute_uid">
+                <source>Attribute Uid</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_basketattribute.attribute_title">
+                <source>Attribute Title</source>
             </trans-unit>
 			<trans-unit id="tx_rbtinyshop_domain_model_tinyshop">
 				<source>TinyShop</source>
@@ -101,6 +134,24 @@
             </trans-unit>
             <trans-unit id="tx_rbtinyshop_domain_model_orderposition.quantity">
                 <source>Quantity</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition.order_attributes">
+                <source>Order Attributes</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderattribute">
+                <source>Order Attribute</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderattribute.group_uid">
+                <source>Group Uid</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderattribute.group_title">
+                <source>Group Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderattribute.attribute_uid">
+                <source>Attribute Uid</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderattribute.attribute_title">
+                <source>Attribute Title</source>
             </trans-unit>
             <trans-unit id="tx_rbtinyshop_domain_model_orderpartialprice">
                 <source>Order Partial Price</source>

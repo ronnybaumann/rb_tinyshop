@@ -1,0 +1,23 @@
+<table style="text-align: right; float: right; padding: 0; margin: 0;" class="lead cart-total">
+    <f:if condition="{order.orderPartialPrices}">
+        <f:for each="{order.orderPartialPrices}" as="orderPartialPrice">
+            <tr>
+                <td>
+                    <strong>{orderPartialPrice.title}</strong>
+                </td>
+                <td>
+                    <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{orderPartialPrice.value}</f:format.number>&euro;
+                </td>
+            </tr>
+        </f:for>
+    </f:if>
+    <tr>
+        <td>
+            <strong>Gesamtbetrag:</strong>
+        </td>
+        <td>
+            <f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{order.total}</f:format.number>&euro;
+        </td>
+    </tr>
+</table>
+<div style="clear: both;"></div>

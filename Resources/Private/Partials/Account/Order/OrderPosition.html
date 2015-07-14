@@ -1,5 +1,14 @@
 <tr>
-    <td>{orderPosition.title}</td>
+    <td>
+        <p>{orderPosition.title}</p>
+        <f:if condition="{orderPosition.orderAttributes}">
+            <p class="order-position-attributes">
+                <f:for each="{orderPosition.orderAttributes}" as="orderAttribute" iteration="orderAttributeIteration">
+                    {orderAttribute.groupTitle}: {orderAttribute.attributeTitle}{f:if(condition: orderAttributeIteration.isLast, then: '', else: '<br />')}
+                </f:for>
+            </p>
+        </f:if>
+    </td>
     <td style="text-align: center;">{orderPosition.quantity}</td>
     <td style="text-align: right;"><f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{orderPosition.price}</f:format.number>&euro;</td>
     <td style="text-align: right;"><f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{orderPosition.total}</f:format.number>&euro;</td>

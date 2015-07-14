@@ -112,7 +112,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * @return void
 	 */
 	public function finishAction(\RB\RbTinyshop\Domain\Model\Order $order) {
-		$this->debug($order);
 		$this->view->assign('order', $order);
 	}
 	
@@ -190,7 +189,22 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 				$orderPosition->setQuantity($basketPosition->getQuantity());
 				$orderPosition->setTitle($basketPosition->getTitle());
 				$orderPosition->setPid($this->settings['storagePidOrder']);
-				
+
+                foreach($basketPosition->getBasketAttributes() as $basketAttribute) {
+                    if($basketAttribute instanceof \RB\RbTinyshop\Domain\Model\BasketAttribute) {
+                        $orderAttribute = new \RB\RbTinyshop\Domain\Model\OrderAttribute();
+                        $orderAttribute->setGroupUid($basketAttribute->getGroupUid());
+                        $orderAttribute->setGroupTitle($basketAttribute->getGroupTitle());
+                        $orderAttribute->setAttributeUid($basketAttribute->getAttributeUid());
+                        $orderAttribute->setAttributeTitle($basketAttribute->getAttributeTitle());
+                        $orderAttribute->setPid($this->settings['storagePidOrder']);
+
+                        $orderPosition->addOrderAttribute($orderAttribute);
+                    }
+                    else {
+                        $orderFinished = false;
+                    }
+                }
 				$order->addOrderPosition($orderPosition);
 			}
 			else {

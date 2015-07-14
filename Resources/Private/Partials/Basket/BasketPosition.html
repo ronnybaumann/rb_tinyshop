@@ -2,7 +2,16 @@
     <td>
         <f:image src="{basketPosition.image}" width="100c" height="100c" />
     </td>
-    <td>{basketPosition.title}</td>
+    <td>
+        <p>{basketPosition.title}</p>
+        <f:if condition="{basketPosition.basketAttributes}">
+            <p class="basket-position-attributes">
+                <f:for each="{basketPosition.basketAttributes}" as="basketAttribute" iteration="basketAttributeIteration">
+                    {basketAttribute.groupTitle}: {basketAttribute.attributeTitle}{f:if(condition: basketAttributeIteration.isLast, then: '', else: '<br />')}
+                </f:for>
+            </p>
+        </f:if>
+    </td>
     <td style="text-align: center;">{basketPosition.quantity}</td>
     <td style="text-align: right;"><f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{basketPosition.price}</f:format.number>&euro;</td>
     <td style="text-align: right;"><f:format.number decimals="2" decimalSeparator="," thousandsSeparator="">{basketPosition.total}</f:format.number>&euro;</td>

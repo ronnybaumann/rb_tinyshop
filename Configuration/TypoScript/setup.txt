@@ -205,7 +205,8 @@ plugin.tx_rbtinyshop._CSS_DEFAULT_STYLE (
  # Module configuration
 module.tx_rbtinyshop {
 	persistence {
-		storagePid = {$module.tx_rbtinyshop.persistence.storagePid}
+		storagePid = {$plugin.tx_rbtinyshop.persistence.storagePid}
+		recursive = {$plugin.tx_rbtinyshop.persistence.recursive}
 	}
 	view {
 		templateRootPath = {$module.tx_rbtinyshop.view.templateRootPath}

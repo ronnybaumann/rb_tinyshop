@@ -30,6 +30,6 @@ namespace RB\RbTinyshop\Domain\Repository;
 /**
  * The repository for ArticleDetails
  */
-class ArticleDetailRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class ArticleDetailRepository extends AbstractRepository {
 	
 }

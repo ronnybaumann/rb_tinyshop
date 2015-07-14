@@ -30,6 +30,6 @@ namespace RB\RbTinyshop\Domain\Repository;
 /**
  * The repository for Address
  */
-class AddressRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class AddressRepository extends AbstractRepository {
 	
 }

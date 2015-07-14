@@ -1,0 +1,10 @@
+<div class="control-group">
+    <label class="control-label">{articleAttribute.title}</label>
+    <div class="controls">
+        <select class="form-control" name="tx_rbtinyshop_tinyshop[articleAttributes][{articleAttribute.attributeGroup.uid}]">
+            <f:for each="{articleAttribute.attributes}" as="attribute">
+                <option value="{attribute.uid}">{attribute.title}</option>
+            </f:for>
+        </select>
+    </div>
+</div>

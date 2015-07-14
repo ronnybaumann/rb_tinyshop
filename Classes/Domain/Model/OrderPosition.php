@@ -63,6 +63,35 @@ class OrderPosition extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @validate NotEmpty
 	 */
 	protected $quantity = 1.0;
+
+    /**
+     * orderAttributes
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\OrderAttribute>
+     * @lazy
+     * @cascade remove
+     */
+    protected $orderAttributes = NULL;
+
+    /**
+     * __construct
+     */
+    public function __construct() {
+        //Do not remove the next line: It would break the functionality
+        $this->initStorageObjects();
+    }
+
+    /**
+     * Initializes all ObjectStorage properties
+     * Do not modify this method!
+     * It will be rewritten on each save in the extension builder
+     * You may modify the constructor of this class instead
+     *
+     * @return void
+     */
+    protected function initStorageObjects() {
+        $this->orderAttributes = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
 	
 	/**
 	 * Returns the title
@@ -148,4 +177,43 @@ class OrderPosition extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	public function getTotal() {
 		return $this->price * $this->quantity;
 	}
+
+    /**
+     * Adds a OrderAttribute
+     *
+     * @param \RB\RbTinyshop\Domain\Model\OrderAttribute $orderAttribute
+     * @return void
+     */
+    public function addOrderAttribute(\RB\RbTinyshop\Domain\Model\OrderAttribute $orderAttribute) {
+        $this->orderAttributes->attach($orderAttribute);
+    }
+
+    /**
+     * Removes a OrderAttribute
+     *
+     * @param \RB\RbTinyshop\Domain\Model\OrderAttribute $orderAttributeToRemove The OrderAttribute to be removed
+     * @return void
+     */
+    public function removeOrderAttribute(\RB\RbTinyshop\Domain\Model\OrderAttribute $orderAttributeToRemove) {
+        $this->orderAttributes->detach($orderAttributeToRemove);
+    }
+
+    /**
+     * Returns the orderAttributes
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\OrderAttribute> $orderAttributes
+     */
+    public function getOrderAttributes() {
+        return $this->orderAttributes;
+    }
+
+    /**
+     * Sets the orderAttributes
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RB\RbTinyshop\Domain\Model\OrderAttribute> $orderAttributes
+     * @return void
+     */
+    public function setOrderAttributes(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderAttributes) {
+        $this->orderAttributes = $orderAttributes;
+    }
 }

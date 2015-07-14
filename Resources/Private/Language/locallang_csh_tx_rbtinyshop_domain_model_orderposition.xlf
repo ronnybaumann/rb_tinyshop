@@ -15,6 +15,9 @@
             <trans-unit id="quantity.description">
                 <source>quantity</source>
             </trans-unit>
+            <trans-unit id="basket_attributes.description">
+                <source>orderAttributes</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

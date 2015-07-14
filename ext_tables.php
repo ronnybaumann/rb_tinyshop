@@ -16,21 +16,62 @@ if (!defined('TYPO3_MODE')) {
 );
 
 if (TYPO3_MODE === 'BE') {
-
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
+		'RbTinyshopBackendController::getArticleByCategoryJson',
+		'RB\\RbTinyshop\\Controller\\BackendController->getArticleByCategoryJson'
+	);
+	
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
+		'RbTinyshopBackendController::getCategoryTreeJson',
+		'RB\\RbTinyshop\\Controller\\BackendController->getCategoryTreeJson'
+	);
+	
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
+		'RbTinyshopBackendController::moveRecordAjax',
+		'RB\\RbTinyshop\\Controller\\BackendController->moveRecordAjax'
+	);
+	
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler (
+		'RbTinyshopBackendController::updateCategoryParentAjax',
+		'RB\\RbTinyshop\\Controller\\BackendController->updateCategoryParentAjax'
+	);
+	
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+		'RB.' . $_EXTKEY,
+		'rb_tinyshop',
+		'',
+		'',
+		array(),
+		array(
+			'access' => 'user,group',
+			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_tinyshop.xlf',
+		)
+	);
+	
+	//change sorting for new MainModule because until now sorting of MainModules is not supported by registerModule function
+	if(isset($GLOBALS['TBE_MODULES']['RbTinyshopRbTinyshop'])) {
+		$rbTinyShopModule = $GLOBALS['TBE_MODULES']['RbTinyshopRbTinyshop'];
+		unset($GLOBALS['TBE_MODULES']['RbTinyshopRbTinyshop']);
+		$newTbeModules =array();
+		foreach ($GLOBALS['TBE_MODULES'] as $key=>$value) {
+			$newTbeModules[$key] = $value;
+			if($key === 'web') {
+				$newTbeModules['RbTinyshopRbTinyshop'] = $rbTinyShopModule;
+			}
+		}
+		$GLOBALS['TBE_MODULES'] = $newTbeModules;
+	}
+	
 	/**
 	 * Registers a Backend Module
 	 */
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 		'RB.' . $_EXTKEY,
-		'web',	 // Make module a submodule of 'web'
+		'rb_tinyshop',	 // Make module a submodule of 'web'
 		'tinyshop',	// Submodule key
 		'',						// Position
 		array(
-			'Article' => 'show',
-			'TinyShop' => 'home',
-			'Basket' => 'show, addItem, removeItem, confirm',
-			'Order' => 'list, show',
-			'Category' => 'show',
+			'Backend' => 'list,popClose',
 		),
 		array(
 			'access' => 'user,group',
@@ -38,7 +79,6 @@ if (TYPO3_MODE === 'BE') {
 			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_tinyshop.xlf',
 		)
 	);
-
 }
 
 $pluginSignature = str_replace('_','',$_EXTKEY) . '_menu';
@@ -90,7 +130,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_tinyshop'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 
@@ -119,7 +159,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_category'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 
@@ -148,7 +188,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_article'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 			
@@ -177,7 +217,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_articledetail'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -206,10 +246,10 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_attribute'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
-		'hideTable' => false,
+		'hideTable' => true,
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
@@ -235,7 +275,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_attributegroup'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => false,
@@ -254,6 +294,36 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_attributegroup'] = array(
 	),
 );
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rbtinyshop_domain_model_articleattribute', 'EXT:rb_tinyshop/Resources/Private/Language/locallang_csh_tx_rbtinyshop_domain_model_articleattribute.xlf');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_rbtinyshop_domain_model_articleattribute');
+$GLOBALS['TCA']['tx_rbtinyshop_domain_model_articleattribute'] = array(
+    'ctrl' => array(
+        'title'	=> 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_articleattribute',
+        'label' => 'title',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => TRUE,
+        'sortby' => 'sorting',
+        'versioningWS' => 2,
+        'versioning_followPages' => TRUE,
+        'hideTable' => true,
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'delete' => 'deleted',
+        'requestUpdate' => ',attribute_group',
+        'enablecolumns' => array(
+            'disabled' => 'hidden',
+            'starttime' => 'starttime',
+            'endtime' => 'endtime',
+        ),
+        'searchFields' => 'title,attribute_group,attributes,',
+        'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/ArticleAttribute.php',
+        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_rbtinyshop_domain_model_articleattribute.gif'
+    ),
+);
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rbtinyshop_domain_model_price', 'EXT:rb_tinyshop/Resources/Private/Language/locallang_csh_tx_rbtinyshop_domain_model_price.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_rbtinyshop_domain_model_price');
 $GLOBALS['TCA']['tx_rbtinyshop_domain_model_price'] = array(
@@ -264,7 +334,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_price'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -293,7 +363,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_image'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -322,7 +392,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_basket'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => false,
@@ -351,7 +421,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_basketposition'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -370,6 +440,64 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_basketposition'] = array(
 	),
 );
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rbtinyshop_domain_model_basketattribute', 'EXT:rb_tinyshop/Resources/Private/Language/locallang_csh_tx_rbtinyshop_domain_model_basketattribute.xlf');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_rbtinyshop_domain_model_basketattribute');
+$GLOBALS['TCA']['tx_rbtinyshop_domain_model_basketattribute'] = array(
+    'ctrl' => array(
+        'title'	=> 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_basketattribute',
+        'label' => 'title',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => TRUE,
+        'sortby' => 'sorting',
+        'versioningWS' => 2,
+        'versioning_followPages' => TRUE,
+        'hideTable' => true,
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'delete' => 'deleted',
+        'enablecolumns' => array(
+            'disabled' => 'hidden',
+            'starttime' => 'starttime',
+            'endtime' => 'endtime',
+        ),
+        'searchFields' => 'group_uid,group_title,attribute_uid,attribute_title,',
+        'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/BasketAttribute.php',
+        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_rbtinyshop_domain_model_basketattribute.gif'
+    ),
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rbtinyshop_domain_model_orderattribute', 'EXT:rb_tinyshop/Resources/Private/Language/locallang_csh_tx_rbtinyshop_domain_model_orderattribute.xlf');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_rbtinyshop_domain_model_orderattribute');
+$GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderattribute'] = array(
+    'ctrl' => array(
+        'title'	=> 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_orderattribute',
+        'label' => 'title',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => TRUE,
+        'sortby' => 'sorting',
+        'versioningWS' => 2,
+        'versioning_followPages' => TRUE,
+        'hideTable' => true,
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'delete' => 'deleted',
+        'enablecolumns' => array(
+            'disabled' => 'hidden',
+            'starttime' => 'starttime',
+            'endtime' => 'endtime',
+        ),
+        'searchFields' => 'group_uid,group_title,attribute_uid,attribute_title,',
+        'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/OrderAttribute.php',
+        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_rbtinyshop_domain_model_orderattribute.gif'
+    ),
+);
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rbtinyshop_domain_model_order', 'EXT:rb_tinyshop/Resources/Private/Language/locallang_csh_tx_rbtinyshop_domain_model_order.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_rbtinyshop_domain_model_order');
 $GLOBALS['TCA']['tx_rbtinyshop_domain_model_order'] = array(
@@ -381,7 +509,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_order'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'default_sortby' => 'ORDER BY crdate DESC',
@@ -412,7 +540,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderposition'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -443,7 +571,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderpartialprice'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -472,7 +600,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderstate'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => false,
@@ -503,7 +631,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_address'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => true,
@@ -532,7 +660,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_payment'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => false,
@@ -561,7 +689,7 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_shipping'] = array(
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
+		'sortby' => 'sorting',
 		'versioningWS' => 2,
 		'versioning_followPages' => TRUE,
 		'hideTable' => false,

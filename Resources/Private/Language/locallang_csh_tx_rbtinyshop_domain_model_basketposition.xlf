@@ -18,6 +18,9 @@
             <trans-unit id="main_image.description">
                 <source>mainImage</source>
             </trans-unit>
+            <trans-unit id="basket_attributes.description">
+                <source>basketAttributes</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

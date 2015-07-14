@@ -1,0 +1,40 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Artikel {{loaddatauri}}
+        <div class="input-group input-group-sm pull-right">
+            <input type="number" min="1" max="100" class="form-control" ng-model="pageSize">
+        </div>
+        <div class="input-group input-group-sm pull-right">
+            &nbsp;&nbsp;&nbsp;Items pro Seite:&nbsp;
+        </div>
+        <div class="input-group input-group-sm pull-right">
+            <input ng-model="q" id="search" class="form-control" placeholder="Suchen">
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>Artikelnummer</th>
+                <th>Artikelname</th>
+                <th class="text-right">Preis</th>
+                <th class="text-right">Bearbeiten</th>
+            </tr>
+            <tr dir-paginate="article in articles | filter:q | itemsPerPage: pageSize" current-page="currentPage">
+                <td>{{article.id}}</td>
+                <td>{{article.articleNumber}}</td>
+                <td>{{article.title}}</td>
+                <td class="text-right">{{article.price|number:2}}</td>
+                <td>
+                    <a class="pull-right btn btn-default btn-xs" data-nodrag href="#/articledetails/{{article.id}}">
+                        <span class="glyphicon glyphicon-list"></span>
+                    </a>
+                    <a ng-click="openArticleInPopUp(article.editLink)" class="pull-right btn btn-primary btn-xs" style="margin-right: 8px;">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="panel-footer text-center"><dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="../typo3conf/ext/rb_tinyshop/Resources/Public/Backend/App/templates/dirPagination.tpl.html"></dir-pagination-controls></div>
+</div>
