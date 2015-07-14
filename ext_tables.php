@@ -445,7 +445,9 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_basketposition'] = array(
 $GLOBALS['TCA']['tx_rbtinyshop_domain_model_basketattribute'] = array(
     'ctrl' => array(
         'title'	=> 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_basketattribute',
-        'label' => 'title',
+        'label' => 'group_title',
+        'label_alt' => 'attribute_title',
+        'label_alt_force' => 1,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
@@ -466,35 +468,6 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_basketattribute'] = array(
         'searchFields' => 'group_uid,group_title,attribute_uid,attribute_title,',
         'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/BasketAttribute.php',
         'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_rbtinyshop_domain_model_basketattribute.gif'
-    ),
-);
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rbtinyshop_domain_model_orderattribute', 'EXT:rb_tinyshop/Resources/Private/Language/locallang_csh_tx_rbtinyshop_domain_model_orderattribute.xlf');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_rbtinyshop_domain_model_orderattribute');
-$GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderattribute'] = array(
-    'ctrl' => array(
-        'title'	=> 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_orderattribute',
-        'label' => 'title',
-        'tstamp' => 'tstamp',
-        'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
-        'dividers2tabs' => TRUE,
-        'sortby' => 'sorting',
-        'versioningWS' => 2,
-        'versioning_followPages' => TRUE,
-        'hideTable' => true,
-        'languageField' => 'sys_language_uid',
-        'transOrigPointerField' => 'l10n_parent',
-        'transOrigDiffSourceField' => 'l10n_diffsource',
-        'delete' => 'deleted',
-        'enablecolumns' => array(
-            'disabled' => 'hidden',
-            'starttime' => 'starttime',
-            'endtime' => 'endtime',
-        ),
-        'searchFields' => 'group_uid,group_title,attribute_uid,attribute_title,',
-        'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/OrderAttribute.php',
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_rbtinyshop_domain_model_orderattribute.gif'
     ),
 );
 
@@ -557,6 +530,37 @@ $GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderposition'] = array(
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/OrderPosition.php',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_rbtinyshop_domain_model_orderposition.gif'
 	),
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rbtinyshop_domain_model_orderattribute', 'EXT:rb_tinyshop/Resources/Private/Language/locallang_csh_tx_rbtinyshop_domain_model_orderattribute.xlf');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_rbtinyshop_domain_model_orderattribute');
+$GLOBALS['TCA']['tx_rbtinyshop_domain_model_orderattribute'] = array(
+    'ctrl' => array(
+        'title'	=> 'LLL:EXT:rb_tinyshop/Resources/Private/Language/locallang_db.xlf:tx_rbtinyshop_domain_model_orderattribute',
+        'label' => 'group_title',
+        'label_alt' => 'attribute_title',
+        'label_alt_force' => 1,
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => TRUE,
+        'sortby' => 'sorting',
+        'versioningWS' => 2,
+        'versioning_followPages' => TRUE,
+        'hideTable' => true,
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'delete' => 'deleted',
+        'enablecolumns' => array(
+            'disabled' => 'hidden',
+            'starttime' => 'starttime',
+            'endtime' => 'endtime',
+        ),
+        'searchFields' => 'group_uid,group_title,attribute_uid,attribute_title,',
+        'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/OrderAttribute.php',
+        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_rbtinyshop_domain_model_orderattribute.gif'
+    ),
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rbtinyshop_domain_model_orderpartialprice', 'EXT:rb_tinyshop/Resources/Private/Language/locallang_csh_tx_rbtinyshop_domain_model_orderpartialprice.xlf');
