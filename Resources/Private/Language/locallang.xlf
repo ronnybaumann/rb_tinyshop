@@ -129,6 +129,24 @@
             <trans-unit id="tx_rbtinyshop_domain_model_orderposition.quantity">
                 <source>Quantity</source>
             </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderposition.order_attributes">
+                <source>Order Attributes</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderattribute">
+                <source>Order Attribute</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderattribute.group_uid">
+                <source>Group Uid</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderattribute.group_title">
+                <source>Group Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderattribute.attribute_uid">
+                <source>Attribute Uid</source>
+            </trans-unit>
+            <trans-unit id="tx_rbtinyshop_domain_model_orderattribute.attribute_title">
+                <source>Attribute Title</source>
+            </trans-unit>
             <trans-unit id="tx_rbtinyshop_domain_model_orderpartialprice">
                 <source>Order Partial Price</source>
             </trans-unit>

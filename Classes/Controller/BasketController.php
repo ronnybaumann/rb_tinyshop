@@ -47,6 +47,22 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @inject
 	 */
 	protected $userRepository = NULL;
+
+    /**
+     * attributeGroupRepository
+     *
+     * @var \RB\RbTinyshop\Domain\Repository\AttributeGroupRepository
+     * @inject
+     */
+    protected $attributeGroupRepository = NULL;
+
+    /**
+     * attributeRepository
+     *
+     * @var \RB\RbTinyshop\Domain\Repository\AttributeRepository
+     * @inject
+     */
+    protected $attributeRepository = NULL;
 	
 	/**
 	 * feSessionStorage
@@ -296,10 +312,16 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * @return \RB\RbTinyshop\Domain\Model\BasketAttribute
      */
     protected function getNewBasketAttribute($groupUid, $attributeUid) {
+        $attributeGroup = $this->attributeGroupRepository->findByUid($groupUid);
+        $attribute = $this->attributeRepository->findByUid($attributeUid);
+
+
         $basketAttribute = new \RB\RbTinyshop\Domain\Model\BasketAttribute();
 
         $basketAttribute->setGroupUid($groupUid);
+        $basketAttribute->setGroupTitle($attributeGroup->getTitle());
         $basketAttribute->setAttributeUid($attributeUid);
+        $basketAttribute->setAttributeTitle($attribute->getTitle());
 
         $basketAttribute->setPid($this->settings['storagePidBasket']);
         return $basketAttribute;

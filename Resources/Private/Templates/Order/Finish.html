@@ -1,0 +1,72 @@
+{namespace ts=RB\RbTinyshop\ViewHelpers}
+<f:layout name="Default" />
+<f:section name="main">
+    <section class="header_text sub">
+        <h4>
+            <span>Vielen Dank für Ihre Bestellung</span>
+        </h4>
+    </section>
+    <section class="main-content">
+        <div class="row">
+            <div class="span12">
+                <p class="buttons center">
+                    <button class="btn btn-inverse" type="button" onclick="printOrder('printOrder')">Bestellung Ausdrucken</button>
+                    <script type="text/javascript">
+                        function printOrder(divName) {
+                            var printContents = document.getElementById(divName).innerHTML;
+                            var originalContents = document.body.innerHTML;
+
+                            document.body.innerHTML = printContents;
+
+                            window.print();
+
+                            document.body.innerHTML = originalContents;
+                        }
+                    </script>
+                </p>
+            </div>
+        </div>
+        <div id="printOrder">
+            <div class="row">
+                <div class="span6">
+                    <f:render partial="Account/Account/BillingAddress" arguments="{billingAddress: order.billingAddress}" />
+                </div>
+                <div class="span6">
+                    <f:render partial="Account/Account/ShippingAddress" arguments="{shippingAddress: order.shippingAddress}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="span6">
+                    <f:render partial="Order/Payment" arguments="{payment: order.payment}" />
+                </div>
+                <div class="span6">
+                    <f:render partial="Order/Shipping" arguments="{shipping: order.shipping}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="span12">
+                    <h4 class="title"><span class="text"><strong>Ihre</strong> Bestellung</span></h4>
+                    <f:if condition="{order}">
+                        <f:then>
+                            <table class="table table-striped">
+                                <thead>
+                                    <f:render partial="Order/Head" />
+                                </thead>
+                                <tbody>
+                                <f:for each="{order.orderPositions}" as="orderPosition" iteration="iteration">
+                                    <f:render partial="Order/OrderPosition" arguments="{orderPosition: orderPosition, iteration: iteration}" />
+                                </f:for>
+                                </tbody>
+                            </table>
+                            <hr />
+                            <f:render partial="Order/Totals" arguments="{order: order, partialPrices: partialPrices}" />
+                        </f:then>
+                        <f:else>
+                            <f:flashMessages renderMode="div" class="alert alert-warning" />
+                        </f:else>
+                    </f:if>
+                </div>
+            </div>
+        </div>
+    </section>
+</f:section>
