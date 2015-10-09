@@ -24,7 +24,7 @@
                         <f:render partial="Basket/Totals" arguments="{basket: basket, partialPrices: partialPrices}" />
                         <hr />
                         <p class="buttons right">              
-                            <f:link.action action="confirm" controller="Basket" pluginName="tinyshop" pageUid="{settings.shopRootId}" arguments="{article: article}" class="btn btn-inverse">Kasse</f:link.action>
+                            <f:link.action action="confirm" controller="Basket" pluginName="tinyshop" pageUid="{settings.shopRootId}" class="btn btn-inverse">Kasse</f:link.action>
                         </p>
                     </f:then>
                     <f:else>

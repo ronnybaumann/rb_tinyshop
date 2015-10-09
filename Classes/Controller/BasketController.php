@@ -124,7 +124,7 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			}
 			
 		}
-		$this->redirect('show', 'Basket', 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+		$this->redirect('show', 'Basket', 'RbTinyshop', array(), $this->settings['shopRootId']);
 	}
 	
 	/**
@@ -162,10 +162,10 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		}
 		
 		if($this->feSessionStorage->has('redirectAction') && $this->feSessionStorage->has('redirectController') && $this->feSessionStorage->getUser()->user['uid']) {
-			$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+			$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array(), $this->settings['shopRootId']);
 		}
 		else {
-			$this->redirect('show', 'Basket', 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+			$this->redirect('show', 'Basket', 'RbTinyshop', array(), $this->settings['shopRootId']);
 		}
 	}
 	
@@ -224,11 +224,11 @@ class BasketController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				$this->view->assign('user', $user);
 			}
 			else {
-				$this->redirect('show', 'Basket', 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+				$this->redirect('show', 'Basket', 'RbTinyshop', array(), $this->settings['shopRootId']);
 			}
 		}
 		else {
-			$this->redirect('login', 'Account', 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+			$this->redirect('login', 'Account', 'RbTinyshop', array(), $this->settings['shopRootId']);
 		}
 	}
 	

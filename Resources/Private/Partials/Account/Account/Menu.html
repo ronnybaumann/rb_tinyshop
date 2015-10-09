@@ -1,15 +1,15 @@
 <ul class="nav nav-list">
     <li class="nav-header">Navigation</li>
     <li>
-        <f:link.action action="account" controller="Account" arguments="{user: user}">Kontoübersicht</f:link.action>
+        <f:link.action action="account" controller="Account">Kontoübersicht</f:link.action>
     </li>
     <li>
-        <f:link.action action="userOrders" controller="Account" arguments="{user: user}">Bestellungen</f:link.action>
+        <f:link.action action="userOrders" controller="Account">Bestellungen</f:link.action>
     </li>
     <li>
-        <f:link.action action="edit" controller="Account" arguments="{user: user}">Benutzerdaten ändern</f:link.action>
+        <f:link.action action="edit" controller="Account">Benutzerdaten ändern</f:link.action>
     </li>
     <li>
-        <a href="{f:uri.action(action:'login', controller:'Account', extensionName: 'rbtinyshop', pluginName: 'tinyshop', pageUid: settings.shopRootId, noCacheHash: 1)}&logintype=logout" method="post" onsubmit="{onSubmit}">Logout</a>
-    </li>
+        <a href="{f:uri.action(action:'login', controller:'Account', extensionName: 'rbtinyshop', pluginName: 'tinyshop', pageUid: settings.shopRootId, arguments: {logintype: 'logout'})}" method="post" onsubmit="{onSubmit}">Logout</a>
+	</li>
 </ul>

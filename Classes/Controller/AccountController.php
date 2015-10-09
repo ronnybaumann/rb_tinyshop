@@ -115,6 +115,19 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	public function loginAction() {
 		$arguments = $this->request->getArguments();
+		if($this->request->hasArgument('logintype')) {
+			if($arguments['logintype'] == 'logout') {
+				$GLOBALS['TSFE']->fe_user->logoff();
+			}
+			
+			if($this->feSessionStorage->has('redirectAction') && $this->feSessionStorage->has('redirectController')) {
+				$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array(), $this->settings['shopRootId']);
+			}
+			else {
+				$this->redirect('account', 'Account', 'RbTinyshop', array(), $this->settings['shopRootId']);
+			}
+		}
+		
 		if(!$this->feSessionStorage->getUser()->user['uid']) {
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['felogin']['loginFormOnSubmitFuncs'])) {
 				$_params = array();
@@ -142,10 +155,10 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			$this->view->assign('arguments', $arguments);
 		}
 		elseif($this->feSessionStorage->has('redirectAction') && $this->feSessionStorage->has('redirectController')) {
-			$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+			$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array(), $this->settings['shopRootId']);
 		}
 		else {
-			$this->redirect('account', 'Account', 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+			$this->redirect('account', 'Account', 'RbTinyshop', array(), $this->settings['shopRootId']);
 		}
 	}
 	
@@ -158,7 +171,7 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$this->feSessionStorage->remove('redirectAction');
 		$this->feSessionStorage->remove('redirectController');
 		if(!$this->feSessionStorage->getUser()->user['uid']) {
-			$this->redirect('login', 'Account', 'RbTinyshop', array('pluginName' => 'Tinyshop', 'redirectAction' => 'account', 'redirectController' => 'Account'), $this->settings['shopRootId']);
+			$this->redirect('login', 'Account', 'RbTinyshop', array('redirectAction' => 'account', 'redirectController' => 'Account'), $this->settings['shopRootId']);
 		}
 		else {
 			$user = $this->userRepository->findByUid($this->feSessionStorage->getUser()->user['uid']);
@@ -167,15 +180,16 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	}
 	
 	/**
-	 * action login
+	 * action userOrders
 	 *
 	 * @return void
 	 */
-	public function userOrdersAction(\RB\RbTinyshop\Domain\Model\User $user) {
+	public function userOrdersAction() {
 		if(!$this->feSessionStorage->getUser()->user['uid']) {
-			$this->redirect('login', 'Account', 'RbTinyshop', array('pluginName' => 'Tinyshop', 'redirectAction' => 'account', 'redirectController' => 'Account'), $this->settings['shopRootId']);
+			$this->redirect('login', 'Account', 'RbTinyshop', array('redirectAction' => 'account', 'redirectController' => 'Account'), $this->settings['shopRootId']);
 		}
 		else {
+			$user = $this->userRepository->findByUid($this->feSessionStorage->getUser()->user['uid']);
 			$this->orderRepository->setDefaultOrderings(array('crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING));
 			$orders = $this->orderRepository->findByFeuser($user);
 			
@@ -231,7 +245,7 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$this->loginAfterRegister($newUser);
 		
 		if($this->feSessionStorage->has('redirectAction') && $this->feSessionStorage->has('redirectController')) {
-			$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+			$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array(), $this->settings['shopRootId']);
 		}
 		else {
 			$this->redirect('account');
@@ -241,44 +255,57 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	/**
 	 * action edit
 	 *
-	 * @param \RB\RbTinyshop\Domain\Model\User $user
-	 * @ignorevalidation $user
 	 * @return void
 	 */
-	public function editAction(\RB\RbTinyshop\Domain\Model\User $user) {
-		$payments = $this->paymentRepository->findAll();
-		$shippings = $this->shippingRepository->findAll();
+	public function editAction() {
+		if(!$this->feSessionStorage->getUser()->user['uid']) {
+			$this->redirect('login', 'Account', 'RbTinyshop', array('redirectAction' => 'account', 'redirectController' => 'Account'), $this->settings['shopRootId']);
+		}
+		else {
+			$user = $this->userRepository->findByUid($this->feSessionStorage->getUser()->user['uid']);
+			
+			$payments = $this->paymentRepository->findAll();
+			$shippings = $this->shippingRepository->findAll();
 		
-		$this->view->assign('payments', $payments);
-		$this->view->assign('shippings', $shippings);
-		$this->view->assign('user', $user);
+			$this->view->assign('payments', $payments);
+			$this->view->assign('shippings', $shippings);
+			$this->view->assign('user', $user);
+		}
 	}
 	
 	/**
-	 * action edit
+	 * action editBillingShippingAddress
 	 *
-	 * @param \RB\RbTinyshop\Domain\Model\User $user
-	 * @ignorevalidation $user
 	 * @return void
 	 */
-	public function editBillingShippingAddressAction(\RB\RbTinyshop\Domain\Model\User $user) {
-		$this->view->assign('user', $user);
+	public function editBillingShippingAddressAction() {
+		if(!$this->feSessionStorage->getUser()->user['uid']) {
+			$this->redirect('login', 'Account', 'RbTinyshop', array('redirectAction' => 'account', 'redirectController' => 'Account'), $this->settings['shopRootId']);
+		}
+		else {
+			$user = $this->userRepository->findByUid($this->feSessionStorage->getUser()->user['uid']);
+			$this->view->assign('user', $user);
+		}
 	}
 	
 	/**
-	 * action edit
+	 * action editPaymentShipping
 	 *
-	 * @param \RB\RbTinyshop\Domain\Model\User $user
-	 * @ignorevalidation $user
 	 * @return void
 	 */
-	public function editPaymentShippingAction(\RB\RbTinyshop\Domain\Model\User $user) {
-		$payments = $this->paymentRepository->findAll();
-		$shippings = $this->shippingRepository->findAll();
+	public function editPaymentShippingAction() {
+		if(!$this->feSessionStorage->getUser()->user['uid']) {
+			$this->redirect('login', 'Account', 'RbTinyshop', array('redirectAction' => 'account', 'redirectController' => 'Account'), $this->settings['shopRootId']);
+		}
+		else {
+			$user = $this->userRepository->findByUid($this->feSessionStorage->getUser()->user['uid']);
+			$payments = $this->paymentRepository->findAll();
+			$shippings = $this->shippingRepository->findAll();
 		
-		$this->view->assign('payments', $payments);
-		$this->view->assign('shippings', $shippings);
-		$this->view->assign('user', $user);
+			$this->view->assign('user', $user);
+			$this->view->assign('payments', $payments);
+			$this->view->assign('shippings', $shippings);
+		}
 	}
 	
 	/**
@@ -292,7 +319,7 @@ class AccountController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$this->persistenceManager->persistAll();
 		
 		if($this->feSessionStorage->has('redirectAction') && $this->feSessionStorage->has('redirectController')) {
-			$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array('pluginName' => 'Tinyshop'), $this->settings['shopRootId']);
+			$this->redirect($this->feSessionStorage->read('redirectAction'), $this->feSessionStorage->read('redirectController'), 'RbTinyshop', array(), $this->settings['shopRootId']);
 		}
 		else {
 			$this->redirect('account');

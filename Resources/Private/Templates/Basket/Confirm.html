@@ -14,7 +14,7 @@
             <div class="span6">
                 <f:render partial="Account/Account/ShippingAddress" arguments="{shippingAddress: user.shippingAddress}" />
                 <p class="buttons right">
-                    <f:link.action action="editBillingShippingAddress" controller="Account" pluginName="tinyshop" pageUid="{settings.shopRootId}" arguments="{user: user}" class="btn btn-inverse">Ändern</f:link.action>
+                    <f:link.action action="editBillingShippingAddress" controller="Account" pluginName="tinyshop" pageUid="{settings.shopRootId}" class="btn btn-inverse">Ändern</f:link.action>
                 </p>
             </div>
         </div>
@@ -25,7 +25,7 @@
             <div class="span6">
                 <f:render partial="Account/Account/Shipping" arguments="{user: user}" />
                 <p class="buttons right">
-                    <f:link.action action="editPaymentShipping" controller="Account" pluginName="tinyshop" pageUid="{settings.shopRootId}" arguments="{user: user}" class="btn btn-inverse">Ändern</f:link.action>
+                    <f:link.action action="editPaymentShipping" controller="Account" pluginName="tinyshop" pageUid="{settings.shopRootId}" class="btn btn-inverse">Ändern</f:link.action>
                 </p>
             </div>
         </div>
@@ -46,7 +46,7 @@
                 <f:render partial="Basket/Totals" arguments="{basket: basket, partialPrices: partialPrices}" />
                 <hr />
                 <p class="buttons right">
-                    <f:link.action action="placeOrder" controller="Order" pluginName="tinyshop" pageUid="{settings.shopRootId}" arguments="{basket: basket}" class="btn btn-inverse">Kostenpflichtig bestellen</f:link.action>
+                    <f:link.action action="placeOrder" controller="Order" pluginName="tinyshop" pageUid="{settings.shopRootId}" class="btn btn-inverse">Kostenpflichtig bestellen</f:link.action>
                 </p>
             </div>
         </div>

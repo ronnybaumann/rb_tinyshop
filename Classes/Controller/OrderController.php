@@ -107,25 +107,35 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	/**
 	 * action show
 	 *
-	 * @param \RB\RbTinyshop\Domain\Model\Order $order
-	 * @ignorevalidation $order
 	 * @return void
 	 */
-	public function finishAction(\RB\RbTinyshop\Domain\Model\Order $order) {
-		$this->view->assign('order', $order);
+	public function finishAction() {
+		$orderUid = $this->feSessionStorage->read('orderUid');
+		if($orderUid) {
+			$order = $this->orderRepository->findByUid($orderUid);
+			$this->view->assign('order', $order);
+		}
+		else {
+			$this->addFlashMessage('Es wurde keine Bestellung gefunden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+		}
 	}
 	
 	/**
-	 * action show
+	 * action placeOrder
 	 *
-	 * @param \RB\RbTinyshop\Domain\Model\Order $order
 	 * @param boolean $paymentSuccess
 	 * @return void
 	 */
-	public function placeOrderAction(\RB\RbTinyshop\Domain\Model\Basket $basket, $paymentSuccess = false) {
+	public function placeOrderAction($paymentSuccess = false) {
+		if(!$this->feSessionStorage->getUser()->user['uid']) {
+			$this->redirect('confirm', 'Basket');
+		}
+		
 		$orderFinished = true;
-		$order = new \RB\RBTinyshop\Domain\Model\Order();
-		$user = $this->userRepository->findByUid($basket->getUserUid());
+		$order = new \RB\RbTinyshop\Domain\Model\Order();
+		$user = $this->userRepository->findByUid($this->feSessionStorage->getUser()->user['uid']);
+		$basket = $this->basketRepository->findOneByUserUid($user->getUid());
+		
 
 		//do paypal payment
 		if($user->getPayment()->getUid() == 4) {
@@ -258,8 +268,8 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 		if($orderFinished) {
 			//$this->basketRepository->remove($basket);
 			//$this->persistenceManager->persistAll();
-			
-			$this->redirect('finish', 'Order', 'RbTinyshop', array('pluginName' => 'Tinyshop', 'order' => $order), $this->settings['shopRootId']);
+			$this->feSessionStorage->write('orderUid', $order->getUid());
+			$this->redirect('finish', 'Order', 'RbTinyshop', array(), $this->settings['shopRootId']);
 		}
 		else {
 			$this->redirect('confirm', 'Basket');
